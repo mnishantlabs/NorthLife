@@ -358,7 +358,7 @@
           <div style="display: flex; align-items: center; gap: 10px;">
             <div class="card-icon-badge" style="width: 26px; height: 26px;">${m.icon}</div>
             <div>
-              <div style="font-size: 13px; font-weight: 600; color: var(--text-ink);">${m.title}</div>
+              <div style="font-size: 13px; font-weight: 700; color: var(--text-ink);">${m.title}</div>
               ${m.sub ? `<div style="font-size: 11px; color: var(--text-muted);">${m.sub}</div>` : ''}
             </div>
           </div>
@@ -1513,15 +1513,15 @@
             <!-- Analysis Row -->
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 8px 0 14px 0;">
               <div style="padding: 10px 12px; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); background-color: var(--bg-surface-subtle);">
-                <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-muted);">Active Habits</span>
+                <span style="font-size: 11px; font-weight: 500; text-transform: uppercase; color: var(--text-muted);">Active Habits</span>
                 <div style="font-size: 20px; font-weight: 800; color: var(--text-ink); margin-top: 2px;">${totalHabits}</div>
               </div>
               <div style="padding: 10px 12px; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); background-color: var(--bg-surface-subtle);">
-                <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-muted);">Completed Today</span>
+                <span style="font-size: 11px; font-weight: 500; text-transform: uppercase; color: var(--text-muted);">Completed Today</span>
                 <div style="font-size: 20px; font-weight: 800; color: var(--text-ink); margin-top: 2px;">${doneToday} / ${totalHabits}</div>
               </div>
               <div style="padding: 10px 12px; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); background-color: var(--bg-surface-subtle);">
-                <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-muted);">Completion Rate</span>
+                <span style="font-size: 11px; font-weight: 500; text-transform: uppercase; color: var(--text-muted);">Completion Rate</span>
                 <div style="font-size: 20px; font-weight: 800; color: var(--text-ink); margin-top: 2px;">${completionRate}%</div>
               </div>
             </div>
@@ -1920,15 +1920,15 @@
             <!-- Quantitative Clinical Averages -->
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px;">
               <div style="padding: 12px; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
-                <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-muted);">Avg Daily Water</span>
+                <span style="font-size: 11px; font-weight: 500; text-transform: uppercase; color: var(--text-muted);">Avg Daily Water</span>
                 <div style="font-size: 24px; font-weight: 800; color: var(--text-ink); margin-top: 2px;">${avgWater} ml</div>
               </div>
               <div style="padding: 12px; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
-                <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-muted);">Avg Daily Fiber</span>
+                <span style="font-size: 11px; font-weight: 500; text-transform: uppercase; color: var(--text-muted);">Avg Daily Fiber</span>
                 <div style="font-size: 24px; font-weight: 800; color: var(--text-ink); margin-top: 2px;">${avgFiber} g</div>
               </div>
               <div style="padding: 12px; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
-                <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-muted);">Bowel Movements</span>
+                <span style="font-size: 11px; font-weight: 500; text-transform: uppercase; color: var(--text-muted);">Bowel Movements</span>
                 <div style="font-size: 24px; font-weight: 800; color: var(--text-ink); margin-top: 2px;">${filteredBowel.length} events</div>
               </div>
             </div>
@@ -1941,7 +1941,7 @@
               ${filteredBowel.length === 0 ? '<p style="font-size: 12px; color: var(--text-muted);">No bowel logs recorded in this period.</p>' : `
                 <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;">
                   <thead>
-                    <tr style="border-bottom: 1px solid var(--border-dark); font-weight: 600;">
+                    <tr style="border-bottom: 1px solid var(--border-dark); font-weight: 700;">
                       <th style="padding: 6px;">Date & Time</th>
                       <th style="padding: 6px;">Bristol Type</th>
                       <th style="padding: 6px;">Pain (0-10)</th>
@@ -1954,10 +1954,10 @@
                     ${filteredBowel.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp)).map(b => `
                       <tr style="border-bottom: 1px solid var(--border-subtle);">
                         <td style="padding: 6px;">${formatDisplayDate(b.timestamp)} ${formatDisplayTime(b.timestamp)}</td>
-                        <td style="padding: 6px; font-weight: 600;">Type ${b.bristolType}</td>
+                        <td style="padding: 6px; font-weight: 700;">Type ${b.bristolType}</td>
                         <td style="padding: 6px;">${b.painScore > 0 ? b.painScore + '/10' : '0'}</td>
                         <td style="padding: 6px;">${b.straining ? 'Yes' : 'No'}</td>
-                        <td style="padding: 6px; font-weight: 600;">${b.blood ? 'FLAGGED' : 'None'}</td>
+                        <td style="padding: 6px; font-weight: 700;">${b.blood ? 'FLAGGED' : 'None'}</td>
                         <td style="padding: 6px; color: var(--text-muted);">${b.notes || '-'}</td>
                       </tr>
                     `).join('')}
@@ -2028,7 +2028,7 @@
               <!-- Vault Status -->
               <div style="padding: 12px; background-color: var(--bg-surface-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
                 <div>
-                  <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-muted);">IndexedDB Health Storage</span>
+                  <span style="font-size: 11px; font-weight: 500; text-transform: uppercase; color: var(--text-muted);">IndexedDB Health Storage</span>
                   <div style="font-size: 14px; font-weight: 700; color: var(--text-ink);">${totalRecords} total items stored locally</div>
                 </div>
                 <div style="font-size: 12px; color: var(--text-muted);">
@@ -2039,7 +2039,7 @@
               <!-- Export Data -->
               <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle);">
                 <div>
-                  <h4 style="font-size: 13.5px; font-weight: 600; color: var(--text-ink);">Export Health Vault</h4>
+                  <h4 style="font-size: 13.5px; font-weight: 700; color: var(--text-ink);">Export Health Vault</h4>
                   <p style="font-size: 12px; color: var(--text-muted);">Download a complete JSON backup of all your health logs, meals, habits, and meds.</p>
                 </div>
                 <button class="btn btn--ink" onclick="Views.exportVaultData()">Download JSON</button>
@@ -2048,7 +2048,7 @@
               <!-- Import Data -->
               <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle);">
                 <div>
-                  <h4 style="font-size: 13.5px; font-weight: 600; color: var(--text-ink);">Import Health Vault</h4>
+                  <h4 style="font-size: 13.5px; font-weight: 700; color: var(--text-ink);">Import Health Vault</h4>
                   <p style="font-size: 12px; color: var(--text-muted);">Restore or merge records from a previously exported JSON backup file.</p>
                 </div>
                 <label class="btn btn--subtle" style="cursor: pointer;">
@@ -2060,7 +2060,7 @@
               <!-- Wipe Vault -->
               <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
-                  <h4 style="font-size: 13.5px; font-weight: 600; color: var(--text-ink);">Clear All Vault Data</h4>
+                  <h4 style="font-size: 13.5px; font-weight: 700; color: var(--text-ink);">Clear All Vault Data</h4>
                   <p style="font-size: 12px; color: var(--text-muted);">Erase all local health records from IndexedDB storage.</p>
                 </div>
                 <button class="btn btn--subtle" style="color: #ef4444; border-color: #fca5a5;" onclick="Views.confirmWipeData()">Wipe Data</button>
