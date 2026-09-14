@@ -24,6 +24,8 @@ body {
   min-height: 100vh;
   line-height: var(--line-height-relaxed);
   background-color: var(--bg-app);
+  background-image: var(--bg-dot-grid);
+  background-size: var(--bg-dot-size);
   color: var(--text-ink);
   font-family: var(--font-family) !important;
   font-weight: var(--font-weight-regular);

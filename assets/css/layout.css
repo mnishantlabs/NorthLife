@@ -8,6 +8,8 @@
   display: flex;
   min-height: 100vh;
   background-color: var(--bg-app);
+  background-image: var(--bg-dot-grid);
+  background-size: var(--bg-dot-size);
 }
 
 /* =========================================================================

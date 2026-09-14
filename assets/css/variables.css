@@ -44,6 +44,10 @@
   --bg-surface-elevated: #EAEAEA;
   --bg-overlay: rgba(17, 24, 39, 0.4);
 
+  /* Architectural Dot Grid (3-5% Opacity) */
+  --bg-dot-grid: radial-gradient(rgba(17, 24, 39, 0.04) 1px, transparent 1px);
+  --bg-dot-size: 20px 20px;
+
   --border-subtle: #E5E7EB;
   --border-dark: #D1D5DB;
   --border-focus: #111827;
@@ -124,6 +128,10 @@
   --bg-surface-subtle: #1C212C;
   --bg-surface-elevated: #262D3B;
   --bg-overlay: rgba(0, 0, 0, 0.75);
+
+  /* Architectural Dot Grid Dark Mode (4% Opacity) */
+  --bg-dot-grid: radial-gradient(rgba(243, 244, 246, 0.04) 1px, transparent 1px);
+  --bg-dot-size: 20px 20px;
 
   --border-subtle: #262D3B;
   --border-dark: #374151;
