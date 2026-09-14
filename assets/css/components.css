@@ -1,5 +1,5 @@
 /* =========================================================================
-   NorthLife — UI Component Styles
+   NorthLife — UI Component Styles (Luxury Polish Edition)
    Strictly Manrope & Minimalist Monochromatic Theme
    ========================================================================= */
 
@@ -10,18 +10,29 @@
   background-color: var(--bg-surface);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-subtle);
-  padding: 20px 24px;
+  padding: 22px 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   box-shadow: var(--shadow-soft);
   transition: box-shadow var(--duration-normal) var(--ease-smooth),
-              border-color var(--duration-normal) var(--ease-smooth);
+              border-color var(--duration-normal) var(--ease-smooth),
+              transform var(--duration-fast) var(--ease-smooth);
 }
 
 .card-nl:hover {
   box-shadow: var(--shadow-soft-hover);
   border-color: var(--border-dark);
+}
+
+.card-nl--interactive {
+  cursor: pointer;
+}
+
+.card-nl--interactive:hover {
+  transform: translateY(-2px);
+  border-color: var(--text-ink);
+  box-shadow: var(--shadow-modal);
 }
 
 .card-header-nl {
@@ -104,46 +115,56 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-  margin: 6px 0;
+  margin: 8px 0;
 }
 
 .metric-hero-value {
-  font-size: 30px;
-  font-weight: 700;
+  font-size: 34px;
+  font-weight: 800;
   color: var(--text-ink);
-  line-height: 1.1;
-  letter-spacing: -0.03em;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
   font-feature-settings: "tnum";
 }
 
 .metric-hero-unit {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--text-muted);
-  margin-left: 3px;
+  margin-left: 4px;
   letter-spacing: normal;
 }
 
 .metric-hero-subtext {
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 400;
   color: var(--text-muted);
   line-height: 1.4;
   margin-top: 2px;
 }
 
-.metric-large {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: var(--letter-spacing-ultratight);
-  color: var(--text-ink);
-  line-height: 1.1;
+/* Daily Holistic Status Bar */
+.status-strip-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-subtle);
 }
 
-.metric-unit {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-regular);
-  color: var(--text-muted);
+.status-strip-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--text-ink);
 }
 
 /* =========================================================================
@@ -179,15 +200,6 @@
   background-color: transparent;
   color: var(--text-muted);
   border-color: var(--border-subtle);
-}
-
-/* Status Indicator Dot */
-.status-indicator {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: var(--radius-full);
-  background-color: var(--text-ink);
 }
 
 /* =========================================================================
@@ -289,7 +301,7 @@
 }
 
 /* =========================================================================
-   5. TIMELINE STREAM (History, Log Events, CRUD)
+   5. TIMELINE STREAM (History, Log Events, Running Totals)
    ========================================================================= */
 .timeline-stream {
   display: flex;
@@ -318,6 +330,7 @@
   align-items: center;
   gap: 12px;
   min-width: 0;
+  flex-wrap: wrap;
 }
 
 .timeline-time {
@@ -329,21 +342,23 @@
   flex-shrink: 0;
 }
 
-.timeline-main {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
 .timeline-badge {
   padding: 3px 8px;
   border-radius: var(--radius-sm);
   background-color: var(--bg-surface-subtle);
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 12.5px;
+  font-weight: 700;
   color: var(--text-ink);
   border: 1px solid var(--border-subtle);
+}
+
+.timeline-running-total {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 2px 6px;
+  border-radius: 4px;
+  background-color: var(--bg-surface-subtle);
 }
 
 .timeline-label {
@@ -363,6 +378,12 @@
   align-items: center;
   gap: 4px;
   flex-shrink: 0;
+  opacity: 0.85;
+  transition: opacity var(--duration-fast);
+}
+
+.timeline-item:hover .timeline-actions {
+  opacity: 1;
 }
 
 /* =========================================================================
@@ -512,13 +533,14 @@
 .habit-stats-strip {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   font-size: 11.5px;
   color: var(--text-muted);
+  flex-wrap: wrap;
 }
 
 .habit-stats-val {
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-ink);
 }
 
@@ -631,15 +653,15 @@
 }
 
 /* =========================================================================
-   10. PROGRESS BARS & GAUGES
+   10. PROGRESS BARS (Thicker & Polished)
    ========================================================================= */
 .progress-track {
   width: 100%;
-  height: 6px;
+  height: 9px;
   border-radius: var(--radius-full);
   background-color: var(--bg-surface-elevated);
   overflow: hidden;
-  margin-top: var(--space-2);
+  margin-top: 10px;
 }
 
 .progress-bar-fill {
@@ -791,6 +813,100 @@
   color: var(--text-ink);
 }
 
+/* =========================================================================
+   14. GLOBAL FLOATING SEARCH MODAL (Ctrl+K)
+   ========================================================================= */
+.search-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  z-index: 10000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 12vh;
+  animation: fade-in 0.15s ease-out;
+}
+
+.search-modal-box {
+  background-color: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-dark);
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2), 0 10px 10px -5px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 580px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: scale-in 0.15s ease-out;
+}
+
+.search-modal-header {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.search-modal-input {
+  width: 100%;
+  padding: 16px 12px;
+  font-size: 15px;
+  font-family: inherit;
+  font-weight: 500;
+  border: none;
+  background: transparent;
+  color: var(--text-ink);
+  outline: none;
+}
+
+.search-modal-results {
+  max-height: 340px;
+  overflow-y: auto;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.search-result-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color 0.12s;
+  text-decoration: none;
+  color: var(--text-ink);
+}
+
+.search-result-item:hover, .search-result-item--selected {
+  background-color: var(--bg-surface-subtle);
+}
+
+.search-modal-footer {
+  padding: 8px 16px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-muted);
+  background-color: var(--bg-surface-subtle);
+}
+
+.kbd-shortcut {
+  padding: 2px 6px;
+  border-radius: 4px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  font-family: inherit;
+  font-size: 10.5px;
+  font-weight: 600;
+}
+
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -802,7 +918,7 @@
 }
 
 /* =========================================================================
-   14. DOCTOR MODE PRINT STYLESHEET
+   15. DOCTOR MODE PRINT STYLESHEET
    ========================================================================= */
 @media print {
   .app-sidebar,
