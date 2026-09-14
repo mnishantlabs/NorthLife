@@ -527,28 +527,93 @@
     openQuickLogModal() {
       Modal.open(`
         <div class="modal-header-nl">
-          <span class="modal-title-nl">Quick Health Log</span>
-          <button class="btn btn--subtle btn--sm" onclick="Modal.close()">Close</button>
+          <span class="modal-title-nl">Universal Quick Health Log</span>
+          <button class="btn btn--ghost btn--sm" onclick="Modal.close()">✕</button>
         </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
-          <button class="btn btn--subtle" onclick="App.quickAddWater(250)" style="padding: 14px; flex-direction: column; gap: 6px;">
-            ${Icons.water}
-            <span>+250ml Water (W)</span>
-          </button>
-          <button class="btn btn--subtle" onclick="App.quickAddWater(500)" style="padding: 14px; flex-direction: column; gap: 6px;">
-            ${Icons.water}
-            <span>+500ml Bottle</span>
-          </button>
-          <button class="btn btn--subtle" onclick="Modal.close(); window.location.hash = 'bowel';" style="padding: 14px; flex-direction: column; gap: 6px;">
-            ${Icons.bowel}
-            <span>Log Digestion (B)</span>
-          </button>
-          <button class="btn btn--subtle" onclick="Modal.close(); window.location.hash = 'diet';" style="padding: 14px; flex-direction: column; gap: 6px;">
-            ${Icons.diet}
-            <span>Log Meal (M)</span>
-          </button>
+        
+        <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+          <!-- 1. Quick Water Section -->
+          <div>
+            <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">1. Hydration</span>
+            <div style="display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap;">
+              <button class="btn btn--secondary btn--sm" onclick="App.quickAddWater(200)">+200ml</button>
+              <button class="btn btn--primary btn--sm" onclick="App.quickAddWater(250)">+250ml Glass</button>
+              <button class="btn btn--secondary btn--sm" onclick="App.quickAddWater(500)">+500ml Bottle</button>
+              <button class="btn btn--secondary btn--sm" onclick="App.quickAddWater(750)">+750ml Flask</button>
+            </div>
+          </div>
+
+          <!-- 2. Quick Meal Section -->
+          <div style="border-top: 1px solid var(--border-subtle); padding-top: 12px;">
+            <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">2. Quick Meal & Fiber</span>
+            <form onsubmit="App.handleQuickMealSubmit(event)" style="display: grid; grid-template-columns: 1fr 80px auto; gap: 8px; margin-top: 6px;">
+              <input type="text" id="quick-meal-name" class="input-nl" placeholder="Meal name (e.g. Oatmeal)" required style="height: 34px;" />
+              <input type="number" id="quick-meal-fiber" class="input-nl" placeholder="Fiber g" min="0" max="100" step="0.5" required style="height: 34px;" />
+              <button type="submit" class="btn btn--primary" style="height: 34px;">Log Meal</button>
+            </form>
+          </div>
+
+          <!-- 3. Quick Digestion Section -->
+          <div style="border-top: 1px solid var(--border-subtle); padding-top: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">3. Digestion (Bristol Stool)</span>
+              <span style="font-size: 11px; color: var(--text-muted);">Click type to log</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-top: 6px;">
+              ${[1,2,3,4,5,6,7].map(t => `
+                <button class="btn btn--secondary btn--sm" style="padding: 0; font-weight: 700;" title="Type ${t}" onclick="App.quickAddBowel(${t})">
+                  T${t}
+                </button>
+              `).join('')}
+            </div>
+          </div>
         </div>
       `);
+    },
+
+    async handleQuickMealSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('quick-meal-name').value;
+      const fiber = document.getElementById('quick-meal-fiber').value;
+      if (!name) return;
+
+      const item = {
+        id: 'diet_' + Date.now(),
+        type: 'Meal',
+        name,
+        fiber: Number(fiber) || 0,
+        date: App.todayDate,
+        timestamp: new Date().toISOString()
+      };
+
+      await putItem('diet_logs', item);
+      Modal.close();
+      ToastManager.showUndo(`Logged ${name} (+${fiber}g)`, async () => {
+        await deleteItem('diet_logs', item.id);
+        App.handleRoute();
+      });
+      App.handleRoute();
+    },
+
+    async quickAddBowel(typeNum) {
+      const item = {
+        id: 'bowel_' + Date.now(),
+        bristolType: Number(typeNum),
+        painScore: 0,
+        straining: false,
+        blood: false,
+        notes: 'Quick Log',
+        date: App.todayDate,
+        timestamp: new Date().toISOString()
+      };
+
+      await putItem('bowel_logs', item);
+      Modal.close();
+      ToastManager.showUndo(`Logged Type ${typeNum} Movement`, async () => {
+        await deleteItem('bowel_logs', item.id);
+        App.handleRoute();
+      });
+      App.handleRoute();
     },
 
     async quickAddWater(ml) {
