@@ -1,0 +1,163 @@
+/* =========================================================================
+   NorthLife — Design Tokens & CSS Custom Properties
+   Strictly Manrope Thin & Minimalist Monochromatic Theme
+   ========================================================================= */
+
+:root {
+  /* Typography Tokens (Strictly Manrope with Solid 400 Body / 600 Headings) */
+  --font-family: 'Manrope', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Font Weights (Minimal, solid hierarchy) */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Typography Scale */
+  --font-size-2xs: 0.6875rem; /* 11px */
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.8125rem;  /* 13px */
+  --font-size-base: 0.875rem; /* 14px */
+  --font-size-md: 0.9375rem;  /* 15px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 2rem;      /* 32px */
+
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.55;
+  --line-height-relaxed: 1.65;
+
+  --letter-spacing-tight: -0.015em;
+  --letter-spacing-ultratight: -0.025em;
+  --letter-spacing-wide: 0.04em;
+
+  /* =========================================================================
+     MINIMALIST MONOCHROMATIC PALETTE (Light Mode)
+     Pure, neat, clean, luxury alabaster & ink without multicolor/rainbow.
+     ========================================================================= */
+  --bg-app: #FAFAFA;
+  --bg-surface: #FFFFFF;
+  --bg-surface-subtle: #F4F4F5;
+  --bg-surface-elevated: #EAEAEA;
+  --bg-overlay: rgba(17, 24, 39, 0.4);
+
+  --border-subtle: #E5E7EB;
+  --border-dark: #D1D5DB;
+  --border-focus: #111827;
+
+  --text-ink: #111827;
+  --text-muted: #6B7280;
+  --text-subtle: #9CA3AF;
+  --text-disabled: #D1D5DB;
+  --text-inverse: #FFFFFF;
+
+  /* Unified Clean Accent System (Monochromatic & Subtle Grayscale) */
+  --pastel-blue-bg: #F4F4F5;
+  --pastel-blue-accent: #111827;
+  --pastel-blue-border: #E5E7EB;
+
+  --pastel-butter-bg: #F4F4F5;
+  --pastel-butter-accent: #111827;
+  --pastel-butter-border: #E5E7EB;
+
+  --pastel-mint-bg: #F4F4F5;
+  --pastel-mint-accent: #111827;
+  --pastel-mint-border: #E5E7EB;
+
+  --pastel-lavender-bg: #F4F4F5;
+  --pastel-lavender-accent: #111827;
+  --pastel-lavender-border: #E5E7EB;
+
+  --pastel-indigo-bg: #F4F4F5;
+  --pastel-indigo-accent: #111827;
+  --pastel-indigo-border: #E5E7EB;
+
+  --pastel-coral-bg: #F4F4F5;
+  --pastel-coral-accent: #111827;
+  --pastel-coral-border: #E5E7EB;
+
+  /* =========================================================================
+     SPACING SCALE
+     ========================================================================= */
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-2-5: 0.625rem;/* 10px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-7: 1.75rem;   /* 28px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+
+  /* Border Radii (Clean, refined curves) */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-2xl: 22px;
+  --radius-full: 9999px;
+
+  /* Elevation Shadows (Ultra subtle) */
+  --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-soft-hover: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-modal: 0 16px 32px -8px rgba(0, 0, 0, 0.1);
+
+  /* Transitions */
+  --ease-instant: cubic-bezier(0, 0, 0.2, 1);
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+}
+
+/* =========================================================================
+   DARK THEME (Minimalist Deep Ink & Charcoal)
+   ========================================================================= */
+[data-theme="dark"] {
+  --bg-app: #0A0D12;
+  --bg-surface: #12161F;
+  --bg-surface-subtle: #1C212C;
+  --bg-surface-elevated: #262D3B;
+  --bg-overlay: rgba(0, 0, 0, 0.75);
+
+  --border-subtle: #262D3B;
+  --border-dark: #374151;
+  --border-focus: #F3F4F6;
+
+  --text-ink: #F3F4F6;
+  --text-muted: #9CA3AF;
+  --text-subtle: #6B7280;
+  --text-disabled: #4B5563;
+  --text-inverse: #0A0D12;
+
+  --pastel-blue-bg: #1C212C;
+  --pastel-blue-accent: #F3F4F6;
+  --pastel-blue-border: #262D3B;
+
+  --pastel-butter-bg: #1C212C;
+  --pastel-butter-accent: #F3F4F6;
+  --pastel-butter-border: #262D3B;
+
+  --pastel-mint-bg: #1C212C;
+  --pastel-mint-accent: #F3F4F6;
+  --pastel-mint-border: #262D3B;
+
+  --pastel-lavender-bg: #1C212C;
+  --pastel-lavender-accent: #F3F4F6;
+  --pastel-lavender-border: #262D3B;
+
+  --pastel-indigo-bg: #1C212C;
+  --pastel-indigo-accent: #F3F4F6;
+  --pastel-indigo-border: #262D3B;
+
+  --pastel-coral-bg: #1C212C;
+  --pastel-coral-accent: #F3F4F6;
+  --pastel-coral-border: #262D3B;
+
+  --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-soft-hover: 0 4px 12px rgba(0, 0, 0, 0.4);
+}

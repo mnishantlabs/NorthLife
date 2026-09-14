@@ -1,0 +1,290 @@
+/* =========================================================================
+   NorthLife — App Layout & Shell Architecture
+   Strictly Manrope Thin & Minimalist Monochromatic Theme
+   ========================================================================= */
+
+/* Root Shell Container */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--bg-app);
+}
+
+/* =========================================================================
+   SIDEBAR NAVIGATION (240px Desktop)
+   ========================================================================= */
+.app-sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 240px;
+  background-color: var(--bg-surface);
+  border-right: 1px solid var(--border-subtle);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-5);
+  transition: transform var(--duration-normal) var(--ease-smooth);
+}
+
+.sidebar-top {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* Brand Header */
+.brand-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-1);
+}
+
+.brand-identity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2-5);
+}
+
+.brand-logo-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  background-color: var(--text-ink);
+  color: var(--text-inverse);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-xs);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.brand-title-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-md);
+  letter-spacing: var(--letter-spacing-tight);
+  line-height: 1.25;
+  color: var(--text-ink);
+}
+
+.brand-subtitle {
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-regular);
+  color: var(--text-muted);
+}
+
+/* Nav Link List */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: var(--font-size-sm);
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2-5);
+  padding: 8px var(--space-3);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-weight: var(--font-weight-regular);
+  transition: all var(--duration-fast) var(--ease-smooth);
+}
+
+.nav-link:hover {
+  color: var(--text-ink);
+  background-color: var(--bg-surface-subtle);
+}
+
+.nav-link--active {
+  background-color: var(--text-ink) !important;
+  color: var(--text-inverse) !important;
+  font-weight: var(--font-weight-semibold);
+}
+
+.nav-link--active .tabler-icon {
+  stroke: var(--text-inverse);
+}
+
+/* Sidebar Bottom Area */
+.sidebar-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.vault-status-pill {
+  padding: var(--space-2) var(--space-2-5);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-surface-subtle);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.status-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background-color: var(--text-ink);
+  animation: pulse-glow 2s infinite ease-in-out;
+  flex-shrink: 0;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+/* =========================================================================
+   MAIN VIEWPORT & HEADER
+   ========================================================================= */
+.main-viewport {
+  margin-left: 240px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-width: 0;
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background-color: var(--bg-app);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0 var(--space-6);
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+  color: var(--text-muted);
+}
+
+.breadcrumbs-current {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-ink);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* User Profile Badge */
+.header-profile-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2-5);
+  padding-left: var(--space-3);
+  border-left: 1px solid var(--border-subtle);
+}
+
+.profile-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  border: 1px solid var(--border-subtle);
+}
+
+/* Main Content Body */
+.app-content {
+  flex: 1;
+  padding: var(--space-5) var(--space-6);
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* Footer */
+.app-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--border-subtle);
+  padding: var(--space-4) var(--space-6);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/* =========================================================================
+   MOBILE BOTTOM BAR (< 768px)
+   ========================================================================= */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background-color: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  z-index: 50;
+  padding: 0 var(--space-2);
+  justify-content: space-around;
+  align-items: center;
+}
+
+/* Responsive Grid Rules */
+@media (max-width: 768px) {
+  .app-sidebar {
+    display: none;
+  }
+  .main-viewport {
+    margin-left: 0;
+    padding-bottom: 64px;
+  }
+  .app-header {
+    padding: 0 var(--space-4);
+  }
+  .app-content {
+    padding: var(--space-4);
+    gap: var(--space-4);
+  }
+  .mobile-bottom-nav {
+    display: flex;
+  }
+}
