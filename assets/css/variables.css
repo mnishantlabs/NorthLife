@@ -1,172 +1,83 @@
 /* =========================================================================
-   NorthLife — Design Tokens & CSS Custom Properties
-   Strictly Manrope Thin & Minimalist Monochromatic Theme
+   NorthLife — Clinical Titanium Theme & Design Tokens
+   3-Face Typographic System: Instrument Serif + Manrope + Geist Mono
    ========================================================================= */
 
 :root {
-  /* Typography Tokens (Strict Discipline: Manrope for UI + Geist Mono for Numbers/Timestamps) */
-  --font-family: 'Manrope', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  /* Typography */
+  --font-heading: 'Instrument Serif', Georgia, serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, monospace;
 
-  /* Font Weights (Strict Hierarchy: 400 normal, 500 labels, 700 titles, 800 hero numbers) */
-  --font-weight-regular: 400;   /* Normal content & descriptions */
-  --font-weight-medium: 500;    /* Labels, badges, chips, units */
-  --font-weight-semibold: 600;  /* Secondary emphasis */
-  --font-weight-bold: 700;      /* Card titles, headings, modal titles */
-  --font-weight-extrabold: 800; /* Big Hero Numbers / Metrics */
+  /* Corner Radii */
+  --radius-pill: 9999px;
+  --radius-card: 16px;
+  --radius-sm: 10px;
+  --radius-xs: 6px;
 
-  /* Typography Scale */
-  --font-size-2xs: 0.6875rem; /* 11px */
-  --font-size-xs: 0.75rem;    /* 12px */
-  --font-size-sm: 0.8125rem;  /* 13px */
-  --font-size-base: 0.875rem; /* 14px */
-  --font-size-md: 0.9375rem;  /* 15px */
-  --font-size-lg: 1.125rem;   /* 18px */
-  --font-size-xl: 1.25rem;    /* 20px */
-  --font-size-2xl: 1.5rem;    /* 24px */
-  --font-size-3xl: 2.125rem;  /* 34px */
-
-  --line-height-tight: 1.15;
-  --line-height-normal: 1.55;
-  --line-height-relaxed: 1.65;
-
-  --letter-spacing-tight: -0.015em;
-  --letter-spacing-ultratight: -0.035em;
-  --letter-spacing-wide: 0.04em;
-
-  /* =========================================================================
-     MINIMALIST MONOCHROMATIC PALETTE (Light Mode)
-     Pure, neat, clean, luxury alabaster & ink without multicolor/rainbow.
-     ========================================================================= */
-  --bg-app: #FAFAFA;
+  /* Light Theme Palette */
+  --bg-app: #F8F9FA;
   --bg-surface: #FFFFFF;
   --bg-surface-subtle: #F4F4F5;
-  --bg-surface-elevated: #EAEAEA;
-  --bg-overlay: rgba(17, 24, 39, 0.4);
+  --bg-surface-elevated: #E4E4E7;
 
-  /* Architectural Dot Grid (3-5% Opacity) */
-  --bg-dot-grid: radial-gradient(rgba(17, 24, 39, 0.04) 1px, transparent 1px);
-  --bg-dot-size: 20px 20px;
+  --border-subtle: #E4E4E7;
+  --border-dark: #D4D4D8;
 
-  --border-subtle: #E5E7EB;
-  --border-dark: #D1D5DB;
-  --border-focus: #111827;
-
-  --text-ink: #111827;
-  --text-muted: #6B7280;
-  --text-subtle: #9CA3AF;
-  --text-disabled: #D1D5DB;
+  --text-ink: #09090B;
+  --text-muted: #71717A;
+  --text-subtle: #A1A1AA;
   --text-inverse: #FFFFFF;
 
-  /* Unified Clean Accent System (Monochromatic & Subtle Grayscale) */
-  --pastel-blue-bg: #F4F4F5;
-  --pastel-blue-accent: #111827;
-  --pastel-blue-border: #E5E7EB;
+  /* 4.5% Charcoal Dot Grid */
+  --bg-dot-grid: radial-gradient(rgba(9, 9, 11, 0.045) 1.2px, transparent 1.2px);
+  --bg-dot-size: 18px 18px;
 
-  --pastel-butter-bg: #F4F4F5;
-  --pastel-butter-accent: #111827;
-  --pastel-butter-border: #E5E7EB;
+  /* Card Elevation */
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.03), 0 6px 18px -2px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.05), 0 12px 28px -4px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 1);
+  --shadow-btn-primary: 0 2px 8px -1px rgba(9, 9, 11, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 
-  --pastel-mint-bg: #F4F4F5;
-  --pastel-mint-accent: #111827;
-  --pastel-mint-border: #E5E7EB;
+  /* Clinical Accents */
+  --accent-hydro: #0284C7;
+  --accent-hydro-bg: #F0F9FF;
+  --accent-hydro-border: #BAE6FD;
 
-  --pastel-lavender-bg: #F4F4F5;
-  --pastel-lavender-accent: #111827;
-  --pastel-lavender-border: #E5E7EB;
+  --accent-gut: #059669;
+  --accent-gut-bg: #ECFDF5;
+  --accent-gut-border: #A7F3D0;
 
-  --pastel-indigo-bg: #F4F4F5;
-  --pastel-indigo-accent: #111827;
-  --pastel-indigo-border: #E5E7EB;
-
-  --pastel-coral-bg: #F4F4F5;
-  --pastel-coral-accent: #111827;
-  --pastel-coral-border: #E5E7EB;
-
-  /* =========================================================================
-     SPACING SCALE
-     ========================================================================= */
-  --space-1: 0.25rem;   /* 4px */
-  --space-2: 0.5rem;    /* 8px */
-  --space-2-5: 0.625rem;/* 10px */
-  --space-3: 0.75rem;   /* 12px */
-  --space-4: 1rem;      /* 16px */
-  --space-5: 1.25rem;   /* 20px */
-  --space-6: 1.5rem;    /* 24px */
-  --space-7: 1.75rem;   /* 28px */
-  --space-8: 2rem;      /* 32px */
-  --space-10: 2.5rem;   /* 40px */
-
-  /* Border Radii (Clean, refined curves) */
-  --radius-xs: 4px;
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 18px;
-  --radius-2xl: 22px;
-  --radius-full: 9999px;
-
-  /* Elevation Shadows (Ultra subtle) */
-  --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.02);
-  --shadow-soft-hover: 0 4px 12px rgba(0, 0, 0, 0.05);
-  --shadow-modal: 0 16px 32px -8px rgba(0, 0, 0, 0.1);
-
-  /* Transitions */
-  --ease-instant: cubic-bezier(0, 0, 0.2, 1);
-  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
-  
-  --duration-fast: 150ms;
-  --duration-normal: 250ms;
+  --accent-streak: #D97706;
+  --accent-streak-bg: #FFFBEB;
+  --accent-streak-border: #FDE68A;
 }
 
-/* =========================================================================
-   DARK THEME (Minimalist Deep Ink & Charcoal)
-   ========================================================================= */
 [data-theme="dark"] {
-  --bg-app: #0A0D12;
-  --bg-surface: #12161F;
-  --bg-surface-subtle: #1C212C;
-  --bg-surface-elevated: #262D3B;
-  --bg-overlay: rgba(0, 0, 0, 0.75);
+  --bg-app: #09090B;
+  --bg-surface: #121215;
+  --bg-surface-subtle: #18181C;
+  --bg-surface-elevated: #27272A;
 
-  /* Architectural Dot Grid Dark Mode (4% Opacity) */
-  --bg-dot-grid: radial-gradient(rgba(243, 244, 246, 0.04) 1px, transparent 1px);
-  --bg-dot-size: 20px 20px;
+  --border-subtle: #27272A;
+  --border-dark: #3F3F46;
 
-  --border-subtle: #262D3B;
-  --border-dark: #374151;
-  --border-focus: #F3F4F6;
+  --text-ink: #FAFAFA;
+  --text-muted: #A1A1AA;
+  --text-subtle: #71717A;
+  --text-inverse: #09090B;
 
-  --text-ink: #F3F4F6;
-  --text-muted: #9CA3AF;
-  --text-subtle: #6B7280;
-  --text-disabled: #4B5563;
-  --text-inverse: #0A0D12;
+  --bg-dot-grid: radial-gradient(rgba(250, 250, 250, 0.045) 1.2px, transparent 1.2px);
 
-  --pastel-blue-bg: #1C212C;
-  --pastel-blue-accent: #F3F4F6;
-  --pastel-blue-border: #262D3B;
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --shadow-btn-primary: 0 2px 8px rgba(0, 0, 0, 0.4);
 
-  --pastel-butter-bg: #1C212C;
-  --pastel-butter-accent: #F3F4F6;
-  --pastel-butter-border: #262D3B;
+  --accent-hydro-bg: rgba(2, 132, 199, 0.14);
+  --accent-hydro-border: rgba(2, 132, 199, 0.3);
 
-  --pastel-mint-bg: #1C212C;
-  --pastel-mint-accent: #F3F4F6;
-  --pastel-mint-border: #262D3B;
+  --accent-gut-bg: rgba(5, 150, 105, 0.14);
+  --accent-gut-border: rgba(5, 150, 105, 0.3);
 
-  --pastel-lavender-bg: #1C212C;
-  --pastel-lavender-accent: #F3F4F6;
-  --pastel-lavender-border: #262D3B;
-
-  --pastel-indigo-bg: #1C212C;
-  --pastel-indigo-accent: #F3F4F6;
-  --pastel-indigo-border: #262D3B;
-
-  --pastel-coral-bg: #1C212C;
-  --pastel-coral-accent: #F3F4F6;
-  --pastel-coral-border: #262D3B;
-
-  --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-soft-hover: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --accent-streak-bg: rgba(217, 119, 6, 0.14);
+  --accent-streak-border: rgba(217, 119, 6, 0.3);
 }

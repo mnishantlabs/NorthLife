@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NorthLife — Clinical Titanium</title>
+
+  <!-- Google Fonts: 3-Face Typographic System -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+  <!-- Base Shared CSS -->
+  <link rel="stylesheet" href="assets/css/variables.css"/>
+  <link rel="stylesheet" href="assets/css/reset.css"/>
+  <link rel="stylesheet" href="assets/css/layout.css"/>
+  <link rel="stylesheet" href="assets/css/components.css"/>
+
+  <style>
+    /* =========================================================================
+       CLINICAL TITANIUM THEME & DESIGN TOKENS (REVERTED & REFINED)
+       ========================================================================= */
+    :root {
+      --font-heading: 'Instrument Serif', Georgia, serif;
+      --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'Geist Mono', ui-monospace, monospace;
+      
+      --radius-pill: 9999px;
+      --radius-card: 16px;
+      --radius-sm: 10px;
+
+      /* Crisp Clinical Titanium Light Mode Palette */
+      --bg-app: #F8F9FA;
+      --bg-surface: #FFFFFF;
+      --bg-surface-subtle: #F4F4F5;
+      --bg-surface-elevated: #E4E4E7;
+      
+      --border-subtle: #E4E4E7;
+      --border-dark: #D4D4D8;
+      
+      --text-ink: #09090B;
+      --text-muted: #71717A;
+      --text-subtle: #A1A1AA;
+      --text-inverse: #FFFFFF;
+
+      /* Refined 4.5% Charcoal Dot Grid (18px Spacing) */
+      --bg-dot-grid: radial-gradient(rgba(9, 9, 11, 0.045) 1.2px, transparent 1.2px);
+      --bg-dot-size: 18px 18px;
+
+      /* Crisp Layered Card Elevation */
+      --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.03), 0 6px 18px -2px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+      --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.05), 0 12px 28px -4px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 1);
+      --shadow-btn-primary: 0 2px 8px -1px rgba(9, 9, 11, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+
+      /* Clinical Accent Tones (Including User-Approved Amber Streak) */
+      --accent-hydro: #0284C7;
+      --accent-hydro-bg: #F0F9FF;
+      --accent-hydro-border: #BAE6FD;
+
+      --accent-gut: #059669;
+      --accent-gut-bg: #ECFDF5;
+      --accent-gut-border: #A7F3D0;
+
+      --accent-streak: #D97706;
+      --accent-streak-bg: #FFFBEB;
+      --accent-streak-border: #FDE68A;
+    }
+
+    [data-theme="dark"] {
+      --bg-app: #09090B;
+      --bg-surface: #121215;
+      --bg-surface-subtle: #18181C;
+      --bg-surface-elevated: #27272A;
+      
+      --border-subtle: #27272A;
+      --border-dark: #3F3F46;
+      
+      --text-ink: #FAFAFA;
+      --text-muted: #A1A1AA;
+      --text-subtle: #71717A;
+      --text-inverse: #09090B;
+
+      --bg-dot-grid: radial-gradient(rgba(250, 250, 250, 0.045) 1.2px, transparent 1.2px);
+
+      --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      --shadow-btn-primary: 0 2px 8px rgba(0, 0, 0, 0.4);
+
+      --accent-hydro-bg: rgba(2, 132, 199, 0.14);
+      --accent-hydro-border: rgba(2, 132, 199, 0.3);
+
+      --accent-gut-bg: rgba(5, 150, 105, 0.14);
+      --accent-gut-border: rgba(5, 150, 105, 0.3);
+
+      --accent-streak-bg: rgba(217, 119, 6, 0.14);
+      --accent-streak-border: rgba(217, 119, 6, 0.3);
+    }
+
+    body {
+      font-family: var(--font-body) !important;
+      background-color: var(--bg-app) !important;
+      background-image: var(--bg-dot-grid) !important;
+      background-size: var(--bg-dot-size) !important;
+      color: var(--text-ink) !important;
+      line-height: 1.55;
+    }
+
+    *, *::before, *::after, input, select, textarea {
+      font-family: var(--font-body);
+    }
+
+    code, kbd, samp, pre, .font-mono, .timeline-time, .timeline-running-total, .stat-mono {
+      font-family: var(--font-mono) !important;
+      font-feature-settings: "tnum" !important;
+    }
+
+    /* Headings & Display Numerals in Instrument Serif */
+    .heading-serif,
+    .concept-title,
+    .card-heading-serif,
+    .metric-hero-numeral {
+      font-family: var(--font-heading) !important;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+    }
+
+    .concept-title {
+      font-size: 27px;
+      line-height: 1.15;
+      color: var(--text-ink);
+    }
+
+    .card-heading-serif {
+      font-size: 18px;
+      line-height: 1.2;
+      color: var(--text-ink);
+      white-space: nowrap;
+    }
+
+    .metric-hero-numeral {
+      font-size: 36px;
+      line-height: 1;
+      color: var(--text-ink);
+    }
+
+    /* =========================================================================
+       SIDEBAR REFINED (Grounded, Balanced, Settings & Vault)
+       ========================================================================= */
+    .app-sidebar {
+      width: 250px;
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid var(--border-subtle);
+      background-color: var(--bg-surface);
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+    }
+
+    .sidebar-top {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: var(--radius-pill);
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 500;
+      transition: background-color 0.12s ease, color 0.12s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--text-ink);
+      background-color: var(--bg-surface-subtle);
+    }
+
+    .nav-link--active {
+      background-color: var(--text-ink) !important;
+      color: var(--text-inverse) !important;
+      font-weight: 700 !important;
+      box-shadow: var(--shadow-btn-primary);
+    }
+
+    .nav-link--active .tabler-icon {
+      stroke: var(--text-inverse);
+    }
+
+    .sidebar-bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .vault-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      background-color: var(--bg-surface-subtle);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-muted);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .pulse-dot-green {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #10B981;
+      display: inline-block;
+      margin-right: 4px;
+      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+    }
+
+    /* =========================================================================
+       ROUNDED PILL BUTTON SYSTEM (Symmetrical & Robust)
+       ========================================================================= */
+    .btn, .btn--pill {
+      border-radius: var(--radius-pill) !important;
+      font-family: var(--font-body) !important;
+      font-size: 12px;
+      font-weight: 600;
+      height: 32px;
+      padding: 0 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      outline: none;
+      transition: transform 0.12s ease, background-color 0.12s ease, border-color 0.12s ease;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn:active {
+      transform: scale(0.97) !important;
+    }
+
+    .btn--primary {
+      background-color: var(--text-ink) !important;
+      color: var(--text-inverse) !important;
+      border-color: var(--text-ink) !important;
+      box-shadow: var(--shadow-btn-primary);
+    }
+
+    .btn--primary:hover {
+      background-color: #27272A !important;
+      border-color: #27272A !important;
+    }
+
+    [data-theme="dark"] .btn--primary:hover {
+      background-color: #E4E4E7 !important;
+      border-color: #E4E4E7 !important;
+    }
+
+    .btn--secondary {
+      background-color: var(--bg-surface-subtle) !important;
+      color: var(--text-ink) !important;
+      border-color: var(--border-subtle) !important;
+    }
+
+    .btn--secondary:hover {
+      background-color: var(--bg-surface-elevated) !important;
+      border-color: var(--border-dark) !important;
+    }
+
+    .btn--ghost {
+      background-color: transparent !important;
+      color: var(--text-muted) !important;
+      border-color: transparent !important;
+      padding: 0 10px;
+    }
+
+    .btn--ghost:hover {
+      background-color: var(--bg-surface-subtle) !important;
+      color: var(--text-ink) !important;
+    }
+
+    .btn--sm {
+      height: 28px !important;
+      padding: 0 12px !important;
+      font-size: 11.5px !important;
+    }
+
+    .btn--icon-only {
+      width: 30px !important;
+      height: 30px !important;
+      min-width: 30px !important;
+      padding: 0 !important;
+      border-radius: var(--radius-pill) !important;
+      background-color: var(--bg-surface-subtle);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-ink);
+    }
+
+    /* =========================================================================
+       CARDS & METRIC GRID (1:1 Symmetry Across All 4 Cards)
+       ========================================================================= */
+    .concept-hero-card {
+      background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-surface-subtle) 100%);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-card);
+      padding: 22px 26px;
+      box-shadow: var(--shadow-card);
+      position: relative;
+    }
+
+    .concept-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 214px;
+      box-shadow: var(--shadow-card);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+    }
+
+    .concept-card:hover {
+      border-color: var(--border-dark);
+      box-shadow: var(--shadow-card-hover);
+      transform: translateY(-2px);
+    }
+
+    .card-header-nl {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .card-title-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .stat-ring-box {
+      width: 38px;
+      height: 38px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .stat-ring-svg {
+      transform: rotate(-90deg);
+      width: 38px;
+      height: 38px;
+    }
+
+    .stat-ring-bg {
+      fill: none;
+      stroke: var(--border-subtle);
+      stroke-width: 3;
+    }
+
+    .stat-ring-fill {
+      fill: none;
+      stroke: var(--text-ink);
+      stroke-width: 3;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .stat-ring-fill--hydro { stroke: var(--accent-hydro) !important; }
+    .stat-ring-fill--gut { stroke: var(--accent-gut) !important; }
+    .stat-ring-fill--bowel { stroke: var(--accent-gut) !important; }
+    .stat-ring-fill--streak { stroke: var(--accent-streak) !important; }
+
+    .progress-track-slim {
+      width: 100%;
+      height: 6px;
+      border-radius: var(--radius-pill);
+      background-color: var(--bg-surface-elevated);
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .progress-fill-slim {
+      height: 100%;
+      border-radius: var(--radius-pill);
+      background-color: var(--text-ink);
+      transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .progress-fill-slim--hydro { background-color: var(--accent-hydro) !important; }
+    .progress-fill-slim--gut { background-color: var(--accent-gut) !important; }
+    .progress-fill-slim--bowel { background-color: var(--accent-gut) !important; }
+    .progress-fill-slim--streak { background-color: var(--accent-streak) !important; }
+
+    .status-strip-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      font-size: 11.5px;
+      font-weight: 500;
+      color: var(--text-ink);
+    }
+
+    .status-strip-chip--hydro {
+      border-color: var(--accent-hydro-border);
+      background-color: var(--accent-hydro-bg);
+      color: var(--accent-hydro);
+    }
+
+    .status-strip-chip--gut {
+      border-color: var(--accent-gut-border);
+      background-color: var(--accent-gut-bg);
+      color: var(--accent-gut);
+    }
+
+    .status-strip-chip--streak {
+      border-color: var(--accent-streak-border);
+      background-color: var(--accent-streak-bg);
+      color: var(--accent-streak);
+    }
+
+    /* =========================================================================
+       CLEAN DECLUTTERED LOWER ACTIVITY & HABITS SECTION
+       ========================================================================= */
+    .decluttered-stream-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      background-color: var(--bg-surface-subtle);
+      border: 1px solid transparent;
+      transition: border-color 0.12s ease, background-color 0.12s ease, transform 0.12s ease;
+    }
+
+    .decluttered-stream-row:hover {
+      border-color: var(--border-dark);
+      background-color: var(--bg-surface);
+      transform: translateX(2px);
+    }
+
+    .stream-time {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      min-width: 62px;
+    }
+
+    .stream-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-ink);
+    }
+
+    .stream-pill-val {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      background-color: var(--bg-surface);
+    }
+
+    /* =========================================================================
+       RICH TOAST NOTIFICATION SYSTEM
+       ========================================================================= */
+    .toast-stack {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+      max-width: 360px;
+      width: calc(100% - 48px);
+    }
+
+    .rich-toast {
+      pointer-events: auto;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-dark);
+      border-radius: 12px;
+      box-shadow: 0 10px 28px -4px rgba(0, 0, 0, 0.1);
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+      overflow: hidden;
+      transform: translateY(16px) scale(0.96);
+      opacity: 0;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+    }
+
+    .rich-toast--visible {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .rich-toast--exit {
+      transform: translateY(8px) scale(0.95);
+      opacity: 0;
+    }
+
+    .toast-content-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .toast-icon-slot {
+      width: 22px;
+      height: 22px;
+      border-radius: var(--radius-pill);
+      background-color: var(--bg-surface-subtle);
+      color: var(--text-ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .toast-text-group {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      min-width: 0;
+    }
+
+    .toast-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-ink);
+    }
+
+    .toast-desc {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .toast-close-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 2px 4px;
+      font-size: 12px;
+    }
+
+    .toast-progress-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2.5px;
+      background-color: var(--text-ink);
+      width: 100%;
+      transform-origin: left;
+      animation: toast-timer linear forwards;
+    }
+
+    @keyframes toast-timer {
+      from { transform: scaleX(1); }
+      to { transform: scaleX(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar" aria-label="Main Navigation">
+      <div class="sidebar-top">
+        <div class="brand-header">
+          <div class="brand-identity">
+            <div class="brand-logo-badge" style="border-radius: var(--radius-pill); background-color: var(--text-ink); color: var(--text-inverse);">NL</div>
+            <div class="brand-title-group">
+              <span class="brand-name heading-serif" style="font-size: 20px;">NorthLife</span>
+              <span class="brand-subtitle" style="font-size: 11px; font-weight: 600; color: var(--text-muted);">Clinical Titanium</span>
+            </div>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <a href="#overview" class="nav-link nav-link--active" style="border-radius: var(--radius-pill);">
+            <svg class="tabler-icon" viewBox="0 0 24 24"><path d="M4 4h6v8h-6z"></path><path d="M4 16h6v4h-6z"></path><path d="M14 12h6v8h-6z"></path><path d="M14 4h6v4h-6z"></path></svg>
+            <span>Overview</span>
+          </a>
+          <a href="#water" class="nav-link" style="border-radius: var(--radius-pill);">
+            <svg class="tabler-icon" viewBox="0 0 24 24"><path d="M7.502 19.423c2.602 2.105 6.394 2.105 8.996 0c2.602 -2.105 3.262 -5.708 1.566 -8.546l-4.89 -7.26c-.42 -.625 -1.287 -.803 -1.936 -.397a1.376 1.376 0 0 0 -.41 .397l-4.893 7.26c-1.695 2.838 -1.035 6.441 1.567 8.546z"></path></svg>
+            <span>Water Tracker</span>
+          </a>
+          <a href="#diet" class="nav-link" style="border-radius: var(--radius-pill);">
+            <svg class="tabler-icon" viewBox="0 0 24 24"><path d="M12 4c-3.2 0 -6 2.8 -6 7c0 5 3 9 6 9s6 -4 6 -9c0 -4.2 -2.8 -7 -6 -7z"></path><path d="M12 4v-2"></path><path d="M9 12a3 3 0 0 0 6 0"></path></svg>
+            <span>Nutrition & Fiber</span>
+          </a>
+          <a href="#bowel" class="nav-link" style="border-radius: var(--radius-pill);">
+            <svg class="tabler-icon" viewBox="0 0 24 24"><path d="M3 12h4l3 8l4 -16l3 8h4"></path></svg>
+            <span>Digestion Hub</span>
+          </a>
+          <a href="#habits" class="nav-link" style="border-radius: var(--radius-pill);">
+            <svg class="tabler-icon" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path><path d="M9 14l2 2l4 -4"></path></svg>
+            <span>Habits & Routines</span>
+          </a>
+          <a href="#meds" class="nav-link" style="border-radius: var(--radius-pill);">
+            <svg class="tabler-icon" viewBox="0 0 24 24"><path d="M4.5 12.5l8 -8a4.95 4.95 0 0 1 7 7l-8 8a4.95 4.95 0 0 1 -7 -7"></path><path d="M8.5 8.5l7 7"></path></svg>
+            <span>Medicines</span>
+          </a>
+          <a href="#doctor-mode" class="nav-link" style="border-radius: var(--radius-pill);">
+            <svg class="tabler-icon" viewBox="0 0 24 24"><path d="M6 4h-1a2 2 0 0 0 -2 2v3.5h0a5.5 5.5 0 0 0 11 0v-3.5a2 2 0 0 0 -2 -2h-1"></path><path d="M8 15a6 6 0 0 0 12 0v-3"></path><path d="M11 3v2"></path><path d="M6 3v2"></path><circle cx="20" cy="10" r="2"></circle></svg>
+            <span>Doctor Mode</span>
+          </a>
+                  <!-- Settings Link -->
+          <a href="#settings" class="nav-link">
+            <svg class="tabler-icon" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"></path><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path></svg>
+            <span>Settings & Vault</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="sidebar-bottom">
+        <button class="btn btn--primary" style="width: 100%; height: 38px;" onclick="DevApp.triggerQuickLog()">
+          <svg class="tabler-icon tabler-icon--sm" viewBox="0 0 24 24"><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+          <span>Log Entry (L)</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Viewport Area -->
+    <div class="main-viewport">
+      <!-- Header -->
+      <header class="app-header">
+        <div class="header-left">
+          <div class="breadcrumbs">
+            <span class="breadcrumbs-current" style="font-weight: 700; font-size: 14px;">Overview</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="pill-badge pill-badge--neutral" style="padding: 5px 12px; border-radius: var(--radius-pill); font-size: 12px; font-weight: 500;">
+            <svg class="tabler-icon tabler-icon--sm" style="margin-right: 4px;" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"></path><path d="M16 3v4"></path><path d="M8 3v4"></path><path d="M4 11h16"></path></svg>
+            <span id="dev-header-date">Today</span>
+          </div>
+
+          <!-- Theme Toggle -->
+          <button id="dev-theme-toggle" class="btn btn--secondary btn--icon-only" title="Toggle Theme" aria-label="Toggle Theme">
+            <svg class="tabler-icon tabler-icon--sm" viewBox="0 0 24 24"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path></svg>
+          </button>
+
+          <div class="header-profile-badge">
+            <div style="width: 28px; height: 28px; border-radius: var(--radius-pill); background-color: var(--text-ink); color: var(--text-inverse); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700;">
+              NL
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content Container with Generous Spacing -->
+      <main class="app-content">
+        <div style="display: flex; flex-direction: column; gap: 28px; max-width: 1200px; margin: 0 auto; width: 100%;">
+          
+          <!-- Clinical Titanium Hero Banner -->
+          <div class="concept-hero-card">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 18px;">
+              <div>
+                <span class="card-tag">Daily Health & Living</span>
+                <h1 class="concept-title" id="dev-greeting-title" style="margin-top: 4px;">
+                  Good afternoon, Nishant
+                </h1>
+                <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 4px; max-width: 600px; line-height: 1.5;">
+                  You have logged <strong>2,250ml</strong> of water today (75% of target), gut fiber is steady at <strong>24g</strong>, and 1 habit routine is pending for tonight.
+                </p>
+              </div>
+
+              <!-- Top Primary & Secondary Pill Action Buttons -->
+              <div style="display: flex; gap: 10px; align-items: center;">
+                <button class="btn btn--primary" onclick="DevApp.quickAddWater(250)">
+                  <svg class="tabler-icon tabler-icon--sm" viewBox="0 0 24 24"><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+                  <span>+250ml Water</span>
+                </button>
+                <button class="btn btn--secondary" onclick="DevApp.triggerQuickLog()">
+                  <svg class="tabler-icon tabler-icon--sm" viewBox="0 0 24 24"><path d="M3 12h4l3 8l4 -16l3 8h4"></path></svg>
+                  <span>Log Activity</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Holistic Status Chips with Inline SVG Flame & Pill Radii -->
+            <div class="status-strip-container" style="margin-top: 20px; padding-top: 16px;">
+              <span class="status-strip-chip status-strip-chip--hydro">
+                <svg class="tabler-icon tabler-icon--sm" viewBox="0 0 24 24"><path d="M7.502 19.423c2.602 2.105 6.394 2.105 8.996 0c2.602 -2.105 3.262 -5.708 1.566 -8.546l-4.89 -7.26c-.42 -.625 -1.287 -.803 -1.936 -.397a1.376 1.376 0 0 0 -.41 .397l-4.893 7.26c-1.695 2.838 -1.035 6.441 1.567 8.546z"></path></svg>
+                <strong>Water:</strong> <span class="stat-mono">2,250 / 3,000 ml (75%)</span>
+              </span>
+              <span class="status-strip-chip status-strip-chip--gut">
+                <svg class="tabler-icon tabler-icon--sm" viewBox="0 0 24 24"><path d="M12 4c-3.2 0 -6 2.8 -6 7c0 5 3 9 6 9s6 -4 6 -9c0 -4.2 -2.8 -7 -6 -7z"></path></svg>
+                <strong>Fiber:</strong> <span class="stat-mono">24 / 30 g (6g left)</span>
+              </span>
+              <span class="status-strip-chip">
+                <svg class="tabler-icon tabler-icon--sm" viewBox="0 0 24 24"><path d="M3 12h4l3 8l4 -16l3 8h4"></path></svg>
+                <strong>Digestion:</strong> Type 4 (Optimal)
+              </span>
+              <span class="status-strip-chip status-strip-chip--streak">
+                <svg class="tabler-icon tabler-icon--sm" viewBox="0 0 24 24"><path d="M12 12c2 -2.96 0 -7 -1 -8c0 3.038 -1.773 4.741 -3 6c-1.226 1.26 -2 3.24 -2 5a6 6 0 1 0 12 0c0 -1.532 -1.056 -3.94 -2 -5c-1.786 3 -2.791 3 -4 2z"></path></svg>
+                <strong>Streak:</strong> <span class="stat-mono" id="dev-streak-chip">0 days</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- 4 Interactive Core Metrics Grid -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px;">
+            
+            <!-- 1. Water Metric Card -->
+            <div class="concept-card">
+              <div class="card-header-nl">
+                <div class="card-title-group">
+                  <div class="card-icon-badge" style="border-radius: var(--radius-pill); color: var(--accent-hydro);">
+                    <svg class="tabler-icon" viewBox="0 0 24 24"><path d="M7.502 19.423c2.602 2.105 6.394 2.105 8.996 0c2.602 -2.105 3.262 -5.708 1.566 -8.546l-4.89 -7.26c-.42 -.625 -1.287 -.803 -1.936 -.397a1.376 1.376 0 0 0 -.41 .397l-4.893 7.26c-1.695 2.838 -1.035 6.441 1.567 8.546z"></path></svg>
+                  </div>
+                  <div>
+                    <span class="card-tag">Hydration</span>
+                    <span class="card-heading-serif">Water Intake</span>
+                  </div>
+                </div>
+                
+                <div class="stat-ring-box">
+                  <svg class="stat-ring-svg" viewBox="0 0 36 36">
+                    <path class="stat-ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                    <path class="stat-ring-fill stat-ring-fill--hydro" id="water-ring-fill" stroke-dasharray="75, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                  </svg>
+                  <span class="stat-mono" id="water-ring-text" style="position: absolute; font-size: 10px; font-weight: 700; color: var(--accent-hydro);">75%</span>
+                </div>
+              </div>
+
+              <div class="metric-hero" style="margin: 12px 0 6px 0;">
+                <div class="metric-hero-numeral" id="water-hero-val">2,250 <span style="font-family: var(--font-body); font-size: 15px; font-weight: 600; color: var(--text-muted);">ml</span></div>
+                <div class="metric-hero-subtext" id="water-hero-sub">Goal: 3,000 ml • 750 ml left</div>
+              </div>
+
+              <div class="progress-track-slim">
+                <div class="progress-fill-slim progress-fill-slim--hydro" id="water-progress-bar" style="width: 75%;"></div>
+              </div>
+
+              <div class="card-footer-nl" style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 14px;">
+                <button class="btn btn--secondary btn--sm" onclick="DevApp.notify({ type: 'info', title: 'Hydration Timeline', message: 'Showing 5 logged entries for today.' })">Timeline</button>
+                <button class="btn btn--primary btn--sm" onclick="DevApp.quickAddWater(250)">+250ml</button>
+              </div>
+            </div>
+
+            <!-- 2. Fiber Metric Card -->
+            <div class="concept-card">
+              <div class="card-header-nl">
+                <div class="card-title-group">
+                  <div class="card-icon-badge" style="border-radius: var(--radius-pill); color: var(--accent-gut);">
+                    <svg class="tabler-icon" viewBox="0 0 24 24"><path d="M12 4c-3.2 0 -6 2.8 -6 7c0 5 3 9 6 9s6 -4 6 -9c0 -4.2 -2.8 -7 -6 -7z"></path><path d="M12 4v-2"></path><path d="M9 12a3 3 0 0 0 6 0"></path></svg>
+                  </div>
+                  <div>
+                    <span class="card-tag">Nutrition Hub</span>
+                    <span class="card-heading-serif">Nutrition & Macros</span>
+                  </div>
+                </div>
+                
+                <div class="stat-ring-box">
+                  <svg class="stat-ring-svg" viewBox="0 0 36 36">
+                    <path class="stat-ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                    <path class="stat-ring-fill stat-ring-fill--gut" stroke-dasharray="80, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                  </svg>
+                  <span class="stat-mono" style="position: absolute; font-size: 10px; font-weight: 700; color: var(--accent-gut);">80%</span>
+                </div>
+              </div>
+
+              <div class="metric-hero" style="margin: 12px 0 6px 0;">
+                <div class="metric-hero-numeral">24 <span style="font-family: var(--font-body); font-size: 15px; font-weight: 600; color: var(--text-muted);">g</span></div>
+                <div class="metric-hero-subtext">Goal: 30 g • 6 g left for target</div>
+              </div>
+
+              <div class="progress-track-slim">
+                <div class="progress-fill-slim progress-fill-slim--gut" style="width: 80%;"></div>
+              </div>
+
+              <div class="card-footer-nl" style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 14px;">
+                <button class="btn btn--secondary btn--sm" onclick="DevApp.notify({ type: 'info', title: 'Meal Logs', message: 'Breakfast (10g fiber) & Lunch (14g fiber) logged.' })">Timeline</button>
+                <button class="btn btn--primary btn--sm" onclick="DevApp.triggerQuickLog()">+ Log Meal</button>
+              </div>
+            </div>
+
+            <!-- 3. Digestive Care Card (Refined 1:1 Symmetry, Clean Naming, Circular Ring) -->
+            <div class="concept-card">
+              <div class="card-header-nl">
+                <div class="card-title-group">
+                  <div class="card-icon-badge" style="border-radius: var(--radius-pill); color: var(--accent-gut);">
+                    <svg class="tabler-icon" viewBox="0 0 24 24"><path d="M3 12h4l3 8l4 -16l3 8h4"></path></svg>
+                  </div>
+                  <div>
+                    <span class="card-tag">Digestion</span>
+                    <span class="card-heading-serif">Digestive Care</span>
+                  </div>
+                </div>
+                
+                <div class="stat-ring-box">
+                  <svg class="stat-ring-svg" viewBox="0 0 36 36">
+                    <path class="stat-ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                    <path class="stat-ring-fill stat-ring-fill--gut" stroke-dasharray="100, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                  </svg>
+                  <span class="stat-mono" style="position: absolute; font-size: 10px; font-weight: 700; color: var(--accent-gut);">T4</span>
+                </div>
+              </div>
+
+              <div class="metric-hero" style="margin: 12px 0 6px 0;">
+                <div class="metric-hero-numeral">Type 4 <span style="font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--text-muted);">(Optimal)</span></div>
+                <div class="metric-hero-subtext">Bristol Scale • Logged 08:30 AM</div>
+              </div>
+
+              <div class="progress-track-slim">
+                <div class="progress-fill-slim progress-fill-slim--gut" style="width: 100%;"></div>
+              </div>
+
+              <div class="card-footer-nl" style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 14px;">
+                <button class="btn btn--secondary btn--sm" onclick="DevApp.notify({ type: 'info', title: 'Digestion Hub', message: 'Clinical regularity score is 100% for this week.' })">Timeline</button>
+                <button class="btn btn--primary btn--sm" onclick="DevApp.triggerQuickLog()">+ Log Bowel</button>
+              </div>
+            </div>
+
+            <!-- 4. Habits Consistency Card (Preserved Amber Accent & Clean Naming) -->
+            <div class="concept-card">
+              <div class="card-header-nl">
+                <div class="card-title-group">
+                  <div class="card-icon-badge" style="border-radius: var(--radius-pill); color: var(--accent-streak);">
+                    <svg class="tabler-icon" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path><path d="M9 14l2 2l4 -4"></path></svg>
+                  </div>
+                  <div>
+                    <span class="card-tag">Consistency</span>
+                    <span class="card-heading-serif">Daily Habits</span>
+                  </div>
+                </div>
+                
+                <div class="stat-ring-box">
+                  <svg class="stat-ring-svg" viewBox="0 0 36 36">
+                    <path class="stat-ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                    <path class="stat-ring-fill stat-ring-fill--streak" stroke-dasharray="75, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                  </svg>
+                  <span class="stat-mono" style="position: absolute; font-size: 10px; font-weight: 700; color: var(--accent-streak);">75%</span>
+                </div>
+              </div>
+
+              <div class="metric-hero" style="margin: 12px 0 6px 0;">
+                <div class="metric-hero-numeral" id="dev-streak-hero">0 <span style="font-family: var(--font-body); font-size: 15px; font-weight: 600; color: var(--text-muted);">days streak</span></div>
+                <div class="metric-hero-subtext" id="habit-subtext-desc">3 completed • 1 remaining tonight</div>
+              </div>
+
+              <div class="progress-track-slim">
+                <div class="progress-fill-slim progress-fill-slim--streak" id="habit-progress-bar" style="width: 75%;"></div>
+              </div>
+
+              <div class="card-footer-nl" style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 14px;">
+                <button class="btn btn--secondary btn--sm" onclick="DevApp.notify({ type: 'info', title: 'Habits Analytics', message: 'Your 14-day streak is your best this month!' })">Timeline</button>
+                <button class="btn btn--primary btn--sm" onclick="DevApp.notify({ type: 'success', title: 'Evening Routine', message: 'Evening Stretch logged!' })">+ Check In</button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Rich Two-Column Lower Density Layout -->
+          <div style="display: grid; grid-template-columns: 1.3fr 1fr; gap: 20px;">
+            
+            <!-- Left: Today's Timeline Stream -->
+            <div class="concept-card">
+              <div class="card-header-nl">
+                <div>
+                  <span class="card-heading-serif">Today's Activity Stream</span>
+                  <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 2px;">Chronological timeline of all logged health actions.</p>
+                </div>
+                <span class="pill-badge pill-badge--subtle" style="border-radius: var(--radius-pill);">4 logged today</span>
+              </div>
+
+              <div class="timeline-stream" style="margin-top: 8px;">
+                <div class="timeline-item" style="border-radius: 10px;">
+                  <div class="timeline-left">
+                    <span class="timeline-time">08:15 AM</span>
+                    <span class="timeline-badge" style="border-radius: var(--radius-pill); background-color: var(--accent-hydro-bg); color: var(--accent-hydro); border-color: var(--accent-hydro-border);">+500 ml</span>
+                    <span class="timeline-label">Morning Warm Water</span>
+                    <span class="timeline-running-total" style="border-radius: var(--radius-pill);">Total: 500 ml</span>
+                  </div>
+                  <span class="pill-badge pill-badge--neutral" style="border-radius: var(--radius-pill);">Hydration</span>
+                </div>
+
+                <div class="timeline-item" style="border-radius: 10px;">
+                  <div class="timeline-left">
+                    <span class="timeline-time">08:30 AM</span>
+                    <span class="bristol-tag bristol-tag--normal" style="border-radius: var(--radius-pill);">Type 4 (Optimal)</span>
+                    <span class="timeline-label">Morning Bowel Movement</span>
+                  </div>
+                  <span class="pill-badge pill-badge--neutral" style="border-radius: var(--radius-pill);">Digestion</span>
+                </div>
+
+                <div class="timeline-item" style="border-radius: 10px;">
+                  <div class="timeline-left">
+                    <span class="timeline-time">09:00 AM</span>
+                    <span class="timeline-label">Oatmeal with chia seeds & almonds</span>
+                    <span class="timeline-badge" style="border-radius: var(--radius-pill); background-color: var(--accent-gut-bg); color: var(--accent-gut); border-color: var(--accent-gut-border);">+10g fiber</span>
+                  </div>
+                  <span class="pill-badge pill-badge--neutral" style="border-radius: var(--radius-pill);">Breakfast</span>
+                </div>
+
+                <div class="timeline-item" style="border-radius: 10px;">
+                  <div class="timeline-left">
+                    <span class="timeline-time">01:30 PM</span>
+                    <span class="timeline-label">Lentils, Quinoa Bowl & Salad</span>
+                    <span class="timeline-badge" style="border-radius: var(--radius-pill); background-color: var(--accent-gut-bg); color: var(--accent-gut); border-color: var(--accent-gut-border);">+14g fiber</span>
+                  </div>
+                  <span class="pill-badge pill-badge--neutral" style="border-radius: var(--radius-pill);">Lunch</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Interactive Habits Checklist & Quick Presets -->
+            <div class="concept-card">
+              <div class="card-header-nl">
+                <div>
+                  <span class="card-heading-serif">Today's Habits Checklist</span>
+                  <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 2px;">1-click toggle to maintain your streak.</p>
+                </div>
+                <span class="pill-badge pill-badge--neutral" style="border-radius: var(--radius-pill);" id="habit-progress-badge">75% Done</span>
+              </div>
+
+              <!-- Interactive Habits Checklist -->
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background-color: var(--bg-surface-subtle); border-radius: 10px;">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <div class="habit-checkbox habit-checkbox--checked" onclick="DevApp.toggleHabitRow(1)">✓</div>
+                    <span id="habit-label-1" style="font-size: 13px; font-weight: 500; text-decoration: line-through; color: var(--text-muted);">500ml water after waking</span>
+                  </div>
+                  <span style="font-size: 11px; font-weight: 600; color: var(--text-muted);">Done ✓</span>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background-color: var(--bg-surface-subtle); border-radius: 10px;">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <div class="habit-checkbox habit-checkbox--checked" onclick="DevApp.toggleHabitRow(2)">✓</div>
+                    <span id="habit-label-2" style="font-size: 13px; font-weight: 500; text-decoration: line-through; color: var(--text-muted);">15-min post-meal walk</span>
+                  </div>
+                  <span style="font-size: 11px; font-weight: 600; color: var(--text-muted);">Done ✓</span>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background-color: var(--bg-surface-subtle); border-radius: 10px;">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <div class="habit-checkbox habit-checkbox--checked" onclick="DevApp.toggleHabitRow(3)">✓</div>
+                    <span id="habit-label-3" style="font-size: 13px; font-weight: 500; text-decoration: line-through; color: var(--text-muted);">Take daily probiotics</span>
+                  </div>
+                  <span style="font-size: 11px; font-weight: 600; color: var(--text-muted);">Done ✓</span>
+                </div>
+
+                <!-- Pending Habit -->
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background-color: var(--bg-surface-subtle); border-radius: 10px; border: 1px dashed var(--border-dark);">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <div class="habit-checkbox" id="habit-check-4" onclick="DevApp.togglePendingHabit(4)" style="cursor: pointer;"></div>
+                    <span id="habit-label-4" style="font-size: 13px; font-weight: 600; color: var(--text-ink);">Evening 10-min stretch</span>
+                  </div>
+                  <span style="font-size: 11px; font-weight: 700; color: var(--text-ink);" id="habit-status-4">Due</span>
+                </div>
+              </div>
+
+              <!-- Quick Presets -->
+              <div style="margin-top: 18px; border-top: 1px solid var(--border-subtle); padding-top: 14px;">
+                <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em;">Quick Hydration Presets</span>
+                <div style="display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap;">
+                  <button class="quick-preset-pill" onclick="DevApp.quickAddWater(200)">+200ml Cup</button>
+                  <button class="quick-preset-pill" onclick="DevApp.quickAddWater(250)">+250ml Glass</button>
+                  <button class="quick-preset-pill" onclick="DevApp.quickAddWater(500)">+500ml Bottle</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </main>
+
+      <footer class="app-footer">
+        <div class="footer-inner" style="justify-content: center;">
+          <span>© 2026 NorthLife • Clinical Titanium Prototype Design</span>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Real Rich Toast Container -->
+  <div class="toast-stack" id="toast-stack" role="status" aria-live="polite"></div>
+
+  <script>
+    const DevApp = {
+      waterIntake: 2250,
+      waterGoal: 3000,
+      habitsDone: 3,
+      habitsTotal: 4,
+
+      init() {
+        this.updateTimeAwareGreeting();
+        this.setupThemeToggle();
+      },
+
+      updateTimeAwareGreeting() {
+        const d = new Date();
+        const hour = d.getHours();
+        let greeting = 'Good morning';
+        if (hour >= 12 && hour < 17) {
+          greeting = 'Good afternoon';
+        } else if (hour >= 17 && hour < 21) {
+          greeting = 'Good evening';
+        } else if (hour >= 21 || hour < 5) {
+          greeting = 'Good night';
+        }
+
+        const titleEl = document.getElementById('dev-greeting-title');
+        if (titleEl) {
+          titleEl.textContent = greeting + ', Nishant';
+        }
+
+        const dateEl = document.getElementById('dev-header-date');
+        if (dateEl) {
+          dateEl.textContent = d.toLocaleDateString('en-US', {
+            weekday: 'short',
+            month: 'short',
+            day: 'numeric'
+          });
+        }
+      },
+
+      setupThemeToggle() {
+        const btn = document.getElementById('dev-theme-toggle');
+        if (!btn) return;
+
+        btn.addEventListener('click', () => {
+          const cur = document.documentElement.getAttribute('data-theme');
+          const next = cur === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          DevApp.notify({
+            type: 'info',
+            title: 'Theme Updated',
+            message: 'Switched to ' + (next === 'dark' ? 'Dark' : 'Light') + ' mode.'
+          });
+        });
+      },
+
+      // Rich Toast Notification System
+      notify({ type = 'success', title = 'Success', message = '', duration = 3500, onUndo = null }) {
+        const stack = document.getElementById('toast-stack');
+        if (!stack) return;
+
+        while (stack.children.length >= 3) {
+          stack.children[0].remove();
+        }
+
+        const toast = document.createElement('div');
+        toast.className = 'rich-toast';
+
+        let iconSvg = '<svg class="tabler-icon tabler-icon--sm" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"></path></svg>';
+        if (type === 'info') {
+          iconSvg = '<svg class="tabler-icon tabler-icon--sm" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path><path d="M12 9h.01"></path><path d="M11 12h1v4h1"></path></svg>';
+        }
+
+        toast.innerHTML = `
+          <div class="toast-content-row">
+            <div class="toast-icon-slot">${iconSvg}</div>
+            <div class="toast-text-group">
+              <span class="toast-title">${title}</span>
+              <span class="toast-desc">${message}</span>
+            </div>
+            ${onUndo ? '<button class="btn btn--primary btn--sm" id="btn-toast-undo" style="height: 24px; padding: 0 8px; font-size: 11px;">Undo</button>' : ''}
+            <button class="toast-close-btn" aria-label="Close Notification">✕</button>
+          </div>
+          <div class="toast-progress-bar" style="animation-duration: ${duration}ms;"></div>
+        `;
+
+        const dismiss = () => {
+          toast.classList.remove('rich-toast--visible');
+          toast.classList.add('rich-toast--exit');
+          setTimeout(() => toast.remove(), 250);
+        };
+
+        toast.querySelector('.toast-close-btn').addEventListener('click', dismiss);
+
+        if (onUndo) {
+          const undoBtn = toast.querySelector('#btn-toast-undo');
+          if (undoBtn) {
+            undoBtn.addEventListener('click', () => {
+              onUndo();
+              dismiss();
+            });
+          }
+        }
+
+        stack.appendChild(toast);
+
+        requestAnimationFrame(() => {
+          toast.classList.add('rich-toast--visible');
+        });
+
+        setTimeout(dismiss, duration);
+      },
+
+      quickAddWater(ml) {
+        this.waterIntake += ml;
+        const pct = Math.min(100, Math.round((this.waterIntake / this.waterGoal) * 100));
+        
+        const heroVal = document.getElementById('water-hero-val');
+        if (heroVal) heroVal.innerHTML = this.waterIntake.toLocaleString() + ' <span style="font-family: var(--font-body); font-size: 16px; font-weight: 600; color: var(--text-muted);">ml</span>';
+        
+        const subVal = document.getElementById('water-hero-sub');
+        const rem = Math.max(0, this.waterGoal - this.waterIntake);
+        if (subVal) subVal.textContent = 'Goal: 3,000 ml • ' + (rem > 0 ? rem.toLocaleString() + ' ml remaining' : 'Daily goal achieved ✓');
+
+        const bar = document.getElementById('water-progress-bar');
+        if (bar) bar.style.width = pct + '%';
+
+        const ring = document.getElementById('water-ring-fill');
+        if (ring) ring.setAttribute('stroke-dasharray', pct + ', 100');
+
+        const ringText = document.getElementById('water-ring-text');
+        if (ringText) ringText.textContent = pct + '%';
+
+        this.notify({
+          type: 'success',
+          title: 'Hydration Logged',
+          message: 'Added +' + ml + 'ml water. Total today: ' + this.waterIntake.toLocaleString() + 'ml.',
+          duration: 4000,
+          onUndo: () => {
+            this.waterIntake -= ml;
+            const prevPct = Math.min(100, Math.round((this.waterIntake / this.waterGoal) * 100));
+            if (heroVal) heroVal.innerHTML = this.waterIntake.toLocaleString() + ' <span style="font-family: var(--font-body); font-size: 16px; font-weight: 600; color: var(--text-muted);">ml</span>';
+            if (bar) bar.style.width = prevPct + '%';
+            if (ring) ring.setAttribute('stroke-dasharray', prevPct + ', 100');
+            if (ringText) ringText.textContent = prevPct + '%';
+            this.notify({ type: 'info', title: 'Water Log Reverted', message: 'Restored previous hydration count.' });
+          }
+        });
+      },
+
+      togglePendingHabit(habitNum) {
+        const checkbox = document.getElementById('habit-check-4');
+        const label = document.getElementById('habit-label-4');
+        const status = document.getElementById('habit-status-4');
+
+        if (checkbox.classList.contains('habit-checkbox--checked')) {
+          checkbox.classList.remove('habit-checkbox--checked');
+          checkbox.textContent = '';
+          label.style.textDecoration = 'none';
+          label.style.color = 'var(--text-ink)';
+          status.textContent = 'Due';
+          this.habitsDone = 3;
+        } else {
+          checkbox.classList.add('habit-checkbox--checked');
+          checkbox.textContent = '✓';
+          label.style.textDecoration = 'line-through';
+          label.style.color = 'var(--text-muted)';
+          status.textContent = 'Done ✓';
+          this.habitsDone = 4;
+
+          this.notify({
+            type: 'success',
+            title: 'Habit Completed!',
+            message: 'Completed "Evening 10-min stretch". All 4 habits finished for today!',
+            duration: 4500
+          });
+        }
+
+        const badge = document.getElementById('habit-progress-badge');
+        const cardBadge = document.getElementById('habit-badge-count');
+        const bar = document.getElementById('habit-progress-bar');
+        const desc = document.getElementById('habit-subtext-desc');
+
+        const pct = Math.round((this.habitsDone / this.habitsTotal) * 100);
+        if (badge) badge.textContent = pct + '% Done';
+        if (cardBadge) cardBadge.textContent = this.habitsDone + ' / ' + this.habitsTotal + ' Done';
+        if (bar) bar.style.width = pct + '%';
+        if (desc) desc.textContent = this.habitsDone === 4 ? 'All 4 routines completed today ✓' : '3 completed • 1 remaining (Evening Stretch)';
+      },
+
+      toggleHabitRow(num) {
+        this.notify({
+          type: 'info',
+          title: 'Habit Verified',
+          message: 'Habit routine #' + num + ' was already marked as completed.'
+        });
+      },
+
+      triggerQuickLog() {
+        this.notify({
+          type: 'info',
+          title: 'Quick Health Logger',
+          message: 'Press L or use the hydration presets below to record metrics instantly.'
+        });
+      }
+    };
+
+    DevApp.init();
+
+    window.addEventListener('keydown', (e) => {
+      if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return;
+      const key = e.key.toLowerCase();
+      if (key === 'l') {
+        DevApp.triggerQuickLog();
+      } else if (key === 'w') {
+        DevApp.quickAddWater(250);
+      }
+    });
+  </script>
+</body>
+</html>

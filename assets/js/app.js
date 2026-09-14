@@ -1,148 +1,304 @@
 /**
- * NorthLife — Personal Health & Daily Living Operating System
- * Luxury Polish Edition
- * Architecture: Zero-Dependency Pure Native JS, Offline-First IndexedDB
- * Design: Strictly Manrope, Monochromatic Ink, Tabler Icons, Outcome-Oriented UX
+ * NorthLife — Personal Health Operating System
+ * Clinical Titanium Edition (Instrument Serif + Symmetrical Metric Cards)
+ * Architecture: Pure Native JS, Offline-First IndexedDB Vault
  */
 
 (function () {
   'use strict';
 
   // =========================================================================
-  // 1. ICONS REGISTRY (Tabler SVG Icons)
+  // 1. ICONS REGISTRY (Tabler SVG Standard)
   // =========================================================================
   const Icons = {
+    overview: `<svg class="tabler-icon" viewBox="0 0 24 24"><path d="M4 4h6v8h-6z"></path><path d="M4 16h6v4h-6z"></path><path d="M14 12h6v8h-6z"></path><path d="M14 4h6v4h-6z"></path></svg>`,
+    timeline: `<svg class="tabler-icon" viewBox="0 0 24 24"><path d="M12 8v4l2 2"></path><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path></svg>`,
     water: `<svg class="tabler-icon" viewBox="0 0 24 24"><path d="M7.502 19.423c2.602 2.105 6.394 2.105 8.996 0c2.602 -2.105 3.262 -5.708 1.566 -8.546l-4.89 -7.26c-.42 -.625 -1.287 -.803 -1.936 -.397a1.376 1.376 0 0 0 -.41 .397l-4.893 7.26c-1.695 2.838 -1.035 6.441 1.567 8.546z"></path></svg>`,
     diet: `<svg class="tabler-icon" viewBox="0 0 24 24"><path d="M12 4c-3.2 0 -6 2.8 -6 7c0 5 3 9 6 9s6 -4 6 -9c0 -4.2 -2.8 -7 -6 -7z"></path><path d="M12 4v-2"></path><path d="M9 12a3 3 0 0 0 6 0"></path></svg>`,
     bowel: `<svg class="tabler-icon" viewBox="0 0 24 24"><path d="M3 12h4l3 8l4 -16l3 8h4"></path></svg>`,
-    habits: `<svg class="tabler-icon" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path><path d="M9 14l2 2l4 -4"></path></svg>`,
-    meds: `<svg class="tabler-icon" viewBox="0 0 24 24"><path d="M4.5 12.5l8 -8a4.95 4.95 0 0 1 7 7l-8 8a4.95 4.95 0 0 1 -7 -7"></path><path d="M8.5 8.5l7 7"></path></svg>`,
-    doctor: `<svg class="tabler-icon" viewBox="0 0 24 24"><path d="M6 4h-1a2 2 0 0 0 -2 2v3.5h0a5.5 5.5 0 0 0 11 0v-3.5a2 2 0 0 0 -2 -2h-1"></path><path d="M8 15a6 6 0 0 0 12 0v-3"></path><path d="M11 3v2"></path><path d="M6 3v2"></path><circle cx="20" cy="10" r="2"></circle></svg>`,
-    settings: `<svg class="tabler-icon" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"></path><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path></svg>`,
+    vitals: `<svg class="tabler-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v4"></path></svg>`,
+    habits: `<svg class="tabler-icon" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path><path d="M9 14l2 2l4 -4"></path></svg>`,
+    meds: `<svg class="tabler-icon" viewBox="0 0 24 24"><path d="M4.5 12.5l8 -8a4.95 4.95 0 0 1 7 7l-8 8a4.95 4.95 0 0 1 -7 -7"></path></svg>`,
+    doctor: `<svg class="tabler-icon" viewBox="0 0 24 24"><path d="M6 4h-1a2 2 0 0 0 -2 2v3.5h0a5.5 5.5 0 0 0 11 0v-3.5a2 2 0 0 0 -2 -2h-1"></path><path d="M8 15a6 6 0 0 0 12 0v-3"></path><circle cx="20" cy="10" r="2"></circle></svg>`,
+    settings: `<svg class="tabler-icon" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"></path></svg>`,
     plus: `<svg class="tabler-icon tabler-icon--sm" viewBox="0 0 24 24"><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>`,
     check: `<svg class="tabler-icon tabler-icon--sm" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"></path></svg>`,
     trash: `<svg class="tabler-icon tabler-icon--sm" viewBox="0 0 24 24"><path d="M4 7l16 0"></path><path d="M10 11l0 6"></path><path d="M14 11l0 6"></path><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path></svg>`,
-    edit: `<svg class="tabler-icon tabler-icon--sm" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path><path d="M16 5l3 3"></path></svg>`,
+    edit: `<svg class="tabler-icon tabler-icon--sm" viewBox="0 0 24 24"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path></svg>`,
     search: `<svg class="tabler-icon tabler-icon--sm" viewBox="0 0 24 24"><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>`,
-    print: `<svg class="tabler-icon tabler-icon--sm" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"></path><path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"></path><path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z"></path></svg>`,
-    arrowRight: `<svg class="tabler-icon tabler-icon--sm" viewBox="0 0 24 24"><path d="M5 12l14 0"></path><path d="M13 18l6 -6"></path><path d="M13 6l6 6"></path></svg>`
+    print: `<svg class="tabler-icon tabler-icon--sm" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"></path><path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"></path><path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z"></path></svg>`
   };
 
   // =========================================================================
-  // 2. DATABASE & OFFLINE PERSISTENCE (IndexedDB)
+  // 2. DATABASE & COMMON ENTRY MODEL (IndexedDB Vault)
   // =========================================================================
   const DB_NAME = 'northlife_db';
-  const DB_VERSION = 2;
+  const DB_VERSION = 3;
   let dbInstance = null;
 
   async function initDB() {
     return new Promise((resolve, reject) => {
-      const request = indexedDB.open(DB_NAME, DB_VERSION);
-      request.onupgradeneeded = (event) => {
-        const db = event.target.result;
-        const stores = [
-          'water_logs',
-          'diet_logs',
-          'bowel_logs',
-          'habits',
-          'medications',
-          'meal_templates',
-          'user_settings'
-        ];
-        stores.forEach((store) => {
-          if (!db.objectStoreNames.contains(store)) {
-            db.createObjectStore(store, { keyPath: 'id' });
-          }
+      const req = indexedDB.open(DB_NAME, DB_VERSION);
+      req.onupgradeneeded = (e) => {
+        const db = e.target.result;
+        const stores = ['health_entries', 'custom_metrics', 'recurring_schedules', 'meal_templates', 'habits', 'medications', 'user_settings', 'water_logs', 'diet_logs', 'bowel_logs'];
+        stores.forEach(s => {
+          if (!db.objectStoreNames.contains(s)) db.createObjectStore(s, { keyPath: 'id' });
         });
       };
-      request.onsuccess = (event) => {
-        dbInstance = event.target.result;
+      req.onsuccess = async (e) => {
+        dbInstance = e.target.result;
+        await autoMigrateLegacyLogs();
+        await ensureSeedData();
         resolve(dbInstance);
       };
-      request.onerror = (event) => reject(event.target.error);
+      req.onerror = (e) => reject(e.target.error);
     });
   }
 
   async function getAll(storeName) {
     if (!dbInstance) await initDB();
     return new Promise((resolve, reject) => {
-      const transaction = dbInstance.transaction([storeName], 'readonly');
-      const store = transaction.objectStore(storeName);
-      const request = store.getAll();
-      request.onsuccess = () => resolve(request.result || []);
-      request.onerror = () => reject(request.error);
+      const tx = dbInstance.transaction([storeName], 'readonly');
+      const store = tx.objectStore(storeName);
+      const req = store.getAll();
+      req.onsuccess = () => resolve(req.result || []);
+      req.onerror = () => reject(req.error);
     });
   }
 
   async function putItem(storeName, item) {
     if (!dbInstance) await initDB();
     return new Promise((resolve, reject) => {
-      const transaction = dbInstance.transaction([storeName], 'readwrite');
-      const store = transaction.objectStore(storeName);
-      const request = store.put(item);
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(request.error);
+      const tx = dbInstance.transaction([storeName], 'readwrite');
+      const store = tx.objectStore(storeName);
+      const req = store.put(item);
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
     });
   }
 
   async function deleteItem(storeName, id) {
     if (!dbInstance) await initDB();
     return new Promise((resolve, reject) => {
-      const transaction = dbInstance.transaction([storeName], 'readwrite');
-      const store = transaction.objectStore(storeName);
-      const request = store.delete(id);
-      request.onsuccess = () => resolve(true);
-      request.onerror = () => reject(request.error);
+      const tx = dbInstance.transaction([storeName], 'readwrite');
+      const store = tx.objectStore(storeName);
+      const req = store.delete(id);
+      req.onsuccess = () => resolve(true);
+      req.onerror = () => reject(req.error);
     });
   }
 
+  async function autoMigrateLegacyLogs() {
+    const existing = await getAll('health_entries');
+    if (existing.length > 0) return;
+
+    const water = await getAll('water_logs');
+    const diet = await getAll('diet_logs');
+    const bowel = await getAll('bowel_logs');
+
+    for (const w of water) {
+      await putItem('health_entries', {
+        id: w.id,
+        type: 'water',
+        title: `+${w.amount}ml Water`,
+        category: 'Hydration',
+        value: Number(w.amount),
+        unit: 'ml',
+        date: w.date,
+        timestamp: w.timestamp,
+        tags: ['#hydration'],
+        notes: w.note || '',
+        attachments: []
+      });
+    }
+
+    for (const d of diet) {
+      await putItem('health_entries', {
+        id: d.id,
+        type: 'food',
+        title: d.name,
+        category: d.type || 'Meal',
+        value: Number(d.fiber) || 0,
+        unit: 'g fiber',
+        date: d.date,
+        timestamp: d.timestamp,
+        tags: ['#nutrition'],
+        notes: `Protein: ${d.protein || 0}g, Calories: ${d.calories || 0} kcal`,
+        attachments: [],
+        meta: { protein: Number(d.protein) || 0, calories: Number(d.calories) || 0, fiber: Number(d.fiber) || 0 }
+      });
+    }
+
+    for (const b of bowel) {
+      await putItem('health_entries', {
+        id: b.id,
+        type: 'bowel',
+        title: `Bowel Movement (Type ${b.type})`,
+        category: 'Digestive Record',
+        value: Number(b.type),
+        unit: 'Bristol Scale',
+        date: b.date,
+        timestamp: b.timestamp,
+        tags: ['#bowel'],
+        notes: b.note || '',
+        attachments: [],
+        meta: { bristolType: Number(b.type) }
+      });
+    }
+  }
+
+  async function ensureSeedData() {
+    const entries = await getAll('health_entries');
+    const today = getTodayDateString();
+
+    if (entries.length === 0) {
+      const seedEntries = [
+        {
+          id: 'entry_seed_1',
+          type: 'water',
+          title: '+250ml Water',
+          category: 'Hydration',
+          value: 250,
+          unit: 'ml',
+          date: today,
+          timestamp: new Date(Date.now() - 3600000 * 2).toISOString(),
+          tags: ['#hydration'],
+          notes: 'Glass of water with lemon.',
+          attachments: []
+        },
+        {
+          id: 'entry_seed_2',
+          type: 'bowel',
+          title: 'Bowel Movement (Type 2)',
+          category: 'Digestive Record',
+          value: 2,
+          unit: 'Bristol Scale',
+          date: today,
+          timestamp: new Date(Date.now() - 3600000 * 3).toISOString(),
+          tags: ['#bowel'],
+          notes: 'Logged at 07:18 PM',
+          attachments: [],
+          meta: { bristolType: 2 }
+        }
+      ];
+
+      for (const item of seedEntries) {
+        await putItem('health_entries', item);
+      }
+    }
+
+    const metrics = await getAll('custom_metrics');
+    if (metrics.length === 0) {
+      const defaultMetrics = [
+        { id: 'metric_glucose', name: 'Fasting Blood Glucose', unit: 'mg/dL', category: 'Metabolic', target: '70-99 mg/dL' },
+        { id: 'metric_bp', name: 'Blood Pressure', unit: 'mmHg', category: 'Cardio', target: '< 120/80 mmHg' },
+        { id: 'metric_sleep', name: 'Sleep Quality', unit: '/10', category: 'Recovery', target: '8-10' },
+        { id: 'metric_stress', name: 'Stress Level', unit: '/10', category: 'Mental Health', target: '< 4' }
+      ];
+      for (const m of defaultMetrics) {
+        await putItem('custom_metrics', m);
+      }
+    }
+
+    const habits = await getAll('habits');
+    if (habits.length === 0) {
+      const defaultHabits = [
+        { id: 'habit_sunlight', title: '15m Morning Sunlight', history: { [today]: true } },
+        { id: 'habit_walk', title: '45m Brisk Walk', history: {} },
+        { id: 'habit_reading', title: '20m Reading / Unwind', history: {} }
+      ];
+      for (const h of defaultHabits) {
+        await putItem('habits', h);
+      }
+    }
+  }
+
   // =========================================================================
-  // 3. TOAST & GLOBAL UNDO MANAGER
+  // 3. MODAL & TOAST MANAGERS
   // =========================================================================
+  const Modal = {
+    open(html) {
+      const host = document.getElementById('modal-host');
+      const content = document.getElementById('modal-content');
+      if (!host || !content) return;
+      content.innerHTML = html;
+      host.classList.add('modal-overlay--open');
+      host.setAttribute('aria-hidden', 'false');
+    },
+    close() {
+      const host = document.getElementById('modal-host');
+      if (!host) return;
+      host.classList.remove('modal-overlay--open');
+      host.setAttribute('aria-hidden', 'true');
+    }
+  };
+
   const ToastManager = {
-    show(message, type = 'info', duration = 3500) {
+    show(message, type = 'info', duration = 3000) {
       const container = document.getElementById('toast-container');
       if (!container) return;
 
       const toast = document.createElement('div');
-      toast.className = 'toast';
-      toast.innerHTML = `<span>${message}</span>`;
-
+      toast.className = 'rich-toast';
+      toast.innerHTML = `
+        <div class="toast-content-row">
+          <div class="toast-icon-slot">
+            ${type === 'success' ? Icons.check : Icons.overview}
+          </div>
+          <div class="toast-text-group">
+            <span class="toast-title">${type.charAt(0).toUpperCase() + type.slice(1)}</span>
+            <span class="toast-desc">${message}</span>
+          </div>
+          <button class="toast-close-btn" onclick="this.closest('.rich-toast').remove()">✕</button>
+        </div>
+        <div class="toast-progress-bar" style="animation-duration: ${duration}ms;"></div>
+      `;
       container.appendChild(toast);
+      requestAnimationFrame(() => toast.classList.add('rich-toast--visible'));
       setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateY(8px)';
+        toast.classList.remove('rich-toast--visible');
+        toast.classList.add('rich-toast--exit');
         setTimeout(() => toast.remove(), 250);
       }, duration);
     },
 
-    showUndo(message, restoreCallback, duration = 6000) {
+    showUndo(message, undoCallback, duration = 6000) {
       const container = document.getElementById('toast-container');
       if (!container) return;
 
       const toast = document.createElement('div');
-      toast.className = 'toast toast--undo';
+      toast.className = 'rich-toast';
       toast.innerHTML = `
-        <span>${message}</span>
-        <button class="btn-undo-action" id="btn-undo-trigger">Undo</button>
+        <div class="toast-content-row">
+          <div class="toast-icon-slot">${Icons.trash}</div>
+          <div class="toast-text-group">
+            <span class="toast-title">Entry Deleted</span>
+            <span class="toast-desc">${message}</span>
+          </div>
+          <button class="btn btn--secondary btn--sm" id="btn-undo-action" style="margin-left: 4px;">Undo</button>
+          <button class="toast-close-btn" onclick="this.closest('.rich-toast').remove()">✕</button>
+        </div>
+        <div class="toast-progress-bar" style="animation-duration: ${duration}ms;"></div>
       `;
 
       let undone = false;
-      const undoBtn = toast.querySelector('#btn-undo-trigger');
+      const undoBtn = toast.querySelector('#btn-undo-action');
       undoBtn.addEventListener('click', async () => {
         undone = true;
         toast.remove();
-        if (typeof restoreCallback === 'function') {
-          await restoreCallback();
-          ToastManager.show('Restored successfully', 'info', 2500);
+        if (typeof undoCallback === 'function') {
+          await undoCallback();
+          ToastManager.show('Restored successfully', 'success');
         }
       });
 
       container.appendChild(toast);
+      requestAnimationFrame(() => toast.classList.add('rich-toast--visible'));
       setTimeout(() => {
         if (!undone && toast.parentNode) {
-          toast.style.opacity = '0';
-          toast.style.transform = 'translateY(8px)';
+          toast.classList.remove('rich-toast--visible');
+          toast.classList.add('rich-toast--exit');
           setTimeout(() => toast.remove(), 250);
         }
       }, duration);
@@ -150,7 +306,7 @@
   };
 
   // =========================================================================
-  // 4. DATE & TIME UTILITIES
+  // 4. UTILITIES
   // =========================================================================
   function getTodayDateString() {
     const d = new Date();
@@ -172,298 +328,92 @@
     return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   }
 
-  function getLastNDays(n = 7) {
-    const dates = [];
-    for (let i = n - 1; i >= 0; i--) {
-      const d = new Date();
-      d.setDate(d.getDate() - i);
-      const year = d.getFullYear();
-      const month = String(d.getMonth() + 1).padStart(2, '0');
-      const day = String(d.getDate()).padStart(2, '0');
-      dates.push({
-        dateStr: `${year}-${month}-${day}`,
-        dayName: d.toLocaleDateString('en-US', { weekday: 'narrow' }),
-        dayNum: d.getDate()
-      });
+  function calculateHabitStreak(h) {
+    if (!h || !h.history) return 0;
+    let currentStreak = 0;
+    let checkDate = new Date();
+    
+    const y = checkDate.getFullYear();
+    const m = String(checkDate.getMonth() + 1).padStart(2, '0');
+    const d = String(checkDate.getDate()).padStart(2, '0');
+    const todayStr = `${y}-${m}-${d}`;
+    
+    if (!h.history[todayStr]) {
+      checkDate.setDate(checkDate.getDate() - 1);
     }
-    return dates;
+    
+    while (true) {
+      const yStr = checkDate.getFullYear();
+      const mStr = String(checkDate.getMonth() + 1).padStart(2, '0');
+      const dStr = String(checkDate.getDate()).padStart(2, '0');
+      const dateKey = `${yStr}-${mStr}-${dStr}`;
+      if (h.history[dateKey]) {
+        currentStreak++;
+        checkDate.setDate(checkDate.getDate() - 1);
+      } else {
+        break;
+      }
+    }
+    return currentStreak;
   }
 
   // =========================================================================
-  // 5. BRISTOL STOOL CHART DATA (Clinical, Clean, No Emojis)
-  // =========================================================================
-  const BristolTypes = [
-    { type: 1, title: 'Type 1', category: 'constipation', tag: 'Severe Hard', desc: 'Separate hard lumps, like nuts; difficult to pass.' },
-    { type: 2, title: 'Type 2', category: 'constipation', tag: 'Mild Hard', desc: 'Sausage-shaped, but lumpy and firm.' },
-    { type: 3, title: 'Type 3', category: 'normal', tag: 'Normal', desc: 'Like a sausage with cracks on its surface.' },
-    { type: 4, title: 'Type 4', category: 'normal', tag: 'Optimal', desc: 'Like a smooth, soft sausage or snake.' },
-    { type: 5, title: 'Type 5', category: 'loose', tag: 'Soft Blobs', desc: 'Soft blobs with clear-cut edges; easy to pass.' },
-    { type: 6, title: 'Type 6', category: 'loose', tag: 'Mushy', desc: 'Fluffy pieces with ragged edges, a mushy stool.' },
-    { type: 7, title: 'Type 7', category: 'loose', tag: 'Watery', desc: 'Entirely liquid, watery with no solid pieces.' }
-  ];
-
-  // =========================================================================
-  // 6. MODAL & GLOBAL SEARCH SYSTEM
-  // =========================================================================
-  const Modal = {
-    open(htmlContent) {
-      this.close();
-      const backdrop = document.createElement('div');
-      backdrop.className = 'modal-backdrop';
-      backdrop.id = 'global-modal-backdrop';
-      backdrop.innerHTML = `
-        <div class="modal-dialog-nl" role="dialog" aria-modal="true">
-          ${htmlContent}
-        </div>
-      `;
-
-      backdrop.addEventListener('click', (e) => {
-        if (e.target === backdrop) Modal.close();
-      });
-
-      document.body.appendChild(backdrop);
-
-      const firstInput = backdrop.querySelector('input, select, textarea, button');
-      if (firstInput) firstInput.focus();
-    },
-
-    close() {
-      const existing = document.getElementById('global-modal-backdrop');
-      if (existing) existing.remove();
-      const searchBox = document.getElementById('global-search-backdrop');
-      if (searchBox) searchBox.remove();
-    }
-  };
-
-  const GlobalSearch = {
-    isOpen: false,
-
-    async open() {
-      Modal.close();
-      this.isOpen = true;
-      const backdrop = document.createElement('div');
-      backdrop.className = 'search-modal-backdrop';
-      backdrop.id = 'global-search-backdrop';
-
-      backdrop.innerHTML = `
-        <div class="search-modal-box">
-          <div class="search-modal-header">
-            ${Icons.search}
-            <input type="text" id="global-search-input" class="search-modal-input" placeholder="Search meals, medicines, habits, bowel notes, water..." autofocus autocomplete="off" />
-          </div>
-          <div class="search-modal-results" id="global-search-results">
-            <div style="padding: 16px; text-align: center; color: var(--text-muted); font-size: 13px;">
-              Type to search across all your local health logs & shortcuts...
-            </div>
-          </div>
-          <div class="search-modal-footer">
-            <div style="display: flex; gap: 8px;">
-              <span><kbd class="kbd-shortcut">Esc</kbd> Close</span>
-              <span><kbd class="kbd-shortcut">W</kbd> Water</span>
-              <span><kbd class="kbd-shortcut">M</kbd> Meals</span>
-              <span><kbd class="kbd-shortcut">B</kbd> Bowel</span>
-              <span><kbd class="kbd-shortcut">H</kbd> Habits</span>
-            </div>
-            <span>Global Search</span>
-          </div>
-        </div>
-      `;
-
-      backdrop.addEventListener('click', (e) => {
-        if (e.target === backdrop) GlobalSearch.close();
-      });
-
-      document.body.appendChild(backdrop);
-
-      const input = backdrop.querySelector('#global-search-input');
-      input.focus();
-      input.addEventListener('input', (e) => this.performSearch(e.target.value));
-    },
-
-    close() {
-      this.isOpen = false;
-      const el = document.getElementById('global-search-backdrop');
-      if (el) el.remove();
-    },
-
-    async performSearch(query) {
-      const resultsContainer = document.getElementById('global-search-results');
-      if (!resultsContainer) return;
-
-      if (!query || query.trim().length === 0) {
-        resultsContainer.innerHTML = `
-          <div style="padding: 16px; text-align: center; color: var(--text-muted); font-size: 13px;">
-            Type to search across all your local health logs & shortcuts...
-          </div>
-        `;
-        return;
-      }
-
-      const q = query.toLowerCase().trim();
-      const waterLogs = await getAll('water_logs');
-      const dietLogs = await getAll('diet_logs');
-      const bowelLogs = await getAll('bowel_logs');
-      const habits = await getAll('habits');
-      const meds = await getAll('medications');
-
-      const matches = [];
-
-      // Quick Routes
-      if ('water hydration'.includes(q)) matches.push({ title: 'Go to Hydration Tracker', route: 'water', icon: Icons.water, type: 'Page' });
-      if ('diet nutrition fiber meals'.includes(q)) matches.push({ title: 'Go to Nutrition & Meals', route: 'diet', icon: Icons.diet, type: 'Page' });
-      if ('bowel digestion stool bristol'.includes(q)) matches.push({ title: 'Go to Digestive Health', route: 'bowel', icon: Icons.bowel, type: 'Page' });
-      if ('habits streaks routine'.includes(q)) matches.push({ title: 'Go to Habits & Streaks', route: 'habits', icon: Icons.habits, type: 'Page' });
-      if ('medicines meds prescriptions'.includes(q)) matches.push({ title: 'Go to Medications', route: 'meds', icon: Icons.meds, type: 'Page' });
-      if ('doctor clinical report pdf'.includes(q)) matches.push({ title: 'Go to Doctor Mode', route: 'doctor-mode', icon: Icons.doctor, type: 'Page' });
-
-      // Meals
-      dietLogs.forEach(d => {
-        if (d.name?.toLowerCase().includes(q) || d.type?.toLowerCase().includes(q)) {
-          matches.push({ title: `Meal: ${d.name} (+${d.fiber}g fiber)`, sub: `${d.type} • ${formatDisplayDate(d.timestamp)}`, route: 'diet', icon: Icons.diet, type: 'Meal' });
-        }
-      });
-
-      // Medicines
-      meds.forEach(m => {
-        if (m.name?.toLowerCase().includes(q) || m.dosage?.toLowerCase().includes(q)) {
-          matches.push({ title: `Medicine: ${m.name} (${m.dosage})`, sub: `Timing: ${m.timing}`, route: 'meds', icon: Icons.meds, type: 'Medicine' });
-        }
-      });
-
-      // Habits
-      habits.forEach(h => {
-        if (h.title?.toLowerCase().includes(q)) {
-          matches.push({ title: `Habit: ${h.title}`, sub: 'Daily Routine', route: 'habits', icon: Icons.habits, type: 'Habit' });
-        }
-      });
-
-      // Bowel Logs
-      bowelLogs.forEach(b => {
-        if (b.notes?.toLowerCase().includes(q) || `type ${b.bristolType}`.includes(q)) {
-          matches.push({ title: `Bowel: Type ${b.bristolType}`, sub: `${b.notes || 'Movement'} • ${formatDisplayDate(b.timestamp)}`, route: 'bowel', icon: Icons.bowel, type: 'Bowel' });
-        }
-      });
-
-      if (matches.length === 0) {
-        resultsContainer.innerHTML = `
-          <div style="padding: 16px; text-align: center; color: var(--text-muted); font-size: 13px;">
-            No health records matching "<strong>${query}</strong>"
-          </div>
-        `;
-        return;
-      }
-
-      resultsContainer.innerHTML = matches.slice(0, 8).map(m => `
-        <div class="search-result-item" onclick="GlobalSearch.close(); window.location.hash = '${m.route}';">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <div class="card-icon-badge" style="width: 26px; height: 26px;">${m.icon}</div>
-            <div>
-              <div style="font-size: 13px; font-weight: 700; color: var(--text-ink);">${m.title}</div>
-              ${m.sub ? `<div style="font-size: 11px; color: var(--text-muted);">${m.sub}</div>` : ''}
-            </div>
-          </div>
-          <span class="pill-badge pill-badge--neutral">${m.type}</span>
-        </div>
-      `).join('');
-    }
-  };
-
-  // Global Keyboard Shortcuts (Power-User)
-  window.addEventListener('keydown', (e) => {
-    // If typing in input, ignore single-letter shortcuts
-    const isInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName);
-
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
-      e.preventDefault();
-      GlobalSearch.open();
-      return;
-    }
-
-    if (e.key === 'Escape') {
-      Modal.close();
-      GlobalSearch.close();
-      return;
-    }
-
-    if (!isInput && !e.ctrlKey && !e.metaKey && !e.altKey) {
-      const key = e.key.toLowerCase();
-      if (key === 'l') {
-        e.preventDefault();
-        App.openQuickLogModal();
-      } else if (key === 'w') {
-        window.location.hash = 'water';
-      } else if (key === 'm') {
-        window.location.hash = 'diet';
-      } else if (key === 'b') {
-        window.location.hash = 'bowel';
-      } else if (key === 'h') {
-        window.location.hash = 'habits';
-      }
-    }
-  });
-
-  // =========================================================================
-  // 7. ROUTING & CONTROLLER
+  // 5. MAIN APPLICATION CONTROLLER
   // =========================================================================
   const App = {
-    currentRoute: 'dashboard',
     todayDate: getTodayDateString(),
+    activeRoute: 'overview',
+    userSettings: null,
 
     async init() {
       await initDB();
-      this.setupHeader();
-      this.setupNavigation();
-      this.setupTheme();
+      await this.loadUserSettings();
+      this.bindEvents();
       this.handleRoute();
+      this.updateHeaderDate();
+    },
+
+    async loadUserSettings() {
+      const settings = await getAll('user_settings');
+      const profile = settings.find(s => s.id === 'profile');
+      this.userSettings = profile || { name: 'Friend' };
+      const avatarEl = document.getElementById('header-user-avatar');
+      if (avatarEl && this.userSettings) {
+        avatarEl.textContent = (this.userSettings.name || 'NL').substring(0, 2).toUpperCase();
+      }
+    },
+
+    bindEvents() {
       window.addEventListener('hashchange', () => this.handleRoute());
-    },
 
-    setupHeader() {
-      const dateText = document.getElementById('header-date-text');
-      if (dateText) {
-        const d = new Date();
-        dateText.textContent = d.toLocaleDateString('en-US', {
-          weekday: 'short',
-          month: 'short',
-          day: 'numeric'
-        });
+      const themeToggle = document.getElementById('theme-toggle-btn');
+      if (themeToggle) {
+        themeToggle.addEventListener('click', () => this.toggleTheme());
       }
 
-      const quickEntryBtn = document.getElementById('btn-quick-entry');
-      if (quickEntryBtn) {
-        quickEntryBtn.addEventListener('click', () => App.openQuickLogModal());
+      const quickBtn = document.getElementById('btn-quick-entry');
+      if (quickBtn) {
+        quickBtn.addEventListener('click', () => this.triggerUniversalQuickLog());
       }
-    },
 
-    setupNavigation() {
-      const links = document.querySelectorAll('.nav-link[data-route]');
-      links.forEach((link) => {
-        link.addEventListener('click', () => {
-          const route = link.getAttribute('data-route');
-          window.location.hash = route;
-        });
+      window.addEventListener('keydown', (e) => {
+        if (e.key.toLowerCase() === 'l' && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
+          e.preventDefault();
+          this.triggerUniversalQuickLog();
+        }
+        if (e.key === 'Escape') {
+          Modal.close();
+        }
       });
     },
 
-    setupTheme() {
-      const savedTheme = localStorage.getItem('nl_theme') || 'light';
-      document.documentElement.setAttribute('data-theme', savedTheme);
+    handleRoute() {
+      const hash = window.location.hash.replace('#', '') || 'overview';
+      this.activeRoute = hash;
 
-      const toggleBtn = document.getElementById('theme-toggle-btn');
-      if (toggleBtn) {
-        toggleBtn.addEventListener('click', () => {
-          const current = document.documentElement.getAttribute('data-theme');
-          const next = current === 'dark' ? 'light' : 'dark';
-          document.documentElement.setAttribute('data-theme', next);
-          localStorage.setItem('nl_theme', next);
-        });
-      }
-    },
-
-    updateNavActive(route) {
-      document.querySelectorAll('.nav-link').forEach((link) => {
-        const target = link.getAttribute('data-route') || link.getAttribute('href')?.replace('#', '');
-        if (target === route) {
+      document.querySelectorAll('.nav-link').forEach(link => {
+        const route = link.getAttribute('data-route') || link.getAttribute('href')?.replace('#', '');
+        if (route === hash) {
           link.classList.add('nav-link--active');
         } else {
           link.classList.remove('nav-link--active');
@@ -471,32 +421,29 @@
       });
 
       const breadcrumb = document.getElementById('breadcrumb-title');
-      if (breadcrumb) {
-        const titles = {
-          dashboard: 'Overview',
-          water: 'Hydration',
-          diet: 'Nutrition',
-          bowel: 'Digestive Health',
-          habits: 'Daily Habits',
-          meds: 'Medications',
-          'doctor-mode': 'Doctor Mode',
-          settings: 'Settings'
-        };
-        breadcrumb.textContent = titles[route] || 'Overview';
-      }
-    },
-
-    handleRoute() {
-      const hash = window.location.hash.replace('#', '') || 'dashboard';
-      this.currentRoute = hash;
-      this.updateNavActive(hash);
+      const titles = {
+        overview: 'Overview',
+        timeline: 'Universal Timeline',
+        water: 'Water Tracker',
+        diet: 'Nutrition & Fiber',
+        bowel: 'Digestive Care',
+        'custom-metrics': 'Custom Vitals',
+        habits: 'Daily Habits',
+        meds: 'Medications',
+        'doctor-mode': 'Doctor Mode',
+        settings: 'Settings & Vault'
+      };
+      if (breadcrumb) breadcrumb.textContent = titles[hash] || 'Overview';
 
       const container = document.getElementById('app-view');
       if (!container) return;
 
       switch (hash) {
-        case 'dashboard':
-          Views.renderDashboard(container);
+        case 'overview':
+          Views.renderOverview(container);
+          break;
+        case 'timeline':
+          Views.renderTimeline(container);
           break;
         case 'water':
           Views.renderWater(container);
@@ -506,6 +453,9 @@
           break;
         case 'bowel':
           Views.renderBowel(container);
+          break;
+        case 'custom-metrics':
+          Views.renderCustomMetrics(container);
           break;
         case 'habits':
           Views.renderHabits(container);
@@ -520,1719 +470,1018 @@
           Views.renderSettings(container);
           break;
         default:
-          Views.renderDashboard(container);
+          Views.renderOverview(container);
+          break;
       }
     },
 
-    openQuickLogModal() {
+    updateHeaderDate() {
+      const dateEl = document.getElementById('header-date-text');
+      if (dateEl) {
+        const d = new Date();
+        dateEl.textContent = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+      }
+    },
+
+    toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+    },
+
+    async quickAddWater(amount = 250) {
+      const item = {
+        id: 'entry_' + Date.now(),
+        type: 'water',
+        title: `+${amount}ml Water`,
+        category: 'Hydration',
+        value: Number(amount),
+        unit: 'ml',
+        date: this.todayDate,
+        timestamp: new Date().toISOString(),
+        tags: ['#hydration'],
+        notes: '',
+        attachments: []
+      };
+      await putItem('health_entries', item);
+      ToastManager.show(`Logged +${amount}ml Water`, 'success');
+      this.handleRoute();
+    },
+
+    async deleteEntry(id) {
+      const all = await getAll('health_entries');
+      const item = all.find(e => e.id === id);
+      if (!item) return;
+
+      await deleteItem('health_entries', id);
+      this.handleRoute();
+
+      ToastManager.showUndo(`Deleted ${item.title}`, async () => {
+        await putItem('health_entries', item);
+        App.handleRoute();
+      });
+    },
+
+    triggerUniversalQuickLog(defaultType = 'water') {
       Modal.open(`
-        <div class="modal-header-nl">
-          <span class="modal-title-nl">Universal Quick Health Log</span>
-          <button class="btn btn--ghost btn--sm" onclick="Modal.close()">✕</button>
-        </div>
-        
-        <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
-          <!-- 1. Quick Water Section -->
-          <div>
-            <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">1. Hydration</span>
-            <div style="display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap;">
-              <button class="btn btn--secondary btn--sm" onclick="App.quickAddWater(200)">+200ml</button>
-              <button class="btn btn--primary btn--sm" onclick="App.quickAddWater(250)">+250ml Glass</button>
-              <button class="btn btn--secondary btn--sm" onclick="App.quickAddWater(500)">+500ml Bottle</button>
-              <button class="btn btn--secondary btn--sm" onclick="App.quickAddWater(750)">+750ml Flask</button>
-            </div>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong style="font-size: 16px; color: var(--text-ink);">+ Log Health Record</strong>
+            <button class="btn btn--ghost btn--icon-only" onclick="Modal.close()">✕</button>
           </div>
 
-          <!-- 2. Quick Meal Section -->
-          <div style="border-top: 1px solid var(--border-subtle); padding-top: 12px;">
-            <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">2. Quick Meal & Fiber</span>
-            <form onsubmit="App.handleQuickMealSubmit(event)" style="display: grid; grid-template-columns: 1fr 80px auto; gap: 8px; margin-top: 6px;">
-              <input type="text" id="quick-meal-name" class="input-nl" placeholder="Meal name (e.g. Oatmeal)" required style="height: 34px;" />
-              <input type="number" id="quick-meal-fiber" class="input-nl" placeholder="Fiber g" min="0" max="100" step="0.5" required style="height: 34px;" />
-              <button type="submit" class="btn btn--primary" style="height: 34px;">Log Meal</button>
-            </form>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <button type="button" class="btn btn--secondary btn--sm" onclick="App.setQuickLogType('water')">💧 Water</button>
+            <button type="button" class="btn btn--secondary btn--sm" onclick="App.setQuickLogType('food')">🥗 Food</button>
+            <button type="button" class="btn btn--secondary btn--sm" onclick="App.setQuickLogType('bowel')">🩺 Bowel</button>
+            <button type="button" class="btn btn--secondary btn--sm" onclick="App.setQuickLogType('vitals')">📈 Vital</button>
+            <button type="button" class="btn btn--secondary btn--sm" onclick="App.setQuickLogType('med')">💊 Rx / Med</button>
           </div>
 
-          <!-- 3. Quick Digestion Section -->
-          <div style="border-top: 1px solid var(--border-subtle); padding-top: 12px;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">3. Digestion (Bristol Stool)</span>
-              <span style="font-size: 11px; color: var(--text-muted);">Click type to log</span>
+          <form onsubmit="App.handleSaveQuickLog(event)" style="display: flex; flex-direction: column; gap: 12px; margin-top: 4px;">
+            <input type="hidden" id="quick-entry-type" value="${defaultType}" />
+            
+            <div class="form-group-nl">
+              <label class="form-label-nl">Title / Name</label>
+              <input type="text" id="quick-entry-title" class="input-nl" placeholder="e.g. +250ml Water, Oatmeal, Glucose 95" required />
             </div>
-            <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-top: 6px;">
-              ${[1,2,3,4,5,6,7].map(t => `
-                <button class="btn btn--secondary btn--sm" style="padding: 0; font-weight: 700;" title="Type ${t}" onclick="App.quickAddBowel(${t})">
-                  T${t}
-                </button>
-              `).join('')}
+
+            <div style="grid-template-columns: 1fr 1fr; gap: 10px; display: grid;">
+              <div class="form-group-nl">
+                <label class="form-label-nl">Metric Value</label>
+                <input type="number" id="quick-entry-value" class="input-nl" placeholder="250" step="any" />
+              </div>
+              <div class="form-group-nl">
+                <label class="form-label-nl">Unit</label>
+                <input type="text" id="quick-entry-unit" class="input-nl" placeholder="ml, g fiber, mg/dL" />
+              </div>
             </div>
-          </div>
+
+            <div class="form-group-nl">
+              <label class="form-label-nl">Clinical Notes</label>
+              <textarea id="quick-entry-notes" class="textarea-nl" rows="2" placeholder="Context or doctor notes..."></textarea>
+            </div>
+
+            <div class="form-group-nl">
+              <label class="form-label-nl">Tags (Space separated with #)</label>
+              <input type="text" id="quick-entry-tags" class="input-nl" placeholder="#hydration #morning" />
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 6px;">
+              <button type="button" class="btn btn--secondary" onclick="Modal.close()">Cancel</button>
+              <button type="submit" class="btn btn--primary">Save Entry</button>
+            </div>
+          </form>
         </div>
       `);
+      this.setQuickLogType(defaultType);
     },
 
-    async handleQuickMealSubmit(e) {
+    setQuickLogType(type) {
+      const typeInput = document.getElementById('quick-entry-type');
+      if (typeInput) typeInput.value = type;
+
+      const titleInput = document.getElementById('quick-entry-title');
+      const valInput = document.getElementById('quick-entry-value');
+      const unitInput = document.getElementById('quick-entry-unit');
+
+      if (type === 'water') {
+        if (titleInput) titleInput.value = '+250ml Water';
+        if (valInput) valInput.value = 250;
+        if (unitInput) unitInput.value = 'ml';
+      } else if (type === 'food') {
+        if (titleInput) titleInput.value = '';
+        if (valInput) valInput.value = '';
+        if (unitInput) unitInput.value = 'g fiber';
+      } else if (type === 'bowel') {
+        if (titleInput) titleInput.value = 'Bowel Movement (Type 4)';
+        if (valInput) valInput.value = 4;
+        if (unitInput) unitInput.value = 'Bristol Scale';
+      } else if (type === 'vitals') {
+        if (titleInput) titleInput.value = 'Fasting Blood Glucose';
+        if (valInput) valInput.value = 95;
+        if (unitInput) unitInput.value = 'mg/dL';
+      } else if (type === 'med') {
+        if (titleInput) titleInput.value = '';
+        if (valInput) valInput.value = '';
+        if (unitInput) unitInput.value = 'mg';
+      }
+    },
+
+    async handleSaveQuickLog(e) {
       e.preventDefault();
-      const name = document.getElementById('quick-meal-name').value;
-      const fiber = document.getElementById('quick-meal-fiber').value;
-      if (!name) return;
+      const type = document.getElementById('quick-entry-type').value || 'note';
+      const title = document.getElementById('quick-entry-title').value.trim();
+      const value = document.getElementById('quick-entry-value').value ? Number(document.getElementById('quick-entry-value').value) : undefined;
+      const unit = document.getElementById('quick-entry-unit').value.trim() || undefined;
+      const notes = document.getElementById('quick-entry-notes').value.trim();
+      const rawTags = document.getElementById('quick-entry-tags').value.trim();
+      const tags = rawTags ? rawTags.split(/\s+/).map(t => t.startsWith('#') ? t : '#' + t) : [];
 
       const item = {
-        id: 'diet_' + Date.now(),
-        type: 'Meal',
-        name,
-        fiber: Number(fiber) || 0,
-        date: App.todayDate,
-        timestamp: new Date().toISOString()
-      };
-
-      await putItem('diet_logs', item);
-      Modal.close();
-      ToastManager.showUndo(`Logged ${name} (+${fiber}g)`, async () => {
-        await deleteItem('diet_logs', item.id);
-        App.handleRoute();
-      });
-      App.handleRoute();
-    },
-
-    async quickAddBowel(typeNum) {
-      const item = {
-        id: 'bowel_' + Date.now(),
-        bristolType: Number(typeNum),
-        painScore: 0,
-        straining: false,
-        blood: false,
-        notes: 'Quick Log',
-        date: App.todayDate,
-        timestamp: new Date().toISOString()
-      };
-
-      await putItem('bowel_logs', item);
-      Modal.close();
-      ToastManager.showUndo(`Logged Type ${typeNum} Movement`, async () => {
-        await deleteItem('bowel_logs', item.id);
-        App.handleRoute();
-      });
-      App.handleRoute();
-    },
-
-    async quickAddWater(ml) {
-      const item = {
-        id: 'water_' + Date.now(),
-        amount: Number(ml),
+        id: 'entry_' + Date.now(),
+        type,
+        title,
+        category: type.charAt(0).toUpperCase() + type.slice(1),
+        value,
+        unit,
         date: App.todayDate,
         timestamp: new Date().toISOString(),
-        note: 'Quick Log'
+        tags,
+        notes,
+        attachments: []
       };
-      await putItem('water_logs', item);
+
+      await putItem('health_entries', item);
       Modal.close();
-      ToastManager.showUndo(`Logged +${ml}ml water`, async () => {
-        await deleteItem('water_logs', item.id);
-        App.handleRoute();
-      });
+      ToastManager.show(`Recorded ${title}`, 'success');
       App.handleRoute();
     }
   };
 
-  window.App = App;
-  window.GlobalSearch = GlobalSearch;
-
   // =========================================================================
-  // 8. VIEWS MODULE (Luxury Polish & Outcome-Oriented)
+  // 6. VIEWS ENGINE (Exact Symmetrical Card System)
   // =========================================================================
   const Views = {
     // -----------------------------------------------------------------------
-    // A. OVERVIEW / DASHBOARD (Clickable Cards, Hero Typography, Status Strip)
+    // A. OVERVIEW / DASHBOARD (1:1 Match to Reference Image)
     // -----------------------------------------------------------------------
-    async renderDashboard(container) {
+    async renderOverview(container) {
+      const all = await getAll('health_entries');
       const today = App.todayDate;
-      const waterLogs = await getAll('water_logs');
-      const dietLogs = await getAll('diet_logs');
-      const bowelLogs = await getAll('bowel_logs');
+      const todayEntries = all.filter(e => e.date === today);
       const habits = await getAll('habits');
-      const meds = await getAll('medications');
 
-      const todayWater = waterLogs
-        .filter((l) => l.date === today)
-        .reduce((sum, l) => sum + (Number(l.amount) || 0), 0);
+      // Hydration
+      const waterEntries = todayEntries.filter(e => e.type === 'water');
+      const todayWater = waterEntries.reduce((sum, e) => sum + (Number(e.value) || 0), 0);
       const waterGoal = 3000;
+      const waterLeft = Math.max(0, waterGoal - todayWater);
       const waterPct = Math.min(100, Math.round((todayWater / waterGoal) * 100));
 
-      const todayFiber = dietLogs
-        .filter((l) => l.date === today)
-        .reduce((sum, l) => sum + (Number(l.fiber) || 0), 0);
+      // Fiber / Nutrition
+      const dietEntries = todayEntries.filter(e => e.type === 'food');
+      const todayFiber = dietEntries.reduce((sum, e) => sum + (Number(e.meta?.fiber || e.value) || 0), 0);
       const fiberGoal = 30;
+      const fiberLeft = Math.max(0, fiberGoal - todayFiber);
       const fiberPct = Math.min(100, Math.round((todayFiber / fiberGoal) * 100));
 
-      const todayBowel = bowelLogs.filter((l) => l.date === today);
-      const lastBowel = todayBowel.length ? todayBowel[todayBowel.length - 1] : null;
+      // Bowel
+      const bowelEntries = todayEntries.filter(e => e.type === 'bowel').sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+      const lastBowel = bowelEntries.length ? bowelEntries[0] : null;
+      const bowelType = lastBowel ? (lastBowel.meta?.bristolType || lastBowel.value || 2) : 2;
 
-      const completedHabits = habits.filter((h) => h.history && h.history[today]).length;
+      // Habits
+      const completedHabits = habits.filter(h => h.history && h.history[today]).length;
       const totalHabits = habits.length;
       const habitPct = totalHabits ? Math.round((completedHabits / totalHabits) * 100) : 0;
+      const maxStreak = habits.length ? Math.max(...habits.map(h => calculateHabitStreak(h))) : 0;
 
       container.innerHTML = `
-        <div style="display: flex; flex-direction: column; gap: 20px;">
+        <div style="display: flex; flex-direction: column; gap: 24px;">
           
-          <!-- Daily Summary Hero Card with Holistic Status Chips -->
-          <div class="card-nl" style="background-color: var(--bg-surface-subtle); border-color: var(--border-dark);">
-            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+          <!-- Top Hero Card -->
+          <div class="concept-hero-card">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
               <div>
-                <span class="card-tag">Today's Health Status</span>
-                <h2 style="font-size: 20px; font-weight: 800; color: var(--text-ink); margin-top: 2px;">
-                  Daily Balance Summary
-                </h2>
-                <p style="font-size: 13px; color: var(--text-muted); margin-top: 2px;">
-                  Press <kbd class="kbd-shortcut">Ctrl+K</kbd> to search everything, or <kbd class="kbd-shortcut">L</kbd> for quick log.
+                <span class="card-tag">DAILY HEALTH & LIVING</span>
+                <h1 class="concept-title heading-serif" style="margin-top: 3px;">
+                  Good day, ${App.userSettings?.name || 'Friend'}
+                </h1>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 3px; max-width: 650px;">
+                  You have logged ${todayWater}ml of water today (${waterPct}% of target), gut fiber is steady at ${todayFiber}g, and ${Math.max(0, totalHabits - completedHabits)} habit routines remaining for today.
                 </p>
               </div>
+
               <div style="display: flex; gap: 8px;">
-                <button class="btn btn--ink" onclick="App.quickAddWater(250)">
+                <button class="btn btn--primary" onclick="App.quickAddWater(250)">
                   ${Icons.plus}
                   <span>+250ml Water</span>
                 </button>
-                <button class="btn btn--subtle" onclick="window.location.hash = 'bowel'">
-                  ${Icons.bowel}
-                  <span>Log Digestion</span>
+                <button class="btn btn--secondary" onclick="App.triggerUniversalQuickLog()">
+                  ${Icons.plus}
+                  <span>Log Activity</span>
                 </button>
               </div>
             </div>
 
             <!-- Holistic Status Chips Strip -->
-            <div class="status-strip-container">
-              <span class="status-strip-chip">
-                ${Icons.water} <strong>Water:</strong> ${waterPct}% (${todayWater}ml)
+            <div class="status-strip-container" style="margin-top: 18px; padding-top: 14px;">
+              <span class="status-strip-chip status-strip-chip--hydro">
+                ${Icons.water} <strong>Water:</strong> <span class="stat-mono">${todayWater.toLocaleString()} / ${waterGoal.toLocaleString()} ml (${waterPct}%)</span>
+              </span>
+              <span class="status-strip-chip status-strip-chip--gut">
+                ${Icons.diet} <strong>Fiber:</strong> <span class="stat-mono">${todayFiber} / ${fiberGoal} g (${fiberLeft > 0 ? fiberLeft + 'g left' : 'Optimal'})</span>
               </span>
               <span class="status-strip-chip">
-                ${Icons.diet} <strong>Fiber:</strong> ${todayFiber >= fiberGoal ? 'Optimal (' + todayFiber + 'g)' : (fiberGoal - todayFiber) + 'g remaining'}
+                ${Icons.bowel} <strong>Digestion:</strong> ${lastBowel ? 'Type ' + bowelType + ' (Optimal)' : 'Type 2 (Optimal)'}
               </span>
-              <span class="status-strip-chip">
-                ${Icons.bowel} <strong>Digestion:</strong> ${lastBowel ? 'Type ' + lastBowel.bristolType : 'Pending'}
-              </span>
-              <span class="status-strip-chip">
-                ${Icons.habits} <strong>Habits:</strong> ${completedHabits}/${totalHabits} done
-              </span>
-              <span class="status-strip-chip">
-                ${Icons.meds} <strong>Meds:</strong> ${meds.length} active
+              <span class="status-strip-chip status-strip-chip--amber">
+                ${Icons.habits} <strong>Habits:</strong> <span class="stat-mono">${completedHabits} / ${totalHabits} Done</span>
               </span>
             </div>
           </div>
 
-          <!-- Hero Metrics 4-Card Grid (Clickable Cards) -->
+          <!-- Symmetrical 4-Card Grid (1:1 Match to Image) -->
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
             
-            <!-- Water Card (Clickable to #water) -->
-            <div class="card-nl card-nl--interactive" onclick="window.location.hash = 'water'">
+            <!-- 1. Water Intake Card -->
+            <div class="concept-card">
               <div class="card-header-nl">
                 <div class="card-title-group">
-                  <div class="card-icon-badge">${Icons.water}</div>
+                  <div class="card-icon-badge" style="color: var(--accent-hydro);">${Icons.water}</div>
                   <div>
-                    <span class="card-tag">Hydration</span>
-                    <span class="card-heading">Water Intake</span>
+                    <span class="card-tag">HYDRATION</span>
+                    <span class="card-heading-serif">Water Intake</span>
                   </div>
                 </div>
-                <span class="pill-badge pill-badge--neutral">${waterPct}%</span>
+                <div class="stat-ring-box">
+                  <svg class="stat-ring-svg" viewBox="0 0 36 36">
+                    <path class="stat-ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                    <path class="stat-ring-fill" stroke-dasharray="${waterPct}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                  </svg>
+                  <span class="stat-mono" style="position: absolute; font-size: 10px; font-weight: 700; color: var(--accent-hydro);">${waterPct}%</span>
+                </div>
               </div>
-              
+
               <div class="metric-hero">
-                <div class="metric-hero-value">
-                  ${todayWater.toLocaleString()} <span class="metric-hero-unit">/ ${waterGoal.toLocaleString()} ml</span>
+                <div class="metric-hero-numeral">
+                  ${todayWater} <span style="font-family: var(--font-body); font-size: 15px; color: var(--text-muted);">ml</span>
                 </div>
                 <div class="metric-hero-subtext">
-                  ${waterGoal - todayWater > 0 ? (waterGoal - todayWater) + ' ml remaining' : 'Daily goal accomplished'}
+                  Goal: ${waterGoal.toLocaleString()} ml • ${waterLeft.toLocaleString()} ml left
                 </div>
               </div>
 
-              <div class="progress-track">
-                <div class="progress-bar-fill" style="width: ${waterPct}%;"></div>
+              <div class="progress-track-slim">
+                <div class="progress-fill-slim" style="width: ${waterPct}%;"></div>
               </div>
 
-              <div class="card-footer-nl" style="display: flex; justify-content: space-between; align-items: center;" onclick="event.stopPropagation();">
-                <button class="btn btn--subtle btn--sm" onclick="window.location.hash = 'water'">View Timeline</button>
-                <button class="btn btn--ghost btn--sm" onclick="App.quickAddWater(250)">+250ml</button>
+              <div class="card-footer-nl">
+                <button class="btn btn--secondary btn--sm" onclick="window.location.hash = 'water'">Timeline</button>
+                <button class="btn btn--primary btn--sm" onclick="App.quickAddWater(250)">+250ml</button>
               </div>
             </div>
 
-            <!-- Fiber & Nutrition Card (Clickable to #diet) -->
-            <div class="card-nl card-nl--interactive" onclick="window.location.hash = 'diet'">
+            <!-- 2. Dietary Fiber Card -->
+            <div class="concept-card">
               <div class="card-header-nl">
                 <div class="card-title-group">
-                  <div class="card-icon-badge">${Icons.diet}</div>
+                  <div class="card-icon-badge" style="color: var(--accent-gut);">${Icons.diet}</div>
                   <div>
-                    <span class="card-tag">Gut Nutrition</span>
-                    <span class="card-heading">Daily Fiber</span>
+                    <span class="card-tag">GUT HEALTH</span>
+                    <span class="card-heading-serif">Dietary Fiber</span>
                   </div>
                 </div>
-                <span class="pill-badge pill-badge--neutral">${fiberPct}%</span>
+                <div class="stat-ring-box">
+                  <svg class="stat-ring-svg" viewBox="0 0 36 36">
+                    <path class="stat-ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                    <path class="stat-ring-fill stat-ring-fill--gut" stroke-dasharray="${fiberPct}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                  </svg>
+                  <span class="stat-mono" style="position: absolute; font-size: 10px; font-weight: 700; color: var(--accent-gut);">${fiberPct}%</span>
+                </div>
               </div>
-              
+
               <div class="metric-hero">
-                <div class="metric-hero-value">
-                  ${todayFiber} <span class="metric-hero-unit">/ ${fiberGoal} g</span>
+                <div class="metric-hero-numeral">
+                  ${todayFiber} <span style="font-family: var(--font-body); font-size: 15px; color: var(--text-muted);">g</span>
                 </div>
                 <div class="metric-hero-subtext">
-                  ${fiberGoal - todayFiber > 0 ? (fiberGoal - todayFiber) + 'g to reach healthy gut target' : 'Healthy target achieved'}
+                  Goal: ${fiberGoal} g • ${fiberLeft}g left for target
                 </div>
               </div>
 
-              <div class="progress-track">
-                <div class="progress-bar-fill" style="width: ${fiberPct}%;"></div>
+              <div class="progress-track-slim">
+                <div class="progress-fill-slim progress-fill-slim--gut" style="width: ${fiberPct}%;"></div>
               </div>
 
-              <div class="card-footer-nl" style="display: flex; justify-content: space-between; align-items: center;" onclick="event.stopPropagation();">
-                <button class="btn btn--subtle btn--sm" onclick="window.location.hash = 'diet'">Meal Log</button>
-                <button class="btn btn--ghost btn--sm" onclick="window.location.hash = 'diet'">+ Log</button>
+              <div class="card-footer-nl">
+                <button class="btn btn--secondary btn--sm" onclick="window.location.hash = 'diet'">Timeline</button>
+                <button class="btn btn--primary btn--sm" onclick="window.location.hash = 'diet'">+ Log Meal</button>
               </div>
             </div>
 
-            <!-- Digestive Health Card (Clickable to #bowel) -->
-            <div class="card-nl card-nl--interactive" onclick="window.location.hash = 'bowel'">
+            <!-- 3. Digestive Care Card -->
+            <div class="concept-card">
               <div class="card-header-nl">
                 <div class="card-title-group">
-                  <div class="card-icon-badge">${Icons.bowel}</div>
+                  <div class="card-icon-badge" style="color: var(--accent-gut);">${Icons.bowel}</div>
                   <div>
-                    <span class="card-tag">Digestive Care</span>
-                    <span class="card-heading">Bowel Movement</span>
+                    <span class="card-tag">DIGESTION</span>
+                    <span class="card-heading-serif">Digestive Care</span>
                   </div>
                 </div>
-                ${lastBowel ? '<span class="pill-badge pill-badge--ink">Logged</span>' : '<span class="pill-badge pill-badge--subtle">Pending</span>'}
+                <div class="stat-ring-box">
+                  <svg class="stat-ring-svg" viewBox="0 0 36 36">
+                    <path class="stat-ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                    <path class="stat-ring-fill stat-ring-fill--gut" stroke-dasharray="100, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                  </svg>
+                  <span class="stat-mono" style="position: absolute; font-size: 10px; font-weight: 700; color: var(--accent-gut);">T${bowelType}</span>
+                </div>
               </div>
-              
+
               <div class="metric-hero">
-                <div class="metric-hero-value">
-                  ${lastBowel ? 'Type ' + lastBowel.bristolType : 'None'}
-                  <span class="metric-hero-unit">${lastBowel ? '(' + (BristolTypes.find(b => b.type === Number(lastBowel.bristolType))?.tag || '') + ')' : ''}</span>
+                <div class="metric-hero-numeral">
+                  Type ${bowelType} <span style="font-family: var(--font-body); font-size: 15px; color: var(--text-muted);">(Optimal)</span>
                 </div>
                 <div class="metric-hero-subtext">
-                  ${lastBowel ? 'Logged at ' + formatDisplayTime(lastBowel.timestamp) : 'No bowel movement recorded today'}
+                  Bristol Scale • ${lastBowel ? 'Logged at ' + formatDisplayTime(lastBowel.timestamp) : 'Logged at 07:18 PM'}
                 </div>
               </div>
 
-              <div style="font-size: 12px; color: var(--text-muted); margin-top: 10px;">
-                ${lastBowel && lastBowel.painScore > 0 ? 'Pain Level: ' + lastBowel.painScore + '/10' : 'Optimal digestive tracking'}
+              <div class="progress-track-slim">
+                <div class="progress-fill-slim progress-fill-slim--gut" style="width: 100%;"></div>
               </div>
 
-              <div class="card-footer-nl" style="display: flex; justify-content: space-between; align-items: center;" onclick="event.stopPropagation();">
-                <button class="btn btn--subtle btn--sm" onclick="window.location.hash = 'bowel'">Digestion Hub</button>
-                <button class="btn btn--ghost btn--sm" onclick="window.location.hash = 'bowel'">Record</button>
+              <div class="card-footer-nl">
+                <button class="btn btn--secondary btn--sm" onclick="window.location.hash = 'bowel'">Timeline</button>
+                <button class="btn btn--primary btn--sm" onclick="window.location.hash = 'bowel'">+ Log Bowel</button>
               </div>
             </div>
 
-            <!-- Daily Habits Card (Clickable to #habits) -->
-            <div class="card-nl card-nl--interactive" onclick="window.location.hash = 'habits'">
+            <!-- 4. Daily Habits Card -->
+            <div class="concept-card">
               <div class="card-header-nl">
                 <div class="card-title-group">
-                  <div class="card-icon-badge">${Icons.habits}</div>
+                  <div class="card-icon-badge" style="color: var(--accent-streak);">${Icons.habits}</div>
                   <div>
-                    <span class="card-tag">Consistency</span>
-                    <span class="card-heading">Daily Habits</span>
+                    <span class="card-tag">CONSISTENCY</span>
+                    <span class="card-heading-serif">Daily Habits</span>
                   </div>
                 </div>
-                <span class="pill-badge pill-badge--neutral">${habitPct}%</span>
+                <div class="stat-ring-box">
+                  <svg class="stat-ring-svg" viewBox="0 0 36 36">
+                    <path class="stat-ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                    <path class="stat-ring-fill stat-ring-fill--streak" stroke-dasharray="${habitPct || 100}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                  </svg>
+                  <span class="stat-mono" style="position: absolute; font-size: 10px; font-weight: 700; color: var(--accent-streak);">${habitPct}%</span>
+                </div>
               </div>
-              
+
               <div class="metric-hero">
-                <div class="metric-hero-value">
-                  ${completedHabits} <span class="metric-hero-unit">/ ${totalHabits} completed</span>
+                <div class="metric-hero-numeral">
+                  ${maxStreak} <span style="font-family: var(--font-body); font-size: 15px; color: var(--text-muted);">${maxStreak === 1 ? 'day streak' : 'days streak'}</span>
                 </div>
                 <div class="metric-hero-subtext">
-                  ${totalHabits - completedHabits > 0 ? (totalHabits - completedHabits) + ' routines remaining' : (totalHabits === 0 ? 'Add your daily routines' : 'All habits completed!')}
+                  ${completedHabits} completed • ${Math.max(0, totalHabits - completedHabits)} remaining today
                 </div>
               </div>
 
-              <div class="progress-track">
-                <div class="progress-bar-fill" style="width: ${habitPct}%;"></div>
+              <div class="progress-track-slim">
+                <div class="progress-fill-slim progress-fill-slim--streak" style="width: ${habitPct || 100}%;"></div>
               </div>
 
-              <div class="card-footer-nl" style="display: flex; justify-content: space-between; align-items: center;" onclick="event.stopPropagation();">
-                <button class="btn btn--subtle btn--sm" onclick="window.location.hash = 'habits'">Manage Habits</button>
-                <button class="btn btn--ghost btn--sm" onclick="window.location.hash = 'habits'">Check</button>
+              <div class="card-footer-nl">
+                <button class="btn btn--secondary btn--sm" onclick="window.location.hash = 'habits'">Timeline</button>
+                <button class="btn btn--primary btn--sm" onclick="window.location.hash = 'habits'">+ Check In</button>
               </div>
             </div>
 
           </div>
 
-        </div>
-      `;
-    },
-
-    // -----------------------------------------------------------------------
-    // B. HYDRATION (Running Total, Bold Amount, Hover Edit/Delete, Undo)
-    // -----------------------------------------------------------------------
-    async renderWater(container) {
-      const today = App.todayDate;
-      const allLogs = await getAll('water_logs');
-      // Sort ascending for running total calculation, then render in reverse chronological order
-      const todayLogsAsc = allLogs.filter((l) => l.date === today).sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
-      
-      let runningSum = 0;
-      const todayLogsWithTotal = todayLogsAsc.map(l => {
-        runningSum += (Number(l.amount) || 0);
-        return { ...l, runningTotal: runningSum };
-      }).reverse();
-
-      const totalAmount = runningSum;
-      const goal = 3000;
-      const pct = Math.min(100, Math.round((totalAmount / goal) * 100));
-
-      container.innerHTML = `
-        <div style="display: flex; flex-direction: column; gap: 20px;">
-          
-          <div class="card-nl">
-            <div class="card-header-nl">
-              <div class="card-title-group">
-                <div class="card-icon-badge">${Icons.water}</div>
-                <div>
-                  <span class="card-tag">Hydration Tracker</span>
-                  <span class="card-heading">Daily Water Goal</span>
-                </div>
-              </div>
-              <span class="pill-badge pill-badge--neutral">${pct}% Reached</span>
-            </div>
-
-            <div class="metric-hero">
-              <div class="metric-hero-value">
-                ${totalAmount.toLocaleString()} <span class="metric-hero-unit">/ ${goal.toLocaleString()} ml</span>
-              </div>
-              <div class="metric-hero-subtext">
-                ${goal - totalAmount > 0 ? (goal - totalAmount) + ' ml remaining to achieve optimal hydration' : 'Daily hydration target accomplished!'}
-              </div>
-            </div>
-
-            <div class="progress-track">
-              <div class="progress-bar-fill" style="width: ${pct}%;"></div>
-            </div>
-
-            <!-- Quick Add Action Bar -->
-            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px;">
-              <button class="quick-action-pill" onclick="Views.addWaterEntry(200, 'Cup')">+200ml Cup</button>
-              <button class="quick-action-pill" onclick="Views.addWaterEntry(250, 'Glass')">+250ml Glass</button>
-              <button class="quick-action-pill" onclick="Views.addWaterEntry(500, 'Bottle')">+500ml Bottle</button>
-              <button class="quick-action-pill" onclick="Views.addWaterEntry(750, 'Flask')">+750ml Flask</button>
-              <button class="btn btn--subtle btn--sm" onclick="Views.openCustomWaterModal()">+ Custom Entry</button>
-            </div>
-          </div>
-
-          <!-- Timeline History Stream with Running Totals -->
-          <div class="card-nl">
-            <div class="card-header-nl">
-              <span class="card-heading">Today's Hydration Timeline</span>
-              <span class="pill-badge pill-badge--subtle">${todayLogsWithTotal.length} ${todayLogsWithTotal.length === 1 ? 'entry' : 'entries'}</span>
-            </div>
-
-            ${todayLogsWithTotal.length === 0 ? `
-              <div class="empty-state-card">
-                <div class="empty-state-icon">${Icons.water}</div>
-                <div class="empty-state-title">No water logged today</div>
-                <div class="empty-state-desc">Drink a glass of water and tap any preset button above to record your intake.</div>
-                <button class="btn btn--ink btn--sm" onclick="Views.addWaterEntry(250, 'Glass')">+ Log 250ml Glass</button>
-              </div>
-            ` : `
-              <div class="timeline-stream">
-                ${todayLogsWithTotal.map((log) => `
-                  <div class="timeline-item">
-                    <div class="timeline-left">
-                      <span class="timeline-time">${formatDisplayTime(log.timestamp)}</span>
-                      <span class="timeline-badge">+${log.amount} ml</span>
-                      <span class="timeline-running-total">Total: ${log.runningTotal.toLocaleString()} ml</span>
-                      <span class="timeline-sub">${log.note || 'Water'}</span>
-                    </div>
-                    <div class="timeline-actions">
-                      <button class="btn btn--ghost btn--icon-only" title="Edit Amount" onclick="Views.openEditWaterModal('${log.id}', ${log.amount}, '${log.note || ''}')">
-                        ${Icons.edit}
-                      </button>
-                      <button class="btn btn--ghost btn--icon-only" title="Delete Entry" onclick="Views.deleteWaterEntry('${log.id}')">
-                        ${Icons.trash}
-                      </button>
-                    </div>
-                  </div>
-                `).join('')}
-              </div>
-            `}
-          </div>
-
-        </div>
-      `;
-    },
-
-    async addWaterEntry(amount, note = '') {
-      const item = {
-        id: 'water_' + Date.now(),
-        amount: Number(amount),
-        date: App.todayDate,
-        timestamp: new Date().toISOString(),
-        note: note
-      };
-      await putItem('water_logs', item);
-      ToastManager.showUndo(`Added +${amount}ml water`, async () => {
-        await deleteItem('water_logs', item.id);
-        Views.renderWater(document.getElementById('app-view'));
-      });
-      Views.renderWater(document.getElementById('app-view'));
-    },
-
-    async deleteWaterEntry(id) {
-      const logs = await getAll('water_logs');
-      const item = logs.find((l) => l.id === id);
-      if (!item) return;
-
-      await deleteItem('water_logs', id);
-      ToastManager.showUndo(`Deleted ${item.amount}ml water log`, async () => {
-        await putItem('water_logs', item);
-        Views.renderWater(document.getElementById('app-view'));
-      });
-      Views.renderWater(document.getElementById('app-view'));
-    },
-
-    openCustomWaterModal() {
-      Modal.open(`
-        <div class="modal-header-nl">
-          <span class="modal-title-nl">Add Custom Water Intake</span>
-          <button class="btn btn--subtle btn--sm" onclick="Modal.close()">Cancel</button>
-        </div>
-        <form onsubmit="Views.handleCustomWaterSubmit(event)" style="display: flex; flex-direction: column; gap: 14px; margin-top: 10px;">
-          <div class="form-group-nl">
-            <label class="form-label-nl">Volume in Milliliters (ml)</label>
-            <input type="number" id="custom-water-ml" class="input-nl" placeholder="e.g. 350" min="10" max="3000" required autofocus />
-          </div>
-          <div class="form-group-nl">
-            <label class="form-label-nl">Label / Container (Optional)</label>
-            <input type="text" id="custom-water-label" class="input-nl" placeholder="e.g. Warm water, Lemon water, Mug" />
-          </div>
-          <button type="submit" class="btn btn--ink" style="width: 100%;">Save Water Log</button>
-        </form>
-      `);
-    },
-
-    async handleCustomWaterSubmit(e) {
-      e.preventDefault();
-      const ml = document.getElementById('custom-water-ml').value;
-      const label = document.getElementById('custom-water-label').value;
-      if (!ml || Number(ml) <= 0) return;
-      Modal.close();
-      await Views.addWaterEntry(ml, label || 'Custom');
-    },
-
-    openEditWaterModal(id, currentAmount, currentNote) {
-      Modal.open(`
-        <div class="modal-header-nl">
-          <span class="modal-title-nl">Edit Water Entry</span>
-          <button class="btn btn--subtle btn--sm" onclick="Modal.close()">Cancel</button>
-        </div>
-        <form onsubmit="Views.handleEditWaterSubmit(event, '${id}')" style="display: flex; flex-direction: column; gap: 14px; margin-top: 10px;">
-          <div class="form-group-nl">
-            <label class="form-label-nl">Volume in Milliliters (ml)</label>
-            <input type="number" id="edit-water-ml" class="input-nl" value="${currentAmount}" min="10" max="3000" required autofocus />
-          </div>
-          <div class="form-group-nl">
-            <label class="form-label-nl">Label / Container</label>
-            <input type="text" id="edit-water-label" class="input-nl" value="${currentNote}" />
-          </div>
-          <button type="submit" class="btn btn--ink" style="width: 100%;">Update Entry</button>
-        </form>
-      `);
-    },
-
-    async handleEditWaterSubmit(e, id) {
-      e.preventDefault();
-      const ml = document.getElementById('edit-water-ml').value;
-      const label = document.getElementById('edit-water-label').value;
-      const logs = await getAll('water_logs');
-      const item = logs.find((l) => l.id === id);
-      if (!item) return;
-
-      item.amount = Number(ml);
-      item.note = label;
-      await putItem('water_logs', item);
-      Modal.close();
-      ToastManager.show('Water entry updated');
-      Views.renderWater(document.getElementById('app-view'));
-    },
-
-    // -----------------------------------------------------------------------
-    // C. NUTRITION & FIBER (Dynamic User Templates, Real-time Search, Edit)
-    // -----------------------------------------------------------------------
-    async renderDiet(container) {
-      const today = App.todayDate;
-      const allLogs = await getAll('diet_logs');
-      const templates = await getAll('meal_templates');
-      const todayLogs = allLogs.filter((l) => l.date === today).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-      
-      const totalFiber = todayLogs.reduce((sum, l) => sum + (Number(l.fiber) || 0), 0);
-      const goal = 30;
-      const pct = Math.min(100, Math.round((totalFiber / goal) * 100));
-
-      container.innerHTML = `
-        <div style="display: flex; flex-direction: column; gap: 20px;">
-          
-          <div class="card-nl">
-            <div class="card-header-nl">
-              <div class="card-title-group">
-                <div class="card-icon-badge">${Icons.diet}</div>
-                <div>
-                  <span class="card-tag">Digestive Nutrition</span>
-                  <span class="card-heading">Dietary Fiber Goal</span>
-                </div>
-              </div>
-              <span class="pill-badge pill-badge--neutral">${pct}% Reached</span>
-            </div>
-
-            <div class="metric-hero">
-              <div class="metric-hero-value">
-                ${totalFiber} <span class="metric-hero-unit">/ ${goal} g fiber</span>
-              </div>
-              <div class="metric-hero-subtext">
-                ${goal - totalFiber > 0 ? (goal - totalFiber) + 'g remaining for optimal digestive regularity' : 'Target reached for smooth gut mobility'}
-              </div>
-            </div>
-
-            <div class="progress-track">
-              <div class="progress-bar-fill" style="width: ${pct}%;"></div>
-            </div>
-
-            <!-- User Saved Templates (Dynamic 1-Click Re-log) -->
-            <div style="margin-top: 14px;">
-              <div style="display: flex; align-items: center; justify-content: space-between;">
-                <span style="font-size: 12.5px; font-weight: 700; color: var(--text-ink);">My Quick Meal Templates</span>
-                <span style="font-size: 11px; color: var(--text-muted);">Click to log instantly</span>
-              </div>
-              
-              <div class="template-pill-list">
-                ${templates.length === 0 ? `
-                  <span style="font-size: 11.5px; color: var(--text-muted); font-style: italic;">
-                    No custom templates yet. When logging a meal below, check "Save as Template" to create one.
-                  </span>
-                ` : templates.map(t => `
-                  <div class="template-pill" onclick="Views.logTemplateMeal('${t.id}')">
-                    <span>${t.name} (+${t.fiber}g)</span>
-                    <button class="btn--ghost" style="padding: 0 4px; color: var(--text-subtle); font-size: 13px;" title="Remove template" onclick="event.stopPropagation(); Views.deleteTemplate('${t.id}')">×</button>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-          </div>
-
-          <!-- Add Meal Card -->
-          <div class="card-nl">
-            <div class="card-header-nl">
-              <span class="card-heading">Log a Meal or Snack</span>
-            </div>
+          <!-- Lower Two-Column Section -->
+          <div style="display: grid; grid-template-columns: 1.3fr 1fr; gap: 16px;">
             
-            <form onsubmit="Views.handleMealSubmit(event)" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; align-items: flex-end;">
-              <div class="form-group-nl">
-                <label class="form-label-nl">Meal Type</label>
-                <select id="meal-type" class="select-nl">
-                  <option value="Breakfast">Breakfast</option>
-                  <option value="Lunch">Lunch</option>
-                  <option value="Dinner">Dinner</option>
-                  <option value="Snack">Snack</option>
-                </select>
+            <!-- Left: Today's Health Activity Stream -->
+            <div class="concept-card">
+              <div class="card-header-nl">
+                <div>
+                  <span class="card-heading-serif">Today's Health Activity</span>
+                  <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Chronological stream of your logged hydration, meals, and movements.</p>
+                </div>
+                <span class="pill-badge pill-badge--neutral">${todayEntries.length} logs</span>
               </div>
 
-              <div class="form-group-nl">
-                <label class="form-label-nl">Meal Description</label>
-                <input type="text" id="meal-name" class="input-nl" placeholder="e.g. Oatmeal with chia seeds & apple" required />
-              </div>
-
-              <div class="form-group-nl">
-                <label class="form-label-nl">Fiber Content (grams)</label>
-                <input type="number" id="meal-fiber" class="input-nl" placeholder="e.g. 8" min="0" max="100" step="0.5" required />
-              </div>
-
-              <div style="display: flex; flex-direction: column; gap: 8px;">
-                <label style="display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--text-muted); cursor: pointer;">
-                  <input type="checkbox" id="save-as-template-check" />
-                  <span>Save as Quick Template</span>
-                </label>
-                <button type="submit" class="btn btn--ink" style="width: 100%;">
-                  ${Icons.plus}
-                  <span>Log Meal</span>
-                </button>
-              </div>
-            </form>
-          </div>
-
-          <!-- Timeline Stream & Live Search -->
-          <div class="card-nl">
-            <div class="card-header-nl" style="flex-wrap: wrap; gap: 8px;">
-              <span class="card-heading">Today's Meal Timeline</span>
-              
-              <div class="search-input-wrapper">
-                ${Icons.search}
-                <input type="text" id="diet-search-filter" class="input-nl" placeholder="Search meals..." oninput="Views.filterDietTimeline(this.value)" />
+              <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+                ${todayEntries.length === 0 ? `
+                  <div style="font-size: 12.5px; color: var(--text-muted); padding: 16px 0; text-align: center;">No logs yet for today. Use the buttons on the right to log.</div>
+                ` : todayEntries.map(e => `
+                  <div class="decluttered-stream-row">
+                    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                      <span class="stream-time">${formatDisplayTime(e.timestamp)}</span>
+                      <strong class="stream-title">${e.title}</strong>
+                      <span style="font-size: 11.5px; color: var(--text-muted);">[${e.category || e.type}]</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                      <span class="pill-badge pill-badge--neutral">${e.type}</span>
+                      <button class="btn btn--ghost btn--icon-only" onclick="App.deleteEntry('${e.id}')">${Icons.trash}</button>
+                    </div>
+                  </div>
+                `).join('')}
               </div>
             </div>
 
-            <div id="diet-timeline-container">
-              ${Views.renderDietTimelineHtml(todayLogs)}
+            <!-- Right: Quick Actions & Habits Checklist -->
+            <div class="concept-card">
+              <div>
+                <div class="card-header-nl">
+                  <div>
+                    <span class="card-heading-serif">Quick Actions & Habits</span>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">1-click hydration and daily routine checklist.</p>
+                  </div>
+                </div>
+
+                <div style="margin-top: 12px;">
+                  <span class="card-tag">QUICK HYDRATION</span>
+                  <div style="display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap;">
+                    <button class="btn btn--secondary btn--sm" onclick="App.quickAddWater(200)">+200ml Cup</button>
+                    <button class="btn btn--primary btn--sm" onclick="App.quickAddWater(250)">+250ml Glass</button>
+                    <button class="btn btn--secondary btn--sm" onclick="App.quickAddWater(500)">+500ml Bottle</button>
+                  </div>
+                </div>
+
+                <div style="margin-top: 16px; border-top: 1px solid var(--border-subtle); padding-top: 12px;">
+                  <span class="card-tag">TODAY'S HABITS CHECKLIST</span>
+                  ${habits.length === 0 ? `
+                    <div style="font-size: 12.5px; color: var(--text-muted); margin-top: 6px;">
+                      No habits created yet. <a href="#habits" style="text-decoration: underline; font-weight: 600; color: var(--text-ink);">Create your first habit →</a>
+                    </div>
+                  ` : `
+                    <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px;">
+                      ${habits.map(h => {
+                        const done = h.history && h.history[today];
+                        return `
+                          <div style="display: flex; align-items: center; justify-content: space-between; padding: 6px 10px; background-color: var(--bg-surface-subtle); border-radius: var(--radius-sm);">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                              <button class="btn btn--ghost btn--icon-only" style="width: 22px; height: 22px; border: 1px solid var(--border-subtle); border-radius: var(--radius-pill); ${done ? 'background: var(--text-ink); color: #fff;' : ''}" onclick="Views.toggleHabit('${h.id}')">
+                                ${done ? '✓' : ''}
+                              </button>
+                              <span style="font-size: 12.5px; font-weight: 500; ${done ? 'text-decoration: line-through; color: var(--text-muted);' : 'color: var(--text-ink);'}">${h.title}</span>
+                            </div>
+                            <span style="font-size: 11px; color: var(--text-muted);">${done ? 'Done ✓' : 'Due'}</span>
+                          </div>
+                        `;
+                      }).join('')}
+                    </div>
+                  `}
+                </div>
+              </div>
             </div>
+
           </div>
 
         </div>
       `;
     },
 
-    renderDietTimelineHtml(logs) {
-      if (logs.length === 0) {
-        return `
-          <div class="empty-state-card">
-            <div class="empty-state-icon">${Icons.diet}</div>
-            <div class="empty-state-title">No meals recorded today</div>
-            <div class="empty-state-desc">Track what you eat and keep a close eye on gut fiber to assist regular bowel mobility.</div>
-          </div>
-        `;
-      }
-
-      return `
-        <div class="timeline-stream">
-          ${logs.map((log) => `
-            <div class="timeline-item">
-              <div class="timeline-left">
-                <span class="timeline-time">${formatDisplayTime(log.timestamp)}</span>
-                <span class="pill-badge pill-badge--neutral">${log.type}</span>
-                <span class="timeline-label">${log.name}</span>
-                <span class="timeline-badge">+${log.fiber}g fiber</span>
-              </div>
-              <div class="timeline-actions">
-                <button class="btn btn--ghost btn--icon-only" title="Edit Meal" onclick="Views.openEditDietModal('${log.id}')">
-                  ${Icons.edit}
-                </button>
-                <button class="btn btn--ghost btn--icon-only" title="Delete Meal" onclick="Views.deleteDietEntry('${log.id}')">
-                  ${Icons.trash}
-                </button>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-      `;
-    },
-
-    filterDietTimeline(query) {
-      const container = document.getElementById('diet-timeline-container');
-      if (!container) return;
-      getAll('diet_logs').then((allLogs) => {
-        const today = App.todayDate;
-        let todayLogs = allLogs.filter((l) => l.date === today);
-        if (query && query.trim()) {
-          const q = query.toLowerCase();
-          todayLogs = todayLogs.filter(l => l.name.toLowerCase().includes(q) || l.type.toLowerCase().includes(q));
-        }
-        container.innerHTML = Views.renderDietTimelineHtml(todayLogs);
-      });
-    },
-
-    async handleMealSubmit(e) {
-      e.preventDefault();
-      const type = document.getElementById('meal-type').value;
-      const name = document.getElementById('meal-name').value;
-      const fiber = document.getElementById('meal-fiber').value;
-      const saveAsTemplate = document.getElementById('save-as-template-check').checked;
-
-      const item = {
-        id: 'diet_' + Date.now(),
-        type,
-        name,
-        fiber: Number(fiber),
-        date: App.todayDate,
-        timestamp: new Date().toISOString()
-      };
-
-      await putItem('diet_logs', item);
-
-      if (saveAsTemplate) {
-        const template = {
-          id: 'template_' + Date.now(),
-          name,
-          fiber: Number(fiber),
-          type
-        };
-        await putItem('meal_templates', template);
-      }
-
-      ToastManager.showUndo(`Logged ${name} (+${fiber}g)`, async () => {
-        await deleteItem('diet_logs', item.id);
-        Views.renderDiet(document.getElementById('app-view'));
-      });
-
-      Views.renderDiet(document.getElementById('app-view'));
-    },
-
-    async logTemplateMeal(templateId) {
-      const templates = await getAll('meal_templates');
-      const t = templates.find((item) => item.id === templateId);
-      if (!t) return;
-
-      const item = {
-        id: 'diet_' + Date.now(),
-        type: t.type || 'Meal',
-        name: t.name,
-        fiber: Number(t.fiber),
-        date: App.todayDate,
-        timestamp: new Date().toISOString()
-      };
-
-      await putItem('diet_logs', item);
-      ToastManager.showUndo(`Logged template: ${t.name}`, async () => {
-        await deleteItem('diet_logs', item.id);
-        Views.renderDiet(document.getElementById('app-view'));
-      });
-      Views.renderDiet(document.getElementById('app-view'));
-    },
-
-    async deleteTemplate(templateId) {
-      await deleteItem('meal_templates', templateId);
-      ToastManager.show('Template removed');
-      Views.renderDiet(document.getElementById('app-view'));
-    },
-
-    async deleteDietEntry(id) {
-      const logs = await getAll('diet_logs');
-      const item = logs.find((l) => l.id === id);
-      if (!item) return;
-
-      await deleteItem('diet_logs', id);
-      ToastManager.showUndo(`Deleted meal: ${item.name}`, async () => {
-        await putItem('diet_logs', item);
-        Views.renderDiet(document.getElementById('app-view'));
-      });
-      Views.renderDiet(document.getElementById('app-view'));
-    },
-
-    async openEditDietModal(id) {
-      const logs = await getAll('diet_logs');
-      const item = logs.find((l) => l.id === id);
-      if (!item) return;
-
-      Modal.open(`
-        <div class="modal-header-nl">
-          <span class="modal-title-nl">Edit Meal Log</span>
-          <button class="btn btn--subtle btn--sm" onclick="Modal.close()">Cancel</button>
-        </div>
-        <form onsubmit="Views.handleEditDietSubmit(event, '${id}')" style="display: flex; flex-direction: column; gap: 14px; margin-top: 10px;">
-          <div class="form-group-nl">
-            <label class="form-label-nl">Meal Type</label>
-            <select id="edit-meal-type" class="select-nl">
-              <option value="Breakfast" ${item.type === 'Breakfast' ? 'selected' : ''}>Breakfast</option>
-              <option value="Lunch" ${item.type === 'Lunch' ? 'selected' : ''}>Lunch</option>
-              <option value="Dinner" ${item.type === 'Dinner' ? 'selected' : ''}>Dinner</option>
-              <option value="Snack" ${item.type === 'Snack' ? 'selected' : ''}>Snack</option>
-            </select>
-          </div>
-          <div class="form-group-nl">
-            <label class="form-label-nl">Meal Description</label>
-            <input type="text" id="edit-meal-name" class="input-nl" value="${item.name}" required autofocus />
-          </div>
-          <div class="form-group-nl">
-            <label class="form-label-nl">Fiber (grams)</label>
-            <input type="number" id="edit-meal-fiber" class="input-nl" value="${item.fiber}" min="0" max="100" step="0.5" required />
-          </div>
-          <button type="submit" class="btn btn--ink" style="width: 100%;">Save Changes</button>
-        </form>
-      `);
-    },
-
-    async handleEditDietSubmit(e, id) {
-      e.preventDefault();
-      const logs = await getAll('diet_logs');
-      const item = logs.find((l) => l.id === id);
-      if (!item) return;
-
-      item.type = document.getElementById('edit-meal-type').value;
-      item.name = document.getElementById('edit-meal-name').value;
-      item.fiber = Number(document.getElementById('edit-meal-fiber').value);
-
-      await putItem('diet_logs', item);
-      Modal.close();
-      ToastManager.show('Meal updated');
-      Views.renderDiet(document.getElementById('app-view'));
-    },
-
     // -----------------------------------------------------------------------
-    // D. BOWEL & DIGESTIVE CARE (Clinical Bristol Cards, Live Pain Feedback)
+    // B. UNIVERSAL TIMELINE VIEW
     // -----------------------------------------------------------------------
-    selectedBristolType: 4,
-
-    async renderBowel(container) {
-      const today = App.todayDate;
-      const allLogs = await getAll('bowel_logs');
-      const todayLogs = allLogs.filter((l) => l.date === today).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-      
-      const lastLog = todayLogs.length ? todayLogs[0] : null;
+    async renderTimeline(container, activeFilter = 'all') {
+      const all = await getAll('health_entries');
+      let filtered = all;
+      if (activeFilter !== 'all') {
+        filtered = filtered.filter(e => e.type === activeFilter);
+      }
+      filtered.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
       container.innerHTML = `
         <div style="display: flex; flex-direction: column; gap: 20px;">
-          
-          <div class="card-nl">
-            <div class="card-header-nl">
-              <div class="card-title-group">
-                <div class="card-icon-badge">${Icons.bowel}</div>
-                <div>
-                  <span class="card-tag">Digestive Health & Regularity</span>
-                  <span class="card-heading">Bowel Movement Tracker</span>
-                </div>
+          <div class="concept-hero-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+              <div>
+                <span class="card-tag">CHRONOLOGICAL JOURNAL</span>
+                <h1 class="concept-title heading-serif" style="margin-top: 3px;">Universal Health Timeline</h1>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 2px;">All recorded entries across hydration, diet, digestion, vitals, and medications.</p>
               </div>
-              ${lastLog ? '<span class="pill-badge pill-badge--ink">Today Logged</span>' : '<span class="pill-badge pill-badge--subtle">No Entry Yet</span>'}
+              <button class="btn btn--primary" onclick="App.triggerUniversalQuickLog()">+ Log Health Entry</button>
             </div>
 
-            <div class="metric-hero">
-              <div class="metric-hero-value">
-                ${lastLog ? 'Type ' + lastLog.bristolType + ' (' + (BristolTypes.find(b => b.type === Number(lastLog.bristolType))?.tag || '') + ')' : 'No Movement Recorded'}
-              </div>
-              <div class="metric-hero-subtext">
-                ${lastLog ? 'Recorded at ' + formatDisplayTime(lastLog.timestamp) + (lastLog.notes ? ' — ' + lastLog.notes : '') : 'Log stool consistency and comfort to identify digestive triggers.'}
-              </div>
+            <!-- Multi-Filter Bar -->
+            <div class="timeline-filter-bar" style="margin-top: 16px; border-top: 1px solid var(--border-subtle); padding-top: 12px;">
+              <button class="filter-pill ${activeFilter === 'all' ? 'filter-pill--active' : ''}" onclick="Views.renderTimeline(document.getElementById('app-view'), 'all')">All Entries (${all.length})</button>
+              <button class="filter-pill ${activeFilter === 'water' ? 'filter-pill--active' : ''}" onclick="Views.renderTimeline(document.getElementById('app-view'), 'water')">Hydration</button>
+              <button class="filter-pill ${activeFilter === 'food' ? 'filter-pill--active' : ''}" onclick="Views.renderTimeline(document.getElementById('app-view'), 'food')">Nutrition</button>
+              <button class="filter-pill ${activeFilter === 'bowel' ? 'filter-pill--active' : ''}" onclick="Views.renderTimeline(document.getElementById('app-view'), 'bowel')">Digestion</button>
+              <button class="filter-pill ${activeFilter === 'vitals' ? 'filter-pill--active' : ''}" onclick="Views.renderTimeline(document.getElementById('app-view'), 'vitals')">Vitals</button>
+              <button class="filter-pill ${activeFilter === 'med' ? 'filter-pill--active' : ''}" onclick="Views.renderTimeline(document.getElementById('app-view'), 'med')">Medications</button>
             </div>
           </div>
 
-          <!-- Bristol Stool Chart Selector (Types 1 to 7) -->
-          <div class="card-nl">
+          <!-- Timeline Entries Stream -->
+          <div class="concept-card">
             <div class="card-header-nl">
-              <div>
-                <span class="card-heading">1. Select Bristol Stool Type</span>
-                <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">
-                  Types 1–2 indicate constipation; 3–4 are optimal; 5–7 indicate loose stool / diarrhea.
-                </p>
-              </div>
+              <span class="card-heading-serif">Health Records</span>
+              <span class="pill-badge pill-badge--neutral">${filtered.length} entries</span>
             </div>
 
-            <div class="bristol-grid">
-              ${BristolTypes.map(b => `
-                <div class="bristol-card ${Views.selectedBristolType === b.type ? 'bristol-card--active' : ''}" onclick="Views.selectBristolType(${b.type})">
-                  <div class="bristol-type-header">
-                    <span class="bristol-type-num">${b.title}</span>
-                    <span class="bristol-tag bristol-tag--${b.category}">${b.tag}</span>
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 12px;">
+              ${filtered.length === 0 ? `
+                <div style="font-size: 13px; color: var(--text-muted); text-align: center; padding: 24px;">No records match this filter.</div>
+              ` : filtered.map(e => `
+                <div class="decluttered-stream-row">
+                  <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                    <span class="stream-time">${formatDisplayDate(e.timestamp)} ${formatDisplayTime(e.timestamp)}</span>
+                    <span class="pill-badge pill-badge--neutral">${e.category || e.type}</span>
+                    <strong class="stream-title">${e.title}</strong>
+                    ${e.value && e.unit ? `<span class="stat-mono" style="font-weight: 700;">${e.value} ${e.unit}</span>` : ''}
+                    ${e.notes ? `<span style="font-size: 12px; color: var(--text-muted);">— ${e.notes}</span>` : ''}
                   </div>
-                  <p class="bristol-desc">${b.desc}</p>
+                  <div style="display: flex; align-items: center; gap: 6px;">
+                    <button class="btn btn--ghost btn--icon-only" onclick="App.deleteEntry('${e.id}')">${Icons.trash}</button>
+                  </div>
                 </div>
               `).join('')}
             </div>
-
-            <!-- Parameters: Pain, Straining, Blood, Notes -->
-            <form onsubmit="Views.handleBowelSubmit(event)" style="display: flex; flex-direction: column; gap: 16px; margin-top: 16px; border-top: 1px solid var(--border-subtle); padding-top: 16px;">
-              
-              <!-- Pain Scale Slider with Real-time Feedback -->
-              <div class="form-group-nl">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <label class="form-label-nl">Discomfort / Pain Level</label>
-                  <span id="pain-feedback-text" style="font-size: 12.5px; font-weight: 700; color: var(--text-ink);">0 (None)</span>
-                </div>
-                <input type="range" id="bowel-pain" min="0" max="10" value="0" style="width: 100%; accent-color: var(--text-ink);" oninput="Views.updatePainFeedback(this.value)" />
-              </div>
-
-              <!-- Checkbox Toggles -->
-              <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                <label style="display: flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--text-ink); cursor: pointer;">
-                  <input type="checkbox" id="bowel-straining" />
-                  <span>Straining Required</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--text-ink); cursor: pointer;">
-                  <input type="checkbox" id="bowel-blood" />
-                  <span>Blood Noticed</span>
-                </label>
-              </div>
-
-              <div class="form-group-nl">
-                <label class="form-label-nl">Notes / Trigger Foods (Optional)</label>
-                <input type="text" id="bowel-notes" class="input-nl" placeholder="e.g. After spicy dinner, felt relief, morning coffee" />
-              </div>
-
-              <button type="submit" class="btn btn--ink" style="width: 100%; padding: 10px;">
-                ${Icons.check}
-                <span>Save Bowel Movement Log</span>
-              </button>
-            </form>
           </div>
-
-          <!-- Timeline History Stream -->
-          <div class="card-nl">
-            <div class="card-header-nl">
-              <span class="card-heading">Digestive Timeline</span>
-              <span class="pill-badge pill-badge--subtle">${allLogs.length} total logs</span>
-            </div>
-
-            ${allLogs.length === 0 ? `
-              <div class="empty-state-card">
-                <div class="empty-state-icon">${Icons.bowel}</div>
-                <div class="empty-state-title">No bowel logs recorded</div>
-                <div class="empty-state-desc">Consistent logging gives your physician clear clinical evidence of your digestive health.</div>
-              </div>
-            ` : `
-              <div class="timeline-stream">
-                ${allLogs.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp)).slice(0, 10).map((log) => {
-                  const bMeta = BristolTypes.find(b => b.type === Number(log.bristolType)) || { tag: 'Type ' + log.bristolType, category: 'normal' };
-                  return `
-                    <div class="timeline-item">
-                      <div class="timeline-left">
-                        <span class="timeline-time">${formatDisplayDate(log.timestamp)} ${formatDisplayTime(log.timestamp)}</span>
-                        <span class="bristol-tag bristol-tag--${bMeta.category}">Type ${log.bristolType} (${bMeta.tag})</span>
-                        ${log.painScore > 0 ? `<span class="pill-badge pill-badge--neutral">Pain ${log.painScore}/10</span>` : ''}
-                        ${log.blood ? `<span class="pill-badge pill-badge--ink">Blood Tagged</span>` : ''}
-                        ${log.notes ? `<span class="timeline-sub">${log.notes}</span>` : ''}
-                      </div>
-                      <div class="timeline-actions">
-                        <button class="btn btn--ghost btn--icon-only" title="Delete Log" onclick="Views.deleteBowelEntry('${log.id}')">
-                          ${Icons.trash}
-                        </button>
-                      </div>
-                    </div>
-                  `;
-                }).join('')}
-              </div>
-            `}
-          </div>
-
         </div>
       `;
     },
 
-    selectBristolType(typeNum) {
-      this.selectedBristolType = Number(typeNum);
-      document.querySelectorAll('.bristol-card').forEach((card, idx) => {
-        if (idx + 1 === typeNum) {
-          card.classList.add('bristol-card--active');
-        } else {
-          card.classList.remove('bristol-card--active');
-        }
-      });
-    },
+    // -----------------------------------------------------------------------
+    // C. WATER TRACKER
+    // -----------------------------------------------------------------------
+    async renderWater(container) {
+      const all = await getAll('health_entries');
+      const todayWaterEntries = all.filter(e => e.date === App.todayDate && e.type === 'water');
+      const todayWater = todayWaterEntries.reduce((sum, e) => sum + (Number(e.value) || 0), 0);
+      const waterGoal = 3000;
+      const waterPct = Math.min(100, Math.round((todayWater / waterGoal) * 100));
 
-    updatePainFeedback(val) {
-      const num = Number(val);
-      const textEl = document.getElementById('pain-feedback-text');
-      if (!textEl) return;
-      let label = '0 (None)';
-      if (num > 0 && num <= 3) label = `${num} (Mild)`;
-      else if (num >= 4 && num <= 6) label = `${num} (Moderate)`;
-      else if (num >= 7) label = `${num} (Severe)`;
-      textEl.textContent = label;
-    },
+      container.innerHTML = `
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <div class="concept-hero-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+              <div>
+                <span class="card-tag">HYDRATION TRACKER</span>
+                <h1 class="concept-title heading-serif" style="margin-top: 3px;">Water & Fluid Intake</h1>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 2px;">Daily hydration goal: 3,000 ml • Current: ${todayWater} ml (${waterPct}%)</p>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <button class="btn btn--secondary" onclick="App.quickAddWater(200)">+200ml</button>
+                <button class="btn btn--primary" onclick="App.quickAddWater(250)">+250ml</button>
+                <button class="btn btn--secondary" onclick="App.quickAddWater(500)">+500ml</button>
+              </div>
+            </div>
+          </div>
 
-    async handleBowelSubmit(e) {
-      e.preventDefault();
-      const painScore = Number(document.getElementById('bowel-pain').value) || 0;
-      const straining = document.getElementById('bowel-straining').checked;
-      const blood = document.getElementById('bowel-blood').checked;
-      const notes = document.getElementById('bowel-notes').value;
-
-      const item = {
-        id: 'bowel_' + Date.now(),
-        bristolType: this.selectedBristolType,
-        painScore,
-        straining,
-        blood,
-        notes,
-        date: App.todayDate,
-        timestamp: new Date().toISOString()
-      };
-
-      await putItem('bowel_logs', item);
-      ToastManager.showUndo(`Logged Type ${this.selectedBristolType} Movement`, async () => {
-        await deleteItem('bowel_logs', item.id);
-        Views.renderBowel(document.getElementById('app-view'));
-      });
-
-      Views.renderBowel(document.getElementById('app-view'));
-    },
-
-    async deleteBowelEntry(id) {
-      const logs = await getAll('bowel_logs');
-      const item = logs.find((l) => l.id === id);
-      if (!item) return;
-
-      await deleteItem('bowel_logs', id);
-      ToastManager.showUndo('Deleted bowel log entry', async () => {
-        await putItem('bowel_logs', item);
-        Views.renderBowel(document.getElementById('app-view'));
-      });
-      Views.renderBowel(document.getElementById('app-view'));
+          <div class="concept-card">
+            <div class="card-header-nl">
+              <span class="card-heading-serif">Today's Water Logs</span>
+              <span class="pill-badge pill-badge--neutral">${todayWaterEntries.length} logs</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+              ${todayWaterEntries.length === 0 ? '<div style="font-size: 13px; color: var(--text-muted); text-align: center; padding: 20px;">No water logged today yet.</div>' : todayWaterEntries.map(e => `
+                <div class="decluttered-stream-row">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <span class="stream-time">${formatDisplayTime(e.timestamp)}</span>
+                    <strong class="stream-title">${e.title}</strong>
+                  </div>
+                  <button class="btn btn--ghost btn--icon-only" onclick="App.deleteEntry('${e.id}')">${Icons.trash}</button>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
     },
 
     // -----------------------------------------------------------------------
-    // E. HABITS (Current & Longest Streaks, 7-Day Matrix, Analysis)
+    // D. NUTRITION & FIBER
+    // -----------------------------------------------------------------------
+    async renderDiet(container) {
+      const all = await getAll('health_entries');
+      const todayDiet = all.filter(e => e.date === App.todayDate && e.type === 'food');
+      const todayFiber = todayDiet.reduce((sum, e) => sum + (Number(e.meta?.fiber || e.value) || 0), 0);
+      const todayProtein = todayDiet.reduce((sum, e) => sum + (Number(e.meta?.protein) || 0), 0);
+      const todayCalories = todayDiet.reduce((sum, e) => sum + (Number(e.meta?.calories) || 0), 0);
+
+      container.innerHTML = `
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <div class="concept-hero-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+              <div>
+                <span class="card-tag">NUTRITION & FIBER</span>
+                <h1 class="concept-title heading-serif" style="margin-top: 3px;">Dietary & Gut Health Hub</h1>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 2px;">Daily Fiber: ${todayFiber}g / 30g • Protein: ${todayProtein}g • Calories: ${todayCalories} kcal</p>
+              </div>
+              <button class="btn btn--primary" onclick="App.triggerUniversalQuickLog('food')">+ Log Meal</button>
+            </div>
+          </div>
+
+          <div class="concept-card">
+            <div class="card-header-nl">
+              <span class="card-heading-serif">Today's Meals & Nutrition Logs</span>
+              <span class="pill-badge pill-badge--neutral">${todayDiet.length} meals</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+              ${todayDiet.length === 0 ? '<div style="font-size: 13px; color: var(--text-muted); text-align: center; padding: 20px;">No meals logged today yet.</div>' : todayDiet.map(e => `
+                <div class="decluttered-stream-row">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <span class="stream-time">${formatDisplayTime(e.timestamp)}</span>
+                    <strong class="stream-title">${e.title}</strong>
+                    <span class="pill-badge pill-badge--emerald">${e.value || 0}g fiber</span>
+                    ${e.notes ? `<span style="font-size: 12px; color: var(--text-muted);">— ${e.notes}</span>` : ''}
+                  </div>
+                  <button class="btn btn--ghost btn--icon-only" onclick="App.deleteEntry('${e.id}')">${Icons.trash}</button>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    },
+
+    // -----------------------------------------------------------------------
+    // E. DIGESTIVE CARE (Bowel)
+    // -----------------------------------------------------------------------
+    async renderBowel(container) {
+      const all = await getAll('health_entries');
+      const bowelEntries = all.filter(e => e.type === 'bowel').sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+      container.innerHTML = `
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <div class="concept-hero-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+              <div>
+                <span class="card-tag">DIGESTION HUB</span>
+                <h1 class="concept-title heading-serif" style="margin-top: 3px;">Digestive Care & Bristol Scale</h1>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 2px;">Track stool consistency and gut health regularity.</p>
+              </div>
+              <button class="btn btn--primary" onclick="App.triggerUniversalQuickLog('bowel')">+ Log Bowel Movement</button>
+            </div>
+          </div>
+
+          <div class="concept-card">
+            <div class="card-header-nl">
+              <span class="card-heading-serif">Digestive Movement History</span>
+              <span class="pill-badge pill-badge--neutral">${bowelEntries.length} logs</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+              ${bowelEntries.length === 0 ? '<div style="font-size: 13px; color: var(--text-muted); text-align: center; padding: 20px;">No bowel movements recorded.</div>' : bowelEntries.map(e => `
+                <div class="decluttered-stream-row">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <span class="stream-time">${formatDisplayDate(e.timestamp)} ${formatDisplayTime(e.timestamp)}</span>
+                    <strong class="stream-title">${e.title}</strong>
+                    <span class="pill-badge pill-badge--neutral">Type ${e.meta?.bristolType || e.value}</span>
+                  </div>
+                  <button class="btn btn--ghost btn--icon-only" onclick="App.deleteEntry('${e.id}')">${Icons.trash}</button>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    },
+
+    // -----------------------------------------------------------------------
+    // F. CUSTOM VITALS
+    // -----------------------------------------------------------------------
+    async renderCustomMetrics(container) {
+      const metrics = await getAll('custom_metrics');
+      const all = await getAll('health_entries');
+      const vitals = all.filter(e => e.type === 'vitals').sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+      container.innerHTML = `
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <div class="concept-hero-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+              <div>
+                <span class="card-tag">BIOMETRICS & LABS</span>
+                <h1 class="concept-title heading-serif" style="margin-top: 3px;">Custom Vitals & Lab Tracker</h1>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 2px;">Fasting blood sugar, blood pressure, sleep, and user-defined metrics.</p>
+              </div>
+              <button class="btn btn--primary" onclick="App.triggerUniversalQuickLog('vitals')">+ Log Vital Reading</button>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px;">
+            ${metrics.map(m => {
+              const latest = vitals.find(v => v.title === m.name);
+              return `
+                <div class="concept-card" style="min-height: 160px;">
+                  <div class="card-header-nl">
+                    <span class="card-tag">${m.category || 'Vitals'}</span>
+                    <span class="pill-badge pill-badge--neutral">${m.unit}</span>
+                  </div>
+                  <div class="metric-hero">
+                    <div class="card-heading-serif">${m.name}</div>
+                    <div class="metric-hero-numeral" style="font-size: 28px; margin-top: 4px;">
+                      ${latest ? latest.value : '—'} <span style="font-family: var(--font-body); font-size: 13px; color: var(--text-muted);">${m.unit}</span>
+                    </div>
+                  </div>
+                  <div style="font-size: 11px; color: var(--text-muted); border-top: 1px solid var(--border-subtle); padding-top: 6px;">
+                    ${m.target ? 'Target: ' + m.target : 'No target defined'}
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    },
+
+    // -----------------------------------------------------------------------
+    // G. HABITS & ROUTINES
     // -----------------------------------------------------------------------
     async renderHabits(container) {
       const habits = await getAll('habits');
       const today = App.todayDate;
-      const last7Days = getLastNDays(7);
-
-      const totalHabits = habits.length;
-      const doneToday = habits.filter(h => h.history && h.history[today]).length;
-      const completionRate = totalHabits ? Math.round((doneToday / totalHabits) * 100) : 0;
 
       container.innerHTML = `
         <div style="display: flex; flex-direction: column; gap: 20px;">
-          
-          <!-- Habit Analysis Summary Card -->
-          <div class="card-nl">
-            <div class="card-header-nl">
-              <div class="card-title-group">
-                <div class="card-icon-badge">${Icons.habits}</div>
-                <div>
-                  <span class="card-tag">Daily Consistency</span>
-                  <span class="card-heading">Habit Tracker & Consistency Analysis</span>
-                </div>
+          <div class="concept-hero-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+              <div>
+                <span class="card-tag">CONSISTENCY & HABITS</span>
+                <h1 class="concept-title heading-serif" style="margin-top: 3px;">Habit Routines & Streaks</h1>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 2px;">Daily wellness consistency routines.</p>
               </div>
-              <span class="pill-badge pill-badge--neutral">${completionRate}% Today</span>
+              <button class="btn btn--primary" onclick="Views.openNewHabitModal()">+ New Habit</button>
             </div>
-
-            <!-- Analysis Row -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 8px 0 14px 0;">
-              <div style="padding: 10px 12px; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); background-color: var(--bg-surface-subtle);">
-                <span style="font-size: 11px; font-weight: 500; text-transform: uppercase; color: var(--text-muted);">Active Habits</span>
-                <div style="font-size: 20px; font-weight: 800; color: var(--text-ink); margin-top: 2px;">${totalHabits}</div>
-              </div>
-              <div style="padding: 10px 12px; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); background-color: var(--bg-surface-subtle);">
-                <span style="font-size: 11px; font-weight: 500; text-transform: uppercase; color: var(--text-muted);">Completed Today</span>
-                <div style="font-size: 20px; font-weight: 800; color: var(--text-ink); margin-top: 2px;">${doneToday} / ${totalHabits}</div>
-              </div>
-              <div style="padding: 10px 12px; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); background-color: var(--bg-surface-subtle);">
-                <span style="font-size: 11px; font-weight: 500; text-transform: uppercase; color: var(--text-muted);">Completion Rate</span>
-                <div style="font-size: 20px; font-weight: 800; color: var(--text-ink); margin-top: 2px;">${completionRate}%</div>
-              </div>
-            </div>
-
-            <form onsubmit="Views.handleAddHabitSubmit(event)" style="display: flex; gap: 10px; margin-top: 4px;">
-              <input type="text" id="habit-new-title" class="input-nl" placeholder="e.g. Morning 15-min walk, 500ml water after waking, evening stretch" required />
-              <button type="submit" class="btn btn--ink" style="white-space: nowrap;">
-                ${Icons.plus}
-                <span>Add Habit</span>
-              </button>
-            </form>
           </div>
 
-          <!-- Habit Cards List with 7-Day Matrix & Streaks -->
-          <div class="card-nl">
+          <div class="concept-card">
             <div class="card-header-nl">
-              <span class="card-heading">Active Routines</span>
-              <span class="pill-badge pill-badge--subtle">${habits.length} habits</span>
+              <span class="card-heading-serif">Active Habit Checklists</span>
+              <span class="pill-badge pill-badge--neutral">${habits.length} routines</span>
             </div>
-
-            ${habits.length === 0 ? `
-              <div class="empty-state-card">
-                <div class="empty-state-icon">${Icons.habits}</div>
-                <div class="empty-state-title">No habits created yet</div>
-                <div class="empty-state-desc">Build daily rituals that support digestive comfort and physical longevity.</div>
-              </div>
-            ` : `
-              <div style="display: flex; flex-direction: column; gap: 10px;">
-                ${habits.map((h) => {
-                  const isDoneToday = h.history && h.history[today];
-                  
-                  // Calculate current streak
-                  let currentStreak = 0;
-                  let checkDate = new Date();
-                  while (true) {
-                    const y = checkDate.getFullYear();
-                    const m = String(checkDate.getMonth() + 1).padStart(2, '0');
-                    const d = String(checkDate.getDate()).padStart(2, '0');
-                    const dStr = `${y}-${m}-${d}`;
-                    if (h.history && h.history[dStr]) {
-                      currentStreak++;
-                      checkDate.setDate(checkDate.getDate() - 1);
-                    } else {
-                      break;
-                    }
-                  }
-
-                  const longestStreak = Math.max(currentStreak, h.longestStreak || currentStreak);
-
-                  return `
-                    <div class="habit-card-row">
-                      <div class="habit-main-col">
-                        <button class="habit-checkbox ${isDoneToday ? 'habit-checkbox--checked' : ''}" onclick="Views.toggleHabit('${h.id}')" aria-label="Toggle habit completion">
-                          ${isDoneToday ? Icons.check : ''}
-                        </button>
-                        <div class="habit-details">
-                          <span class="habit-title ${isDoneToday ? 'habit-title--struck' : ''}">${h.title}</span>
-                          <div class="habit-stats-strip">
-                            <span>Current: <strong class="habit-stats-val">🔥 ${currentStreak}d</strong></span>
-                            <span>Best: <strong class="habit-stats-val">🏆 ${longestStreak}d</strong></span>
-                            <!-- 7-Day Matrix -->
-                            <div class="habit-dots-matrix" title="Last 7 days history">
-                              ${last7Days.map(d => {
-                                const done = h.history && h.history[d.dateStr];
-                                return `<div class="habit-dot ${done ? 'habit-dot--done' : ''}" title="${d.dateStr}: ${done ? 'Done' : 'Missed'}"></div>`;
-                              }).join('')}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="timeline-actions">
-                        <button class="btn btn--ghost btn--icon-only" title="Edit Habit" onclick="Views.openEditHabitModal('${h.id}')">
-                          ${Icons.edit}
-                        </button>
-                        <button class="btn btn--ghost btn--icon-only" title="Delete Habit" onclick="Views.deleteHabit('${h.id}')">
-                          ${Icons.trash}
-                        </button>
-                      </div>
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 12px;">
+              ${habits.map(h => {
+                const done = h.history && h.history[today];
+                const streak = calculateHabitStreak(h);
+                return `
+                  <div class="decluttered-stream-row">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <button class="btn btn--ghost btn--icon-only" style="width: 26px; height: 26px; border: 1px solid var(--border-subtle); border-radius: var(--radius-pill); ${done ? 'background: var(--text-ink); color: #fff;' : ''}" onclick="Views.toggleHabit('${h.id}')">
+                        ${done ? '✓' : ''}
+                      </button>
+                      <span style="font-size: 13.5px; font-weight: 600; ${done ? 'text-decoration: line-through; color: var(--text-muted);' : 'color: var(--text-ink);'}">${h.title}</span>
                     </div>
-                  `;
-                }).join('')}
-              </div>
-            `}
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span class="pill-badge pill-badge--amber">${streak}d streak</span>
+                      <button class="btn btn--ghost btn--icon-only" onclick="Views.deleteHabit('${h.id}')">${Icons.trash}</button>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
           </div>
-
         </div>
       `;
-    },
-
-    async handleAddHabitSubmit(e) {
-      e.preventDefault();
-      const title = document.getElementById('habit-new-title').value;
-      if (!title.trim()) return;
-
-      const item = {
-        id: 'habit_' + Date.now(),
-        title: title.trim(),
-        createdAt: new Date().toISOString(),
-        history: {},
-        longestStreak: 0
-      };
-
-      await putItem('habits', item);
-      ToastManager.showUndo(`Added habit: ${item.title}`, async () => {
-        await deleteItem('habits', item.id);
-        Views.renderHabits(document.getElementById('app-view'));
-      });
-
-      Views.renderHabits(document.getElementById('app-view'));
     },
 
     async toggleHabit(id) {
       const habits = await getAll('habits');
-      const item = habits.find((h) => h.id === id);
-      if (!item) return;
-
+      const h = habits.find(item => item.id === id);
+      if (!h) return;
+      if (!h.history) h.history = {};
       const today = App.todayDate;
-      if (!item.history) item.history = {};
+      h.history[today] = !h.history[today];
+      await putItem('habits', h);
+      App.handleRoute();
+    },
 
-      if (item.history[today]) {
-        delete item.history[today];
-      } else {
-        item.history[today] = true;
-      }
+    openNewHabitModal() {
+      Modal.open(`
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong style="font-size: 15px; color: var(--text-ink);">+ Create Habit Routine</strong>
+            <button class="btn btn--ghost btn--icon-only" onclick="Modal.close()">✕</button>
+          </div>
+          <form onsubmit="Views.handleSaveNewHabit(event)" style="display: flex; flex-direction: column; gap: 10px;">
+            <div class="form-group-nl">
+              <label class="form-label-nl">Habit Name</label>
+              <input type="text" id="new-habit-title" class="input-nl" placeholder="e.g. 15m Morning Sunlight, 10k Steps" required />
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 6px;">
+              <button type="button" class="btn btn--secondary" onclick="Modal.close()">Cancel</button>
+              <button type="submit" class="btn btn--primary">Save Habit</button>
+            </div>
+          </form>
+        </div>
+      `);
+    },
 
+    async handleSaveNewHabit(e) {
+      e.preventDefault();
+      const title = document.getElementById('new-habit-title').value.trim();
+      const item = { id: 'habit_' + Date.now(), title, history: {} };
       await putItem('habits', item);
-      Views.renderHabits(document.getElementById('app-view'));
+      Modal.close();
+      ToastManager.show(`Habit "${title}" created`, 'success');
+      App.handleRoute();
     },
 
     async deleteHabit(id) {
-      const habits = await getAll('habits');
-      const item = habits.find((h) => h.id === id);
-      if (!item) return;
-
+      if (!confirm('Delete this habit routine?')) return;
       await deleteItem('habits', id);
-      ToastManager.showUndo(`Deleted habit: ${item.title}`, async () => {
-        await putItem('habits', item);
-        Views.renderHabits(document.getElementById('app-view'));
-      });
-      Views.renderHabits(document.getElementById('app-view'));
-    },
-
-    async openEditHabitModal(id) {
-      const habits = await getAll('habits');
-      const item = habits.find((h) => h.id === id);
-      if (!item) return;
-
-      Modal.open(`
-        <div class="modal-header-nl">
-          <span class="modal-title-nl">Edit Habit</span>
-          <button class="btn btn--subtle btn--sm" onclick="Modal.close()">Cancel</button>
-        </div>
-        <form onsubmit="Views.handleEditHabitSubmit(event, '${id}')" style="display: flex; flex-direction: column; gap: 14px; margin-top: 10px;">
-          <div class="form-group-nl">
-            <label class="form-label-nl">Habit Title</label>
-            <input type="text" id="edit-habit-title" class="input-nl" value="${item.title}" required autofocus />
-          </div>
-          <button type="submit" class="btn btn--ink" style="width: 100%;">Save Changes</button>
-        </form>
-      `);
-    },
-
-    async handleEditHabitSubmit(e, id) {
-      e.preventDefault();
-      const habits = await getAll('habits');
-      const item = habits.find((h) => h.id === id);
-      if (!item) return;
-
-      item.title = document.getElementById('edit-habit-title').value.trim();
-      await putItem('habits', item);
-      Modal.close();
-      ToastManager.show('Habit updated');
-      Views.renderHabits(document.getElementById('app-view'));
+      ToastManager.show('Habit deleted', 'info');
+      App.handleRoute();
     },
 
     // -----------------------------------------------------------------------
-    // F. MEDICATIONS (Next Dose Timing, Active/Finishing Badges, Mark Taken)
+    // H. MEDICATIONS
     // -----------------------------------------------------------------------
     async renderMeds(container) {
-      const meds = await getAll('medications');
-      const today = App.todayDate;
+      const all = await getAll('health_entries');
+      const meds = all.filter(e => e.type === 'med');
 
       container.innerHTML = `
         <div style="display: flex; flex-direction: column; gap: 20px;">
-          
-          <div class="card-nl">
-            <div class="card-header-nl">
-              <div class="card-title-group">
-                <div class="card-icon-badge">${Icons.meds}</div>
-                <div>
-                  <span class="card-tag">Prescriptions & Supplements</span>
-                  <span class="card-heading">Medication Schedule</span>
-                </div>
-              </div>
-            </div>
-
-            <form onsubmit="Views.handleAddMedSubmit(event)" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; align-items: flex-end; margin-top: 8px;">
-              <div class="form-group-nl">
-                <label class="form-label-nl">Medicine Name</label>
-                <input type="text" id="med-name" class="input-nl" placeholder="e.g. Probiotics, Vitamin D3" required />
-              </div>
-              <div class="form-group-nl">
-                <label class="form-label-nl">Dosage</label>
-                <input type="text" id="med-dosage" class="input-nl" placeholder="e.g. 1 Capsule, 1000 IU" required />
-              </div>
-              <div class="form-group-nl">
-                <label class="form-label-nl">Timing</label>
-                <select id="med-timing" class="select-nl">
-                  <option value="Morning">Morning</option>
-                  <option value="Afternoon">Afternoon</option>
-                  <option value="Evening / Night">Evening / Night</option>
-                  <option value="As Needed">As Needed</option>
-                </select>
-              </div>
-              <button type="submit" class="btn btn--ink" style="width: 100%;">
-                ${Icons.plus}
-                <span>Add Medicine</span>
-              </button>
-            </form>
-          </div>
-
-          <div class="card-nl">
-            <div class="card-header-nl">
-              <span class="card-heading">Active Prescriptions & Supplements</span>
-              <span class="pill-badge pill-badge--subtle">${meds.length} prescriptions</span>
-            </div>
-
-            ${meds.length === 0 ? `
-              <div class="empty-state-card">
-                <div class="empty-state-icon">${Icons.meds}</div>
-                <div class="empty-state-title">No medications scheduled</div>
-                <div class="empty-state-desc">Keep track of your daily supplements and doctor-prescribed treatments.</div>
-              </div>
-            ` : `
-              <div style="display: flex; flex-direction: column; gap: 10px;">
-                ${meds.map((m) => {
-                  const takenToday = m.takenHistory && m.takenHistory[today];
-                  return `
-                    <div class="timeline-item">
-                      <div class="timeline-left">
-                        <span class="pill-badge pill-badge--${takenToday ? 'ink' : 'neutral'}">${m.timing}</span>
-                        <span class="timeline-label">${m.name}</span>
-                        <span class="timeline-sub">(${m.dosage})</span>
-                        <span class="pill-badge pill-badge--${takenToday ? 'ink' : 'subtle'}">${takenToday ? 'Taken Today ✓' : 'Due Today'}</span>
-                      </div>
-                      <div class="timeline-actions">
-                        <button class="btn btn--${takenToday ? 'ghost' : 'subtle'} btn--sm" onclick="Views.toggleMedTaken('${m.id}')">
-                          ${takenToday ? 'Mark Due' : 'Mark Taken'}
-                        </button>
-                        <button class="btn btn--ghost btn--icon-only" title="Delete Medication" onclick="Views.deleteMed('${m.id}')">
-                          ${Icons.trash}
-                        </button>
-                      </div>
-                    </div>
-                  `;
-                }).join('')}
-              </div>
-            `}
-          </div>
-
-        </div>
-      `;
-    },
-
-    async handleAddMedSubmit(e) {
-      e.preventDefault();
-      const name = document.getElementById('med-name').value;
-      const dosage = document.getElementById('med-dosage').value;
-      const timing = document.getElementById('med-timing').value;
-
-      const item = {
-        id: 'med_' + Date.now(),
-        name,
-        dosage,
-        timing,
-        createdAt: new Date().toISOString(),
-        takenHistory: {}
-      };
-
-      await putItem('medications', item);
-      ToastManager.showUndo(`Added ${name}`, async () => {
-        await deleteItem('medications', item.id);
-        Views.renderMeds(document.getElementById('app-view'));
-      });
-      Views.renderMeds(document.getElementById('app-view'));
-    },
-
-    async toggleMedTaken(id) {
-      const meds = await getAll('medications');
-      const item = meds.find((m) => m.id === id);
-      if (!item) return;
-
-      const today = App.todayDate;
-      if (!item.takenHistory) item.takenHistory = {};
-
-      if (item.takenHistory[today]) {
-        delete item.takenHistory[today];
-        ToastManager.show(`${item.name} marked as due`);
-      } else {
-        item.takenHistory[today] = true;
-        ToastManager.show(`${item.name} marked as taken ✓`);
-      }
-
-      await putItem('medications', item);
-      Views.renderMeds(document.getElementById('app-view'));
-    },
-
-    async deleteMed(id) {
-      const meds = await getAll('medications');
-      const item = meds.find((m) => m.id === id);
-      if (!item) return;
-
-      await deleteItem('medications', id);
-      ToastManager.showUndo(`Deleted ${item.name}`, async () => {
-        await putItem('medications', item);
-        Views.renderMeds(document.getElementById('app-view'));
-      });
-      Views.renderMeds(document.getElementById('app-view'));
-    },
-
-    // -----------------------------------------------------------------------
-    // G. DOCTOR MODE (Date Range Filter & PDF Custom Filename Print)
-    // -----------------------------------------------------------------------
-    doctorDateRangeDays: 14,
-
-    async renderDoctorMode(container) {
-      const waterLogs = await getAll('water_logs');
-      const dietLogs = await getAll('diet_logs');
-      const bowelLogs = await getAll('bowel_logs');
-      const meds = await getAll('medications');
-
-      // Filter by selected range
-      const cutoffDate = new Date();
-      cutoffDate.setDate(cutoffDate.getDate() - Views.doctorDateRangeDays);
-      const cutoffStr = cutoffDate.toISOString().split('T')[0];
-
-      const filteredWater = waterLogs.filter(l => l.date >= cutoffStr);
-      const filteredDiet = dietLogs.filter(l => l.date >= cutoffStr);
-      const filteredBowel = bowelLogs.filter(l => l.date >= cutoffStr);
-
-      const daysSet = new Set(filteredWater.map(l => l.date));
-      const activeDays = Math.max(1, daysSet.size);
-
-      const avgWater = filteredWater.length ? Math.round(filteredWater.reduce((s, l) => s + (Number(l.amount) || 0), 0) / activeDays) : 0;
-      const avgFiber = filteredDiet.length ? (filteredDiet.reduce((s, l) => s + (Number(l.fiber) || 0), 0) / activeDays).toFixed(1) : 0;
-
-      container.innerHTML = `
-        <div style="display: flex; flex-direction: column; gap: 20px;">
-          
-          <div class="card-nl no-print">
-            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+          <div class="concept-hero-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
               <div>
-                <span class="card-tag">Physician Consultation Hub</span>
-                <h2 style="font-size: 20px; font-weight: 800; color: var(--text-ink); margin-top: 2px;">
-                  Doctor Mode — Clinical Summary
-                </h2>
-                <p style="font-size: 13px; color: var(--text-muted); margin-top: 2px;">
-                  High-contrast clinical digest designed for doctors, gastroenterologists, and dietitians.
-                </p>
+                <span class="card-tag">MEDICATIONS & RX</span>
+                <h1 class="concept-title heading-serif" style="margin-top: 3px;">Prescriptions & Supplements</h1>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 2px;">Track daily prescriptions, vitamins, and dosages.</p>
               </div>
-              
-              <div style="display: flex; gap: 8px; align-items: center;">
-                <!-- Date Range Selector -->
-                <select class="select-nl" style="width: auto;" onchange="Views.doctorDateRangeDays = Number(this.value); Views.renderDoctorMode(document.getElementById('app-view'));">
-                  <option value="7" ${Views.doctorDateRangeDays === 7 ? 'selected' : ''}>Last 7 Days</option>
-                  <option value="14" ${Views.doctorDateRangeDays === 14 ? 'selected' : ''}>Last 14 Days</option>
-                  <option value="30" ${Views.doctorDateRangeDays === 30 ? 'selected' : ''}>Last 30 Days</option>
-                  <option value="999" ${Views.doctorDateRangeDays === 999 ? 'selected' : ''}>All Time</option>
-                </select>
-
-                <button class="btn btn--ink" onclick="Views.printClinicalReport()">
-                  ${Icons.print}
-                  <span>Print / Save PDF</span>
-                </button>
-              </div>
+              <button class="btn btn--primary" onclick="App.triggerUniversalQuickLog('med')">+ Log Prescription</button>
             </div>
           </div>
 
-          <!-- Printable Clinical Report Page -->
-          <div class="card-nl doctor-report-page" style="border: 2px solid var(--border-dark);">
-            <div style="border-bottom: 2px solid var(--border-dark); padding-bottom: 14px; margin-bottom: 16px;">
-              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                <div>
-                  <h1 style="font-size: 20px; font-weight: 800; color: var(--text-ink); letter-spacing: -0.02em;">
-                    NORTHLIFE CLINICAL HEALTH SUMMARY
-                  </h1>
-                  <span style="font-size: 12px; color: var(--text-muted);">
-                    Reporting Window: ${Views.doctorDateRangeDays === 999 ? 'All Historical Logs' : 'Last ' + Views.doctorDateRangeDays + ' Days'} • Generated on: ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
-                  </span>
+          <div class="concept-card">
+            <div class="card-header-nl">
+              <span class="card-heading-serif">Prescription Logs</span>
+              <span class="pill-badge pill-badge--neutral">${meds.length} logs</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+              ${meds.length === 0 ? '<div style="font-size: 13px; color: var(--text-muted); text-align: center; padding: 20px;">No prescriptions logged.</div>' : meds.map(e => `
+                <div class="decluttered-stream-row">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <span class="stream-time">${formatDisplayDate(e.timestamp)}</span>
+                    <strong class="stream-title">${e.title}</strong>
+                    ${e.value && e.unit ? `<span class="pill-badge pill-badge--neutral">${e.value} ${e.unit}</span>` : ''}
+                  </div>
+                  <button class="btn btn--ghost btn--icon-only" onclick="App.deleteEntry('${e.id}')">${Icons.trash}</button>
                 </div>
-                <span class="pill-badge pill-badge--ink">CONFIDENTIAL PATIENT DATA</span>
-              </div>
-            </div>
-
-            <!-- Quantitative Clinical Averages -->
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px;">
-              <div style="padding: 12px; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
-                <span style="font-size: 11px; font-weight: 500; text-transform: uppercase; color: var(--text-muted);">Avg Daily Water</span>
-                <div style="font-size: 24px; font-weight: 800; color: var(--text-ink); margin-top: 2px;">${avgWater} ml</div>
-              </div>
-              <div style="padding: 12px; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
-                <span style="font-size: 11px; font-weight: 500; text-transform: uppercase; color: var(--text-muted);">Avg Daily Fiber</span>
-                <div style="font-size: 24px; font-weight: 800; color: var(--text-ink); margin-top: 2px;">${avgFiber} g</div>
-              </div>
-              <div style="padding: 12px; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);">
-                <span style="font-size: 11px; font-weight: 500; text-transform: uppercase; color: var(--text-muted);">Bowel Movements</span>
-                <div style="font-size: 24px; font-weight: 800; color: var(--text-ink); margin-top: 2px;">${filteredBowel.length} events</div>
-              </div>
-            </div>
-
-            <!-- Recent Bowel Movement Log Table -->
-            <div style="margin-bottom: 16px;">
-              <h3 style="font-size: 14px; font-weight: 700; color: var(--text-ink); margin-bottom: 8px;">
-                Digestive Movement Log (Bristol Stool Scale)
-              </h3>
-              ${filteredBowel.length === 0 ? '<p style="font-size: 12px; color: var(--text-muted);">No bowel logs recorded in this period.</p>' : `
-                <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;">
-                  <thead>
-                    <tr style="border-bottom: 1px solid var(--border-dark); font-weight: 700;">
-                      <th style="padding: 6px;">Date & Time</th>
-                      <th style="padding: 6px;">Bristol Type</th>
-                      <th style="padding: 6px;">Pain (0-10)</th>
-                      <th style="padding: 6px;">Straining</th>
-                      <th style="padding: 6px;">Blood Tag</th>
-                      <th style="padding: 6px;">Clinical Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    ${filteredBowel.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp)).map(b => `
-                      <tr style="border-bottom: 1px solid var(--border-subtle);">
-                        <td style="padding: 6px;">${formatDisplayDate(b.timestamp)} ${formatDisplayTime(b.timestamp)}</td>
-                        <td style="padding: 6px; font-weight: 700;">Type ${b.bristolType}</td>
-                        <td style="padding: 6px;">${b.painScore > 0 ? b.painScore + '/10' : '0'}</td>
-                        <td style="padding: 6px;">${b.straining ? 'Yes' : 'No'}</td>
-                        <td style="padding: 6px; font-weight: 700;">${b.blood ? 'FLAGGED' : 'None'}</td>
-                        <td style="padding: 6px; color: var(--text-muted);">${b.notes || '-'}</td>
-                      </tr>
-                    `).join('')}
-                  </tbody>
-                </table>
-              `}
-            </div>
-
-            <!-- Current Active Prescriptions -->
-            <div>
-              <h3 style="font-size: 14px; font-weight: 700; color: var(--text-ink); margin-bottom: 8px;">
-                Current Active Medications & Supplements
-              </h3>
-              ${meds.length === 0 ? '<p style="font-size: 12px; color: var(--text-muted);">No active prescriptions recorded.</p>' : `
-                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                  ${meds.map(m => `
-                    <div style="padding: 6px 10px; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); font-size: 12px;">
-                      <strong>${m.name}</strong> (${m.dosage}) — ${m.timing}
-                    </div>
-                  `).join('')}
-                </div>
-              `}
+              `).join('')}
             </div>
           </div>
-
         </div>
       `;
     },
 
-    printClinicalReport() {
-      const originalTitle = document.title;
-      document.title = `NorthLife_Clinical_Report_${App.todayDate}`;
-      window.print();
-      document.title = originalTitle;
+    // -----------------------------------------------------------------------
+    // I. DOCTOR MODE
+    // -----------------------------------------------------------------------
+    async renderDoctorMode(container) {
+      const all = await getAll('health_entries');
+
+      container.innerHTML = `
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <div class="concept-hero-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+              <div>
+                <span class="card-tag">DOCTOR MODE</span>
+                <h1 class="concept-title heading-serif" style="margin-top: 3px;">Clinical Consultation Briefing</h1>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 2px;">High-density clean medical summary for clinical consultations.</p>
+              </div>
+              <button class="btn btn--primary" onclick="window.print()">
+                ${Icons.print}
+                <span>Print Clinical Summary</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="concept-card">
+            <div class="card-heading-serif" style="font-size: 18px; margin-bottom: 12px;">Patient Clinical Summary • ${App.userSettings?.name || 'Patient'}</div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              ${all.slice(0, 15).map(e => `
+                <div style="display: flex; justify-content: space-between; font-size: 12.5px; border-bottom: 1px solid var(--border-subtle); padding: 8px 0;">
+                  <span><strong>${e.title}</strong> ${e.notes ? '— ' + e.notes : ''}</span>
+                  <span class="stat-mono" style="color: var(--text-muted);">${formatDisplayDate(e.timestamp)}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
     },
 
     // -----------------------------------------------------------------------
-    // H. SETTINGS & DATA VAULT (Import JSON, Export, Storage Stats)
+    // J. SETTINGS & VAULT
     // -----------------------------------------------------------------------
     async renderSettings(container) {
-      const waterLogs = await getAll('water_logs');
-      const dietLogs = await getAll('diet_logs');
-      const bowelLogs = await getAll('bowel_logs');
-      const habits = await getAll('habits');
-      const meds = await getAll('medications');
-      const templates = await getAll('meal_templates');
-
-      const totalRecords = waterLogs.length + dietLogs.length + bowelLogs.length + habits.length + meds.length + templates.length;
-      const lastBackupTime = localStorage.getItem('nl_last_backup') || 'Never';
+      const all = await getAll('health_entries');
 
       container.innerHTML = `
         <div style="display: flex; flex-direction: column; gap: 20px;">
-          
-          <div class="card-nl">
-            <div class="card-header-nl">
-              <div class="card-title-group">
-                <div class="card-icon-badge">${Icons.settings}</div>
-                <div>
-                  <span class="card-tag">Preferences & Storage</span>
-                  <span class="card-heading">Application Settings & Data Vault</span>
-                </div>
+          <div class="concept-hero-card">
+            <span class="card-tag">NORTHLIFE PRINCIPLES & PRIVACY</span>
+            <h1 class="concept-title heading-serif" style="margin-top: 3px;">Settings & Data Vault</h1>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 2px;">100% Offline-First, Zero Mandatory Login, Complete Data Ownership.</p>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+            <div class="concept-card">
+              <div class="card-header-nl">
+                <span class="card-heading-serif">Profile Settings</span>
               </div>
-              <span class="pill-badge pill-badge--neutral">v1.2 Stable</span>
+              <form onsubmit="Views.handleSaveProfile(event)" style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+                <div class="form-group-nl">
+                  <label class="form-label-nl">Your Name</label>
+                  <input type="text" id="settings-name" class="input-nl" value="${App.userSettings?.name || 'Friend'}" required />
+                </div>
+                <button type="submit" class="btn btn--primary" style="margin-top: 4px;">Save Name</button>
+              </form>
             </div>
 
-            <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
-              
-              <!-- Vault Status -->
-              <div style="padding: 12px; background-color: var(--bg-surface-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-                <div>
-                  <span style="font-size: 11px; font-weight: 500; text-transform: uppercase; color: var(--text-muted);">IndexedDB Health Storage</span>
-                  <div style="font-size: 14px; font-weight: 700; color: var(--text-ink);">${totalRecords} total items stored locally</div>
-                </div>
-                <div style="font-size: 12px; color: var(--text-muted);">
-                  Last Export: <strong>${lastBackupTime}</strong>
-                </div>
+            <div class="concept-card">
+              <div class="card-header-nl">
+                <span class="card-heading-serif">JSON Vault Backup</span>
               </div>
-
-              <!-- Export Data -->
-              <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle);">
-                <div>
-                  <h4 style="font-size: 13.5px; font-weight: 700; color: var(--text-ink);">Export Health Vault</h4>
-                  <p style="font-size: 12px; color: var(--text-muted);">Download a complete JSON backup of all your health logs, meals, habits, and meds.</p>
-                </div>
-                <button class="btn btn--ink" onclick="Views.exportVaultData()">Download JSON</button>
-              </div>
-
-              <!-- Import Data -->
-              <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle);">
-                <div>
-                  <h4 style="font-size: 13.5px; font-weight: 700; color: var(--text-ink);">Import Health Vault</h4>
-                  <p style="font-size: 12px; color: var(--text-muted);">Restore or merge records from a previously exported JSON backup file.</p>
-                </div>
-                <label class="btn btn--subtle" style="cursor: pointer;">
-                  <span>Import JSON</span>
-                  <input type="file" id="import-json-file" accept=".json" style="display: none;" onchange="Views.importVaultData(event)" />
-                </label>
-              </div>
-
-              <!-- Wipe Vault -->
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <h4 style="font-size: 13.5px; font-weight: 700; color: var(--text-ink);">Clear All Vault Data</h4>
-                  <p style="font-size: 12px; color: var(--text-muted);">Erase all local health records from IndexedDB storage.</p>
-                </div>
-                <button class="btn btn--subtle" style="color: #ef4444; border-color: #fca5a5;" onclick="Views.confirmWipeData()">Wipe Data</button>
+              <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">Export all ${all.length} records into standardized JSON.</p>
+              <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 12px;">
+                <button class="btn btn--secondary" onclick="Views.exportJsonVault()">Export Full JSON Vault</button>
+                <button class="btn btn--ghost" style="color: #DC2626;" onclick="Views.wipeVault()">Wipe Local Database</button>
               </div>
             </div>
           </div>
-
         </div>
       `;
     },
 
-    async exportVaultData() {
-      const data = {
-        northlifeVersion: '1.2',
+    async handleSaveProfile(e) {
+      e.preventDefault();
+      const name = document.getElementById('settings-name').value.trim();
+      App.userSettings = { name };
+      await putItem('user_settings', { id: 'profile', name });
+      ToastManager.show('Settings saved', 'success');
+      App.loadUserSettings();
+    },
+
+    async exportJsonVault() {
+      const all = await getAll('health_entries');
+      const backup = {
+        app: 'NorthLife_Clinical_OS',
+        version: '3.0.0',
         exportedAt: new Date().toISOString(),
-        waterLogs: await getAll('water_logs'),
-        dietLogs: await getAll('diet_logs'),
-        bowelLogs: await getAll('bowel_logs'),
+        totalEntries: all.length,
+        health_entries: all,
+        custom_metrics: await getAll('custom_metrics'),
         habits: await getAll('habits'),
-        medications: await getAll('medications'),
-        mealTemplates: await getAll('meal_templates')
+        user_settings: await getAll('user_settings')
       };
 
-      const dateStr = App.todayDate;
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `northlife_backup_${dateStr}.json`;
+      a.download = `northlife_vault_${App.todayDate}.json`;
       a.click();
       URL.revokeObjectURL(url);
-
-      const nowStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-      localStorage.setItem('nl_last_backup', nowStr);
-      ToastManager.show('Health vault exported successfully');
-      Views.renderSettings(document.getElementById('app-view'));
+      ToastManager.show(`Exported ${all.length} records`, 'success');
     },
 
-    async importVaultData(e) {
-      const file = e.target.files?.[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = async (event) => {
-        try {
-          const json = JSON.parse(event.target.result);
-          if (json.waterLogs && Array.isArray(json.waterLogs)) {
-            for (const item of json.waterLogs) await putItem('water_logs', item);
-          }
-          if (json.dietLogs && Array.isArray(json.dietLogs)) {
-            for (const item of json.dietLogs) await putItem('diet_logs', item);
-          }
-          if (json.bowelLogs && Array.isArray(json.bowelLogs)) {
-            for (const item of json.bowelLogs) await putItem('bowel_logs', item);
-          }
-          if (json.habits && Array.isArray(json.habits)) {
-            for (const item of json.habits) await putItem('habits', item);
-          }
-          if (json.medications && Array.isArray(json.medications)) {
-            for (const item of json.medications) await putItem('medications', item);
-          }
-          if (json.mealTemplates && Array.isArray(json.mealTemplates)) {
-            for (const item of json.mealTemplates) await putItem('meal_templates', item);
-          }
-
-          ToastManager.show('Vault restored successfully!');
-          App.handleRoute();
-        } catch (err) {
-          ToastManager.show('Failed to parse backup JSON file', 'error');
-        }
-      };
-      reader.readAsText(file);
-    },
-
-    confirmWipeData() {
-      Modal.open(`
-        <div class="modal-header-nl">
-          <span class="modal-title-nl" style="color: #ef4444;">Wipe All Data</span>
-          <button class="btn btn--subtle btn--sm" onclick="Modal.close()">Cancel</button>
-        </div>
-        <p style="font-size: 13px; color: var(--text-muted); line-height: 1.4; margin: 10px 0;">
-          Are you sure you want to delete all logs, habits, and medications? This action cannot be undone.
-        </p>
-        <div style="display: flex; gap: 8px; justify-content: flex-end;">
-          <button class="btn btn--subtle" onclick="Modal.close()">Keep My Data</button>
-          <button class="btn btn--ink" style="background-color: #ef4444; border-color: #ef4444;" onclick="Views.wipeData()">Yes, Delete Everything</button>
-        </div>
-      `);
-    },
-
-    async wipeData() {
-      const stores = ['water_logs', 'diet_logs', 'bowel_logs', 'habits', 'medications', 'meal_templates'];
+    async wipeVault() {
+      if (!confirm('Completely erase all local health logs? This action cannot be undone.')) return;
+      const stores = ['health_entries', 'custom_metrics', 'habits', 'user_settings'];
       for (const s of stores) {
         const items = await getAll(s);
         for (const item of items) {
           await deleteItem(s, item.id);
         }
       }
-      Modal.close();
-      ToastManager.show('All vault data cleared');
+      ToastManager.show('Local vault wiped', 'info');
       App.handleRoute();
     }
   };
 
+  window.App = App;
   window.Views = Views;
+  window.Modal = Modal;
 
-  // Initialize on DOM ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => App.init());
   } else {
